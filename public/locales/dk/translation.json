@@ -1,0 +1,88 @@
+{
+    "id": "ID",
+    "we_are": "Vi er",
+    "subscribe": "Tilmeld",
+    "no_image": "Ingen billede",
+    "error": "Ups! Noget gik galt.",
+    "error2": "Ups.. Noget er gået galt.\nkontakt Safehouse Solutions support på 50 51 11 92.",
+    "category": "Kategori",
+    "categories": "Kategorier",
+    "quantity": "Antal",
+    "name": "Navn",
+    "position": "Position",
+    "status": "Status",
+    "inside": "Inde",
+    "outside": "Ude",
+    "hardware": "Hardware",
+    "surveillance": "Overvågning",
+    "price": "Pris",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "description": "Beskrivelse",
+    "auth": {
+        "sign_in": "Log ind",
+        "sign_up": "Opret konto",
+        "login": "Log ind",
+        "username": "Brugernavn",
+        "password": "Adgangskode",
+        "enter_username": "Indtast brugernavn",
+        "enter_password": "Indtast adgangskode",
+        "no_account": "Har du ikke en konto?",
+        "error": "Tillykke, du har ikke en konto.",
+        "error2": "Stop med at forsøge at logge ind.",
+        "register": "Registrer",
+        "show": "Vis",
+        "hide": "Skjul"
+    },
+    "navigation": {
+        "home": "Hjem",
+        "contact_us": "Kontakt os",
+        "app": "Åbn Dashboard",
+        "profile": "Åbn Profil",
+        "log_out": "Log ud...",
+        "dashboard": "Dashboard",
+        "pim": "PIM"
+    },
+    "landing": {
+        "welcome": "Velkommen til Safehouse Solutions",
+        "partner": "Din betroede partner i moderne lagerstyring. Optimer, strømlin og forbedr dine operationer.",
+        "inventory": "Lagerstyring",
+        "inventory.description": "Hold styr på hver vare i dit lager med realtidsopdateringer. Strømlin arbejdsgangen og sikr præcise lagerbeholdninger.",
+        "monitoring": "Lagerovervågning",
+        "monitoring.description": "Få indsigt i den daglige drift med dashboards, der viser nøglemålepunkter som produktivitet, ordrenøjagtighed og lagerskifte.",
+        "barcode": "Stregkode- og RFID-integration",
+        "barcode.description": "Fremskynd lagerkontrol og reducer fejl ved at integrere stregkode- og RFID-scanningsteknologi."
+    },
+    "contact_us": {
+        "title": "Kontakt os",
+        "description": "Vi vil meget gerne høre fra dig! Kontakt os for spørgsmål eller feedback."
+    },
+    "newsletter": {
+        "join": "Tilmeld dig vores nyhedsbrev",
+        "stay_updated": "Hold dig opdateret med de seneste nyheder og tilbud!",
+        "enter_email": "Indtast din e-mail",
+        "thank_you": "Tak for din tilmelding!"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "employees": {
+            "title": "Medarbejderoversigt",
+            "total": "Samlede medarbejdere"
+        },
+        "products": {
+            "title": "Produkter der håndteres nu",
+            "no_products": "Der håndteres ingen produkter i øjeblikket"
+        },
+        "error": {
+            "employees": "Kunne ikke indlæse medarbejdere. Prøv igen.",
+            "products": "Kunne ikke indlæse produkter. Prøv igen."
+        }
+    },
+    "pim": {
+        "title": "Produktinformationsstyring",
+        "edit_title": "Rediger produkt",
+        "select_categories": "Vælg kategorier",
+        "loading": "Indlæser produkter...",
+        "error": "Der opstod en fejl under redigering af produktet."
+    }
+}
