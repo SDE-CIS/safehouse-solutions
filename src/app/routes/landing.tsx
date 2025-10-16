@@ -1,13 +1,13 @@
 import { Banner } from '@/components/ui/banner';
 import { useTranslation } from "react-i18next";
-import { FaBarcode, FaEye, FaWarehouse } from 'react-icons/fa6';
+import { FaDoorClosed, FaEye, FaHouse } from 'react-icons/fa6';
 
 export function LandingRoute() {
     const { t } = useTranslation();
 
     const features = [
         {
-            icon: <FaWarehouse />,
+            icon: <FaHouse />,
             title: t('landing.inventory'),
             text: t('landing.inventory.description')
         },
@@ -17,7 +17,7 @@ export function LandingRoute() {
             text: t('landing.monitoring.description')
         },
         {
-            icon: <FaBarcode />,
+            icon: <FaDoorClosed />,
             title: t('landing.barcode'),
             text: t('landing.barcode.description')
         },
