@@ -155,6 +155,7 @@ export function Navigation() {
                                     fontSize="sm"
                                     fontWeight={400}
                                     variant="plain"
+                                    _hover={{ color: "brand.500" }}
                                 >
                                     <Link to={paths.auth.login.getHref(location.pathname)}>
                                         {t('auth.sign_in')}
@@ -303,7 +304,7 @@ const DesktopNav = () => {
                     <HoverCardRoot openDelay={0} closeDelay={0}>
                         <HoverCardTrigger>
                             <Link to={getHref ? getHref() : '#'} color={linkColor}>
-                                <Text textStyle="md">
+                                <Text textStyle="md" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     {t(`navigation.${label?.toLowerCase().replace(' ', '_')}`).toUpperCase()}
                                 </Text>
                             </Link>
