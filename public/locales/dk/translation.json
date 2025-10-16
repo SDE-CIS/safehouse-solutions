@@ -57,7 +57,10 @@
         "monitoring": "Overvågning & Sikkerhed",
         "monitoring.description": "Hold øje med dit hjem i realtid med integrerede kameraer og sensorer, der beskytter mod ubudne gæster og sikrer tryghed.",
         "barcode": "Smart adgangskontrol",
-        "barcode.description": "Sikre indgange med avanceret RFID-låsesystem, som nemt kan administreres og tilpasses efter familiens behov."
+        "barcode.description": "Sikre indgange med avanceret RFID-låsesystem, som nemt kan administreres og tilpasses efter familiens behov.",
+        "about_title": "Om Safehouse Solutions",
+        "about_description": "Safehouse Solutions blev grundlagt i 2023 med en vision",
+        "about_description2": "om at skabe innovative og brugervenlige smart home-løsninger, der kombinerer avanceret teknologi med enkelhed og pålidelighed. Vores team består af passionerede eksperter inden for IoT, sikkerhed og softwareudvikling, som arbejder dedikeret på at levere produkter og tjenester, der forbedrer hverdagen for vores kunder."
     },
     "contact_us": {
         "title": "Kontakt os",
