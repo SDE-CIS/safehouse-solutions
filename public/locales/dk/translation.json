@@ -48,15 +48,15 @@
         "pim": "PIM"
     },
     "landing": {
-        "welcome": "Velkommen til dit smart home",
-        "description": "Din løsning til automatisering i hjemmet.",
-        "extra_text": "Lorem ipsum a dolo mera.",
-        "inventory": "Lagerstyring",
-        "inventory.description": "Hold styr på hver vare i dit lager med realtidsopdateringer. Strømlin arbejdsgangen og sikr præcise lagerbeholdninger.",
-        "monitoring": "Lagerovervågning",
-        "monitoring.description": "Få indsigt i den daglige drift med dashboards, der viser nøglemålepunkter som produktivitet, ordrenøjagtighed og lagerskifte.",
-        "barcode": "Stregkode- og RFID-integration",
-        "barcode.description": "Fremskynd lagerkontrol og reducer fejl ved at integrere stregkode- og RFID-scanningsteknologi."
+        "welcome": "Velkommen til Safehouse Solutions",
+        "description": "Din sikre og brugervenlige smart home-løsning til automatisering og overvågning af dit hjem.",
+        "extra_text": "Skræddersyet til at gøre hverdagen nemmere, mere tryg og mere effektiv for hele familien.",
+        "inventory": "Brugeradministration",
+        "inventory.description": "Administrer nemt adgang og brugere til dit smart home via en intuitiv platform, der sikrer fleksibilitet og kontrol.",
+        "monitoring": "Overvågning & Sikkerhed",
+        "monitoring.description": "Hold øje med dit hjem i realtid med integrerede kameraer og sensorer, der beskytter mod ubudne gæster og sikrer tryghed.",
+        "barcode": "Smart adgangskontrol",
+        "barcode.description": "Sikre indgange med avanceret RFID-låsesystem, som nemt kan administreres og tilpasses efter familiens behov."
     },
     "contact_us": {
         "title": "Kontakt os",

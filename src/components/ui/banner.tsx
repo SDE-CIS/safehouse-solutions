@@ -60,7 +60,7 @@ export function Banner({
                         {description}
                     </Text>
                     {extraText && (
-                        <Text fontSize="lg" maxW="620px" opacity={0.8}>
+                        <Text fontSize="lg" mt="5px" maxW="620px" opacity={0.8}>
                             {extraText}
                         </Text>
                     )}
