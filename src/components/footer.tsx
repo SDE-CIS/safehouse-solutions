@@ -7,6 +7,7 @@ import { useColorModeValue } from './ui/color-mode'
 import { Link } from "react-router-dom";
 import { FaDribbble, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa6";
 import logo from '/images/logo.png';
+import { useTranslation } from 'react-i18next';
 
 const ListHeader = ({ children }: { children: ReactNode }) => {
     return (
@@ -17,6 +18,8 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 }
 
 export function Footer() {
+    const { t } = useTranslation();
+
     return (
         <Box
             bg='gray.50'
@@ -37,61 +40,22 @@ export function Footer() {
                         <Text fontSize={'sm'}>© 2025 Safehouse Solutions</Text>
                     </Stack>
                     <Stack align={'flex-start'}>
-                        <ListHeader>Product</ListHeader>
+                        <ListHeader>Safehouse Solutions</ListHeader>
                         <Link to={'#'}>
-                            Overview
-                        </Link>
-                        <Link to={'#'}>
-                            Features
-                        </Link>
-                        <Link to={'#'}>
-                            Tutorials
-                        </Link>
-                        <Link to={'#'}>
-                            Pricing
-                        </Link>
-                        <Link to={'#'}>
-                            Releases
+                            {t('Kontakt')}
                         </Link>
                     </Stack>
                     <Stack align={'flex-start'}>
-                        <ListHeader>Company</ListHeader>
+                        <ListHeader>{t('help')}</ListHeader>
                         <Link to={'#'}>
-                            About
+                            {t('support')}
                         </Link>
                         <Link to={'#'}>
-                            Press
-                        </Link>
-                        <Link to={'#'}>
-                            Careers
-                        </Link>
-                        <Link to={'#'}>
-                            Contact
-                        </Link>
-                        <Link to={'#'}>
-                            Partners
+                            {t('private_policy')}
                         </Link>
                     </Stack>
                     <Stack align={'flex-start'}>
-                        <ListHeader>Support</ListHeader>
-                        <Link to={'#'}>
-                            Help Center
-                        </Link>
-                        <Link to={'#'}>
-                            Terms of Service
-                        </Link>
-                        <Link to={'#'}>
-                            Legal
-                        </Link>
-                        <Link to={'#'}>
-                            Privacy Policy
-                        </Link>
-                        <Link to={'#'}>
-                            Status
-                        </Link>
-                    </Stack>
-                    <Stack align={'flex-start'}>
-                        <ListHeader>Follow Us</ListHeader>
+                        <ListHeader>{t('follow_us')}</ListHeader>
                         <HStack>
                             <Link to={'https://facebook.com'}>
                                 <Icon boxSize={6} color="gray.500">
@@ -119,8 +83,6 @@ export function Footer() {
                                 </Icon>
                             </Link>
                         </HStack>
-
-
                     </Stack>
                 </SimpleGrid>
             </Container>

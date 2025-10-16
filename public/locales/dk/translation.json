@@ -19,6 +19,10 @@
     "save": "Gem",
     "cancel": "Annuller",
     "description": "Beskrivelse",
+    "private_policy": "Privatpolitik",
+    "support": "Support",
+    "help": "Hjælp",
+    "follow_us": "Følg os",
     "auth": {
         "sign_in": "Log ind",
         "sign_up": "Opret konto",
