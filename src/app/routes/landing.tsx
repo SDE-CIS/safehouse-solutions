@@ -26,7 +26,7 @@ export function LandingRoute() {
     return (
         <div>
             <Banner
-                imageUrl="/images/gradient_banner.jpg"
+                imageUrl="/images/gradient4.jpg"
                 title={t('landing.welcome')}
                 description={t('landing.description')}
                 extraText={t('landing.extra_text')}
