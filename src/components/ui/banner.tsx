@@ -1,20 +1,16 @@
-import {Box, Container, Heading, Text} from '@chakra-ui/react';
-
-interface BannerProps {
-    imageUrl: string; // URL of the background image
-    title: string; // Main heading text
-    description: string; // Subtext description
-    overlayColor?: string; // Optional overlay color (default: rgba(0, 0, 0, 0.5))
-    size?: 'sm' | 'md' | 'lg'; // Banner size (height options)
-}
+import { BannerProps } from '@/types/banner';
+import { Box, Container, Heading, Text } from '@chakra-ui/react';
+import { FeaturesSection } from './features-section';
 
 export function Banner({
-                           imageUrl,
-                           title,
-                           description,
-                           overlayColor = 'rgba(0, 0, 0, 0.5)',
-                           size = 'sm',
-                       }: BannerProps) {
+    imageUrl,
+    title,
+    description,
+    extraText,
+    features,
+    overlayColor = 'rgba(0, 0, 0, 0)',
+    size = 'sm',
+}: BannerProps) {
     const height = {
         sm: '50vh',
         md: '75vh',
@@ -23,7 +19,6 @@ export function Banner({
 
     return (
         <Box position="relative" width="100%" height={height} overflow="hidden">
-            {/* Background Image */}
             <Box
                 position="absolute"
                 top="0"
@@ -47,17 +42,16 @@ export function Banner({
                 }}
             />
 
-            <Container maxW="container.xl" height="100%" flex={1}>
-                {/* Overlay Text */}
+            <Container maxW="container.xl" height="100%">
                 <Box
                     position="relative"
                     zIndex="1"
                     display="flex"
                     flexDirection="column"
                     justifyContent="center"
-                    height="100%"
+                    height="60%"
                     color="white"
-                    px={4}
+                    px={5}
                 >
                     <Heading as="h1" size="5xl" fontWeight="bold" mb={4}>
                         {title}
@@ -65,7 +59,16 @@ export function Banner({
                     <Text fontSize="2xl" maxW="620px">
                         {description}
                     </Text>
+                    {extraText && (
+                        <Text fontSize="lg" maxW="620px" opacity={0.8}>
+                            {extraText}
+                        </Text>
+                    )}
                 </Box>
+
+                {features && (
+                    <FeaturesSection features={features} />
+                )}
             </Container>
         </Box>
     );

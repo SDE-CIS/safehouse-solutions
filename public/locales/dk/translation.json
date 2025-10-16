@@ -48,8 +48,9 @@
         "pim": "PIM"
     },
     "landing": {
-        "welcome": "Velkommen til Safehouse Solutions",
-        "partner": "Din betroede partner i moderne lagerstyring. Optimer, strømlin og forbedr dine operationer.",
+        "welcome": "Velkommen til dit smart home",
+        "description": "Din løsning til automatisering i hjemmet.",
+        "extra_text": "Lorem ipsum a dolo mera.",
         "inventory": "Lagerstyring",
         "inventory.description": "Hold styr på hver vare i dit lager med realtidsopdateringer. Strømlin arbejdsgangen og sikr præcise lagerbeholdninger.",
         "monitoring": "Lagerovervågning",
