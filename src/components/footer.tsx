@@ -42,43 +42,43 @@ export function Footer() {
                     <Stack align={'flex-start'}>
                         <ListHeader>Safehouse Solutions</ListHeader>
                         <Link to={'#'}>
-                            {t('Kontakt')}
+                            <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('contact')}</Text>
                         </Link>
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>{t('help')}</ListHeader>
                         <Link to={'#'}>
-                            {t('support')}
+                            <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('support')}</Text>
                         </Link>
                         <Link to={'#'}>
-                            {t('private_policy')}
+                            <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('private_policy')}</Text>
                         </Link>
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>{t('follow_us')}</ListHeader>
                         <HStack>
                             <Link to={'https://facebook.com'}>
-                                <Icon boxSize={6} color="gray.500">
+                                <Icon boxSize={6} color="gray.500" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     <FaFacebook />
                                 </Icon>
                             </Link>
                             <Link to={'https://x.com'}>
-                                <Icon boxSize={6} color="gray.500">
+                                <Icon boxSize={6} color="gray.500" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     <FaTwitter />
                                 </Icon>
                             </Link>
                             <Link to={'https://dribbble.com'}>
-                                <Icon boxSize={6} color="gray.500">
+                                <Icon boxSize={6} color="gray.500" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     <FaDribbble />
                                 </Icon>
                             </Link>
                             <Link to={'https://instagram.com'}>
-                                <Icon boxSize={6} color="gray.500">
+                                <Icon boxSize={6} color="gray.500" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     <FaInstagram />
                                 </Icon>
                             </Link>
                             <Link to={'https://linkedin.com'}>
-                                <Icon boxSize={6} color="gray.500">
+                                <Icon boxSize={6} color="gray.500" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     <FaLinkedin />
                                 </Icon>
                             </Link>
