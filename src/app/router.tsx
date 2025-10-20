@@ -74,11 +74,11 @@ export const createAppRouter = () =>
                     ErrorBoundary: AppRootErrorBoundary,
                 },
                 {
-                    path: paths.dashboard.security.path,
+                    path: paths.dashboard.cameras.path,
                     lazy: async () => {
-                        const { SecurityRoute } = await import('./routes/dashboard/security');
+                        const { CamerasRoute } = await import('./routes/dashboard/cameras');
                         return {
-                            Component: SecurityRoute,
+                            Component: CamerasRoute,
                         };
                     },
                     ErrorBoundary: AppRootErrorBoundary,

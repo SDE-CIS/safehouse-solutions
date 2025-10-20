@@ -39,10 +39,10 @@ export const paths: Record<string, Path> = {
             path: '',
             getHref: () => '/dashboard',
         },
-        security: {
-            label: 'Security',
-            path: '/dashboard/security',
-            getHref: () => '/dashboard/security',
+        cameras: {
+            label: 'Cameras',
+            path: '/dashboard/cameras',
+            getHref: () => '/dashboard/cameras',
         },
         pim: {
             label: 'PIM',

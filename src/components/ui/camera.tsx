@@ -1,6 +1,6 @@
-import {Box, Flex, Heading, Spinner, Text} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import {useMqtt} from "@/hooks/useMqtt"; // Import your custom MQTT hook
+import { Box, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useMqtt } from "@/hooks/useMqtt";
 
 interface CameraFeedProps {
     cameraId: number;
@@ -29,9 +29,10 @@ export function Camera({ cameraId, topic, title, liveColor }: CameraFeedProps) {
 
     return (
         <Box p={4} borderRadius="md" shadow="md">
-            <Heading size="md" mb={2} color="white">
+            <Heading size="lg">
                 {title}
             </Heading>
+            <Text color="gray.500">Test</Text>
 
             <Box
                 bg="black"
@@ -40,6 +41,7 @@ export function Camera({ cameraId, topic, title, liveColor }: CameraFeedProps) {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                mt={3}
             >
                 {imageSrc ? (
                     <img
@@ -52,10 +54,8 @@ export function Camera({ cameraId, topic, title, liveColor }: CameraFeedProps) {
                             objectFit: "cover",
                         }}
                     />
-                ) : isConnected ? (
-                    <Spinner color="white" size="lg" />
                 ) : (
-                    <Text color="gray.500">No feed available</Text>
+                    <Spinner color="white" size="lg" />
                 )}
             </Box>
 

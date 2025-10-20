@@ -24,6 +24,7 @@
     "help": "Hjælp",
     "follow_us": "Følg os",
     "contact": "Kontakt",
+    "no_feed_available": "Ingen feed tilgængelig",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
@@ -48,12 +49,18 @@
     },
     "navigation": {
         "home": "Hjem",
+        "cameras": "Kameraovervågning",
         "contact_us": "Kontakt os",
         "app": "Åbn Dashboard",
         "profile": "Åbn Profil",
         "log_out": "Log ud...",
         "dashboard": "Dashboard",
         "pim": "PIM"
+    },
+    "cameras": {
+        "overview": "Oversigt over kameraer",
+        "no_cameras": "Ingen kameraer fundet.",
+        "add_camera": "Tilføj kamera"
     },
     "landing": {
         "welcome": "Velkommen til Safehouse Solutions",
