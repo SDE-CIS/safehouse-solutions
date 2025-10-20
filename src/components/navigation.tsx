@@ -314,7 +314,7 @@ const DesktopNav = () => {
                                         height: "2px",
                                         bottom: "-4px",
                                         left: 0,
-                                        bg: "brand.500", // Adjust this to your theme color
+                                        bg: "brand.500",
                                         transition: "width 0.3s ease-in-out",
                                     }}
                                     _hover={{
