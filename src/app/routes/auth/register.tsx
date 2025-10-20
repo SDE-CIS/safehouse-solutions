@@ -1,10 +1,7 @@
-import {Error} from '@/components/ui/error';
-import {useTranslation} from "react-i18next";
+import { RegisterForm } from '@/components/ui/register-form';
 
 export function RegisterRoute() {
-    const { t } = useTranslation();
-
     return (
-        <Error title={t('auth.error')} text={t('auth.error2')} />
+        <RegisterForm />
     );
 }

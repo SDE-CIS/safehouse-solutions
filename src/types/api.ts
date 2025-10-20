@@ -1,5 +1,5 @@
-import {z} from "zod";
-import {FetchBaseQueryError} from "@reduxjs/toolkit/query/react";
+import { z } from "zod";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 
 export type ExtendedFetchBaseQueryError = FetchBaseQueryError & {
     originalStatus?: number;
@@ -23,6 +23,14 @@ export interface User {
     Password: string | null,
     ProfilePicture: string,
     Roles: string[],
+}
+
+export interface Register {
+    Name: string;
+    Username: string;
+    Email: string;
+    Password: string;
+    ConfirmPassword: string;
 }
 
 export interface Login {

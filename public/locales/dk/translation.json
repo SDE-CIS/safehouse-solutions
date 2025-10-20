@@ -25,6 +25,13 @@
     "follow_us": "Følg os",
     "contact": "Kontakt",
     "auth": {
+        "name": "Navn",
+        "email": "E-mail",
+        "confirm_password": "Bekræft adgangskode",
+        "enter_name": "Indtast navn",
+        "enter_email": "Indtast din e-mail",
+        "enter_confirm_password": "Bekræft adgangskode",
+        "already_have_account": "Har du allerede en konto?",
         "sign_in": "Log ind",
         "sign_up": "Opret konto",
         "login": "Log ind",
