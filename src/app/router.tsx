@@ -76,9 +76,19 @@ export const createAppRouter = () =>
                 {
                     path: paths.dashboard.cameras.path,
                     lazy: async () => {
-                        const { CamerasRoute } = await import('./routes/dashboard/cameras');
+                        const { CamerasRoute } = await import('./routes/dashboard/cameras/cameras');
                         return {
                             Component: CamerasRoute,
+                        };
+                    },
+                    ErrorBoundary: AppRootErrorBoundary,
+                },
+                {
+                    path: paths.dashboard.camera.path,
+                    lazy: async () => {
+                        const { CameraRoute } = await import('./routes/dashboard/cameras/camera');
+                        return {
+                            Component: CameraRoute,
                         };
                     },
                     ErrorBoundary: AppRootErrorBoundary,

@@ -3,9 +3,10 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 interface CameraFeedProps {
     title: string;
     liveColor: string;
+    height?: string;
 }
 
-export function Camera({ title, liveColor }: CameraFeedProps) {
+export function CameraBox({ title, liveColor, height }: CameraFeedProps) {
     const streamUrl = "http://192.168.1.131:8080?action=stream";
 
     return (
@@ -16,7 +17,7 @@ export function Camera({ title, liveColor }: CameraFeedProps) {
             <Box
                 bg="black"
                 borderRadius="md"
-                h="350px"
+                h={height || "350px"}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"

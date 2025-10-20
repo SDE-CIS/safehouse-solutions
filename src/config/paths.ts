@@ -44,6 +44,12 @@ export const paths: Record<string, Path> = {
             path: '/dashboard/cameras',
             getHref: () => '/dashboard/cameras',
         },
+        camera: {
+            label: 'Camera View',
+            hidden: true,
+            path: '/dashboard/cameras/:cameraId',
+            getHref: (id: string) => `/dashboard/cameras/${id}`,
+        },
         keycards: {
             label: 'Keycards',
             path: '/dashboard/keycards',
