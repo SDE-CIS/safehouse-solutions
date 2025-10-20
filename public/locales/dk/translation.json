@@ -76,7 +76,9 @@
         "barcode.description": "Sikre indgange med avanceret RFID-låsesystem, som nemt kan administreres og tilpasses efter familiens behov.",
         "about_title": "Om Safehouse Solutions",
         "about_description": "Safehouse Solutions blev grundlagt i 2023 med en vision",
-        "about_description2": "om at skabe innovative og brugervenlige smart home-løsninger, der kombinerer avanceret teknologi med enkelhed og pålidelighed. Vores team består af passionerede eksperter inden for IoT, sikkerhed og softwareudvikling, som arbejder dedikeret på at levere produkter og tjenester, der forbedrer hverdagen for vores kunder."
+        "about_description2": "om at skabe innovative og brugervenlige smart home-løsninger, der kombinerer avanceret teknologi med enkelhed og pålidelighed. Vores team består af passionerede eksperter inden for IoT, sikkerhed og softwareudvikling, som arbejder dedikeret på at levere produkter og tjenester, der forbedrer hverdagen for vores kunder.",
+        "get_started": "Kom i gang i dag",
+        "get_started_description": "Oplev fordelene ved et smart home. Tilmeld dig Safehouse Solutions og tag kontrol over dit hjem med vores sikre og brugervenlige løsninger."
     },
     "contact_us": {
         "title": "Kontakt os",

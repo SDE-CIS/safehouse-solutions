@@ -49,7 +49,7 @@ export function Banner({
                     display="flex"
                     flexDirection="column"
                     justifyContent="center"
-                    height="60%"
+                    height={features ? "60%" : "100%"}
                     color="white"
                     px={5}
                 >

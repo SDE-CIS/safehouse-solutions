@@ -44,6 +44,14 @@ export function LandingRoute() {
                     {t('landing.about_description2')}
                 </Text>
             </Container>
+
+            <Banner
+                imageUrl="/images/smart.jpeg"
+                title={t('landing.get_started')}
+                description={t('landing.get_started_description')}
+                size='sm'
+                overlayColor="rgba(0, 0, 0, 0.3)"
+            />
         </div>
     );
 }
