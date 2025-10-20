@@ -1,38 +1,17 @@
-import { Box, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useMqtt } from "@/hooks/useMqtt";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
 interface CameraFeedProps {
-    cameraId: number;
-    topic: string;
     title: string;
     liveColor: string;
 }
 
-export function Camera({ cameraId, topic, title, liveColor }: CameraFeedProps) {
-    const [imageSrc, setImageSrc] = useState<string | null>(null);
-    const { message: receivedImage, isConnected } = useMqtt({
-        server: "10.130.54.49",
-        port: 9001,
-        username: "G7Christian",
-        password: "SDECSC",
-        clientId: `Dashboard-Camera-${cameraId}`,
-        topic,
-    });
-
-    useEffect(() => {
-        if (receivedImage && receivedImage.image) {
-            const src = `data:image/jpeg;base64,${receivedImage.image}`;
-            setImageSrc(src);
-        }
-    }, [receivedImage]);
+export function Camera({ title, liveColor }: CameraFeedProps) {
+    const streamUrl = "http://192.168.1.131:8080?action=stream";
 
     return (
         <Box p={4} borderRadius="md" shadow="md">
-            <Heading size="lg">
-                {title}
-            </Heading>
-            <Text color="gray.500">Test</Text>
+            <Heading size="lg">{title}</Heading>
+            <Text color="gray.500">MJPEG Stream</Text>
 
             <Box
                 bg="black"
@@ -42,34 +21,26 @@ export function Camera({ cameraId, topic, title, liveColor }: CameraFeedProps) {
                 alignItems="center"
                 justifyContent="center"
                 mt={3}
+                overflow="hidden"
             >
-                {imageSrc ? (
-                    <img
-                        src={imageSrc}
-                        alt={`${title} feed`}
-                        style={{
-                            borderRadius: "8px",
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                        }}
-                    />
-                ) : (
-                    <Spinner color="white" size="lg" />
-                )}
+                <img
+                    src={streamUrl}
+                    alt={`${title} feed`}
+                    style={{
+                        borderRadius: "8px",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                    }}
+                />
             </Box>
 
             {/* Live Indicator */}
-            {isConnected && (
-                <Flex justifyContent="space-between">
-                    <Text mt={2} fontWeight="bold" color={liveColor}>
-                        ● Live
-                    </Text>
-                    <Text mt={2} fontWeight="bold" color={receivedImage?.motion_detected ? "red.500" : ""}>
-                        {receivedImage?.motion_detected ? "Motion detected!" : "No motion detected."}
-                    </Text>
-                </Flex>
-            )}
+            <Flex justifyContent="space-between">
+                <Text mt={2} fontWeight="bold" color={liveColor}>
+                    ● Live
+                </Text>
+            </Flex>
         </Box>
     );
 }
