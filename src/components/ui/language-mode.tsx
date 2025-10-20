@@ -53,5 +53,6 @@ export function LanguageModeButton() {
 const languages = createListCollection({
     items: [
         { label: "Danish", value: "dk" },
+        { label: "Bulgarian", value: "bg" },
     ],
 })

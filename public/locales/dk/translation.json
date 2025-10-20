@@ -104,12 +104,5 @@
             "employees": "Kunne ikke indlæse medarbejdere. Prøv igen.",
             "products": "Kunne ikke indlæse produkter. Prøv igen."
         }
-    },
-    "pim": {
-        "title": "Produktinformationsstyring",
-        "edit_title": "Rediger produkt",
-        "select_categories": "Vælg kategorier",
-        "loading": "Indlæser produkter...",
-        "error": "Der opstod en fejl under redigering af produktet."
     }
 }
