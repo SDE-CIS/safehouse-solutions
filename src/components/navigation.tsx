@@ -304,7 +304,26 @@ const DesktopNav = () => {
                     <HoverCardRoot openDelay={0} closeDelay={0}>
                         <HoverCardTrigger>
                             <Link to={getHref ? getHref() : '#'} color={linkColor}>
-                                <Text textStyle="lg" transition="0.2s" _hover={{ color: "brand.500" }}>
+                                <Text
+                                    textStyle="lg"
+                                    position="relative"
+                                    _after={{
+                                        content: `""`,
+                                        position: "absolute",
+                                        width: "0%",
+                                        height: "2px",
+                                        bottom: "-4px",
+                                        left: 0,
+                                        bg: "brand.500", // Adjust this to your theme color
+                                        transition: "width 0.3s ease-in-out",
+                                    }}
+                                    _hover={{
+                                        color: "brand.500",
+                                        _after: {
+                                            width: "100%",
+                                        },
+                                    }}
+                                >
                                     {t(`navigation.${label?.toLowerCase().replace(' ', '_')}`).toUpperCase()}
                                 </Text>
                             </Link>
