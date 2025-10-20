@@ -102,7 +102,7 @@ export function Navigation() {
                 <Collapsible.Root>
                     <Flex
                         color={useColorModeValue('gray.600', 'white')}
-                        minH="90px"
+                        minH="80px"
                         py={{ base: 2 }}
                         px={{ base: 4 }}
                         align="center"
@@ -130,11 +130,11 @@ export function Navigation() {
                                 <Image
                                     src={logo}
                                     alt="Logo"
-                                    h={{ base: '25px', lg: '25px' }}
+                                    h={{ base: '25px', lg: '30px' }}
                                     w="auto"
                                 />
                             </Link>
-                            <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+                            <Flex display={{ base: 'none', md: 'flex' }} marginTop="0.1rem" marginLeft="3rem">
                                 <DesktopNav />
                             </Flex>
                         </Flex>
@@ -184,7 +184,7 @@ export function Navigation() {
                     </Collapsible.Content>
                 </Collapsible.Root>
             </Container>
-        </Box>
+        </Box >
     );
 }
 
@@ -298,13 +298,13 @@ const DesktopNav = () => {
     const filteredPaths = Object.entries(paths).filter(([, value]) => !value.hidden);
 
     return (
-        <Stack direction="row" gap={8}>
+        <Stack direction="row" gap={12}>
             {filteredPaths.map(([key, { label, getHref, ...subPaths }]) => (
                 <Box key={key}>
                     <HoverCardRoot openDelay={0} closeDelay={0}>
                         <HoverCardTrigger>
                             <Link to={getHref ? getHref() : '#'} color={linkColor}>
-                                <Text textStyle="md" transition="0.2s" _hover={{ color: "brand.500" }}>
+                                <Text textStyle="lg" transition="0.2s" _hover={{ color: "brand.500" }}>
                                     {t(`navigation.${label?.toLowerCase().replace(' ', '_')}`).toUpperCase()}
                                 </Text>
                             </Link>

@@ -1,4 +1,3 @@
-
 - [ ] Admin Panel
 	- [x] Dashboard (Overview of the warehouse employees and wares)
 	- [x] Surveillance (Camera live feed)
