@@ -84,36 +84,6 @@ export const createAppRouter = () =>
                     ErrorBoundary: AppRootErrorBoundary,
                 },
                 {
-                    path: paths.dashboard.pim.path,
-                    lazy: async () => {
-                        const { PimRoute } = await import('./routes/dashboard/pim');
-                        return {
-                            Component: PimRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.users.path,
-                    lazy: async () => {
-                        const { UsersRoute } = await import('./routes/dashboard/users/users');
-                        return {
-                            Component: UsersRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.user.path,
-                    lazy: async () => {
-                        const { UserRoute } = await import('./routes/dashboard/users/user');
-                        return {
-                            Component: UserRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
                     path: paths.dashboard.keycards.path,
                     lazy: async () => {
                         const { KeycardsRoute } = await import('./routes/dashboard/keycards/keycards');

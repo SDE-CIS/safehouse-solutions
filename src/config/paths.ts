@@ -44,22 +44,6 @@ export const paths: Record<string, Path> = {
             path: '/dashboard/cameras',
             getHref: () => '/dashboard/cameras',
         },
-        pim: {
-            label: 'PIM',
-            path: '/dashboard/pim',
-            getHref: () => '/dashboard/pim',
-        },
-        users: {
-            label: 'Users',
-            path: '/dashboard/users',
-            getHref: () => '/dashboard/users',
-        },
-        user: {
-            hidden: true,
-            label: 'User View',
-            path: '/dashboard/users/:userId',
-            getHref: (id: string) => `/app/discussions/${id}`,
-        },
         keycards: {
             label: 'Keycards',
             path: '/dashboard/keycards',
