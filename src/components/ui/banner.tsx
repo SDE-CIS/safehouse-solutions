@@ -1,6 +1,12 @@
-import { BannerProps } from '@/types/banner';
+import { useEffect, useState } from 'react';
 import { Box, Container, Heading, Text } from '@chakra-ui/react';
 import { FeaturesSection } from './features-section';
+import { BannerProps } from '@/types/banner';
+
+interface EnhancedBannerProps extends BannerProps {
+    typing?: boolean;
+    glow?: boolean;
+}
 
 export function Banner({
     imageUrl,
@@ -10,15 +16,36 @@ export function Banner({
     features,
     overlayColor = 'rgba(0, 0, 0, 0)',
     size = 'sm',
-}: BannerProps) {
+    typing = false,
+}: EnhancedBannerProps) {
     const height = {
         sm: '50vh',
         md: '75vh',
         lg: '100vh',
     }[size];
 
+    const [typedText, setTypedText] = useState('');
+    const typingSpeed = 100;
+
+    useEffect(() => {
+        if (!typing || !description) {
+            setTypedText(description ?? '');
+            return;
+        }
+
+        let i = 0;
+        const interval = setInterval(() => {
+            setTypedText(description.slice(0, i + 1));
+            i++;
+            if (i === description.length) clearInterval(interval);
+        }, typingSpeed);
+
+        return () => clearInterval(interval);
+    }, [typing, description]);
+
     return (
         <Box position="relative" width="100%" height={height} overflow="hidden">
+            {/* Background Image with Overlay */}
             <Box
                 position="absolute"
                 top="0"
@@ -49,26 +76,41 @@ export function Banner({
                     display="flex"
                     flexDirection="column"
                     justifyContent="center"
-                    height={features ? "60%" : "100%"}
+                    height={features ? '60%' : '100%'}
                     color="white"
                     px={5}
                 >
-                    <Heading as="h1" size="5xl" fontWeight="bold" mb={4}>
+                    <Heading
+                        as="h1"
+                        size="5xl"
+                        fontWeight="bold"
+                        mb={4}
+                    >
                         {title}
                     </Heading>
-                    <Text fontSize="2xl" maxW="620px">
-                        {description}
+
+                    <Text
+                        fontSize="2xl"
+                        maxW="620px"
+                        whiteSpace="pre-line"
+                    >
+                        {typedText}
                     </Text>
+
                     {extraText && (
-                        <Text fontSize="lg" mt="5px" maxW="620px" opacity={0.8}>
+                        <Text
+                            fontSize="lg"
+                            mt="5px"
+                            maxW="620px"
+                            opacity={0.8}
+                            whiteSpace="pre-line"
+                        >
                             {extraText}
                         </Text>
                     )}
                 </Box>
 
-                {features && (
-                    <FeaturesSection features={features} />
-                )}
+                {features && <FeaturesSection features={features} />}
             </Container>
         </Box>
     );

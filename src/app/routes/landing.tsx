@@ -33,6 +33,7 @@ export function LandingRoute() {
                 extraText={t('landing.extra_text')}
                 features={features}
                 size='md'
+                typing={true}
             />
 
             <Container className="max-w-4xl mx-auto p-5">

@@ -66,7 +66,7 @@
     },
     "landing": {
         "welcome": "Velkommen til Safehouse Solutions",
-        "description": "Din sikre og brugervenlige smart home-løsning til automatisering og overvågning af dit hjem.",
+        "description": "Din sikre og brugervenlige smart home-løsning.",
         "extra_text": "Skræddersyet til at gøre hverdagen nemmere, mere tryg og mere effektiv for hele familien.",
         "inventory": "Brugeradministration",
         "inventory.description": "Administrer nemt adgang og brugere til dit smart home via en intuitiv platform, der sikrer fleksibilitet og kontrol.",
