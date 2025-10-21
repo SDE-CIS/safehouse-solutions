@@ -26,6 +26,14 @@ export const paths: Record<string, Path> = {
         path: '/contact-us',
         getHref: () => '/contact-us',
     },
+
+    privacy_policy: {
+        hidden: true,
+        label: 'Privacy Policy',
+        path: '/privacy-policy',
+        getHref: () => '/privacy-policy',
+    },
+
     dashboard: {
         hidden: true,
         root: {

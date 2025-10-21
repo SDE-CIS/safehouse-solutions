@@ -56,6 +56,13 @@ export const createAppRouter = () =>
                         return { Component: ContactUsRoute };
                     },
                 },
+                {
+                    path: paths.privacy_policy.path,
+                    lazy: async () => {
+                        const { PrivacyPolicyRoute } = await import('./routes/privacy-policy');
+                        return { Component: PrivacyPolicyRoute };
+                    },
+                },
             ],
         },
         {

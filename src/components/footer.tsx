@@ -50,7 +50,7 @@ export function Footer() {
                         <Link to={'#'}>
                             <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('support')}</Text>
                         </Link>
-                        <Link to={'#'}>
+                        <Link to={'/privacy-policy'}>
                             <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('private_policy')}</Text>
                         </Link>
                     </Stack>

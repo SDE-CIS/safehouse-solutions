@@ -84,6 +84,15 @@
         "get_started": "Kom i gang i dag",
         "get_started_description": "Oplev fordelene ved et smart home med Safehouse Solutions. Tilmeld dig nu og få adgang til vores intuitive platform, der gør det nemt at administrere og overvåge dit hjem, uanset hvor du er."
     },
+    "privacy_policy": {
+        "title": "Privatpolitik",
+        "description": "Lær mere om, hvordan vi beskytter dine personlige oplysninger og sikrer dit privatliv.",
+        "intro_title": "Introduktion til vores privatlivspolitik",
+        "intro_description": "Vi værner om dit privatliv og stræber efter at beskytte dine personlige oplysninger. Læs videre for at lære mere om vores praksis.",
+        "detailed_content": "Denne privatlivspolitik forklarer, hvordan vi indsamler, bruger og beskytter dine oplysninger, når du bruger vores tjenester. Vi forpligter os til at overholde gældende databeskyttelseslove og sikre, at dine data behandles sikkert og ansvarligt.",
+        "uses": "Hvordan vi bruger dine oplysninger",
+        "uses_description": "Vi bruger dine oplysninger til at levere og forbedre vores tjenester, kommunikere med dig og sikre en sikker brugeroplevelse. Vi deler ikke dine oplysninger med tredjepart uden dit samtykke, medmindre det er nødvendigt for at overholde lovgivningen eller beskytte vores rettigheder."
+    },
     "contact_us": {
         "title": "Kontakt os",
         "description": "Vi vil meget gerne høre fra dig! Kontakt os for spørgsmål eller feedback."
