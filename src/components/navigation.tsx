@@ -3,7 +3,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     Box,
-    Button,
     Center,
     Collapsible,
     Container,
@@ -29,6 +28,7 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { loggedOut, selectCurrentAccessToken, selectUsername } from "@/services/login.ts";
 import { Avatar } from "@/components/ui/avatar.tsx";
+import { Button } from './ui/button';
 
 export function DashboardNavigation() {
     const { t } = useTranslation();
@@ -151,26 +151,12 @@ export function Navigation() {
                         ) : (
                             <Stack flex={{ base: 1, md: 0 }} justify="flex-end" alignItems="center" direction="row"
                                 gap={6}>
-                                <Button
-                                    fontSize="sm"
-                                    fontWeight={400}
-                                    variant="plain"
-                                    _hover={{ color: "brand.500" }}
-                                >
+                                <Button variantStyle="reverse">
                                     <Link to={paths.auth.login.getHref(location.pathname)}>
                                         {t('auth.sign_in')}
                                     </Link>
                                 </Button>
-                                <Button
-                                    display={{ base: 'none', md: 'inline-flex' }}
-                                    fontSize="sm"
-                                    fontWeight={600}
-                                    color="white"
-                                    bg="brand.600"
-                                    _hover={{
-                                        bg: 'brand.300',
-                                    }}
-                                >
+                                <Button>
                                     <Link to={"/auth/register"}>
                                         {t('auth.sign_up')}
                                     </Link>

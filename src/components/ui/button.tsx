@@ -1,37 +1,80 @@
 import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react"
 import {
-  AbsoluteCenter,
-  Button as ChakraButton,
-  Span,
-  Spinner,
+    AbsoluteCenter,
+    Button as ChakraButton,
+    Spinner,
+    Text as Span,
 } from "@chakra-ui/react"
 import * as React from "react"
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next"
 
 interface ButtonLoadingProps {
-  loading?: boolean
-  loadingText?: React.ReactNode
+    loading?: boolean
+    loadingText?: React.ReactNode
 }
 
-export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {}
+type ButtonVariant = "filled" | "reverse"
+
+export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {
+    variantStyle?: ButtonVariant
+}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     function Button(props, ref) {
-        const { loading, disabled, loadingText, children, ...rest } = props;
-        const { t } = useTranslation();
+        const {
+            loading,
+            disabled,
+            loadingText,
+            children,
+            variantStyle = "filled",
+            ...rest
+        } = props
+        const { t } = useTranslation()
 
-        // Helper to conditionally translate
         const getContent = (content: React.ReactNode) =>
-            typeof content === "string" ? t(content) : content;
+            typeof content === "string" ? t(content) : content
+
+        // Style logic based on variantStyle
+        const baseStyles =
+            variantStyle === "filled"
+                ? {
+                    bg: "brand.500",
+                    color: "white",
+                    border: "1px solid transparent",
+                    _hover: {
+                        bg: "transparent",
+                        color: "black",
+                        border: "1px solid black",
+                    },
+                }
+                : {
+                    bg: "transparent",
+                    color: "black",
+                    border: "1px solid black",
+                    _hover: {
+                        bg: "brand.500",
+                        color: "white",
+                        border: "1px solid transparent",
+                    },
+                }
 
         return (
-            <ChakraButton disabled={loading || disabled} ref={ref} {...rest}>
+            <ChakraButton
+                ref={ref}
+                disabled={loading || disabled}
+                borderRadius="xl"
+                transition="0.3s"
+                {...baseStyles}
+                {...rest}
+            >
                 {loading && !loadingText ? (
                     <>
                         <AbsoluteCenter display="inline-flex">
                             <Spinner size="inherit" color="inherit" />
                         </AbsoluteCenter>
-                        <Span opacity={0}>{getContent(children)}</Span>
+                        <Span as="span" opacity={0}>
+                            {getContent(children)}
+                        </Span>
                     </>
                 ) : loading && loadingText ? (
                     <>
@@ -42,6 +85,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     getContent(children)
                 )}
             </ChakraButton>
-        );
-    },
-);
+        )
+    }
+)

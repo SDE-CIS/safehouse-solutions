@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Button, Flex, Input, Text, } from '@chakra-ui/react';
+import { Box, Flex, Input, Text, } from '@chakra-ui/react';
 import { useColorModeValue } from "@/components/ui/color-mode.tsx";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { Button } from './button';
 
 export function Newsletter() {
     const [email, setEmail] = useState('');
@@ -47,7 +48,7 @@ export function Newsletter() {
                             bg="white"
                             _dark={{ bg: 'gray.700' }}
                         />
-                        <Button type="submit" colorScheme="teal">
+                        <Button type="submit">
                             {t('subscribe')}
                         </Button>
                     </Flex>
