@@ -26,6 +26,10 @@
     "contact": "Kontakt",
     "no_feed_available": "Ingen feed tilgængelig",
     "go_back": "Tilbage",
+    "project_smart_home": "Smart Home Projekt",
+    "project_smart_office": "Smart Office Projekt",
+    "project_smart_home_description": "Et omfattende smart home-system, der integrerer sikkerhed, belysning, klima og underholdning for at skabe et intelligent og sammenkoblet hjemmemiljø.",
+    "project_smart_office_description": "En avanceret smart office-løsning, der optimerer arbejdspladsens effektivitet gennem automatisering af belysning, temperaturkontrol, adgangskontrol og mødeplanlægning.",
     "auth": {
         "name": "Navn",
         "email": "E-mail",

@@ -6,4 +6,5 @@ export interface BannerProps {
     features?: any;
     overlayColor?: string;
     size?: 'sm' | 'md' | 'lg';
+    typing?: boolean;
 }

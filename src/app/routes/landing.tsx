@@ -1,4 +1,5 @@
 import { Banner } from '@/components/ui/banner';
+import { Slideshow } from '@/components/ui/slideshow';
 import { Container, Heading, Text } from '@chakra-ui/react';
 import { useTranslation } from "react-i18next";
 import { FaDoorClosed, FaEye, FaHouse } from 'react-icons/fa6';
@@ -25,7 +26,7 @@ export function LandingRoute() {
     ];
 
     return (
-        <div>
+        <div className="content">
             <Banner
                 imageUrl="/images/gradient4.jpg"
                 title={t('landing.welcome')}
@@ -53,6 +54,11 @@ export function LandingRoute() {
                 size='sm'
                 overlayColor="rgba(0, 0, 0, 0.3)"
             />
+
+            <Slideshow slides={[
+                { title: t('project_smart_home'), description: t('project_smart_home_description'), src: "/images/slideshow/smart_home.jpeg", alt: t('project_smart_home') },
+                { title: t('project_smart_office'), description: t('project_smart_office_description'), src: "/images/slideshow/office.jpeg", alt: t('project_smart_office') },
+            ]} />
         </div>
     );
 }

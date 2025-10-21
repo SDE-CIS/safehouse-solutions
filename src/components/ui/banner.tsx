@@ -3,11 +3,6 @@ import { Box, Container, Heading, Text } from '@chakra-ui/react';
 import { FeaturesSection } from './features-section';
 import { BannerProps } from '@/types/banner';
 
-interface EnhancedBannerProps extends BannerProps {
-    typing?: boolean;
-    glow?: boolean;
-}
-
 export function Banner({
     imageUrl,
     title,
@@ -17,7 +12,7 @@ export function Banner({
     overlayColor = 'rgba(0, 0, 0, 0)',
     size = 'sm',
     typing = false,
-}: EnhancedBannerProps) {
+}: BannerProps) {
     const height = {
         sm: '50vh',
         md: '75vh',
