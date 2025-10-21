@@ -41,7 +41,7 @@ export function Footer() {
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>Safehouse Solutions</ListHeader>
-                        <Link to={'#'}>
+                        <Link to={'/contact-us'}>
                             <Text transition="0.2s" _hover={{ color: "brand.500" }}>{t('contact')}</Text>
                         </Link>
                     </Stack>
