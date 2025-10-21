@@ -89,13 +89,25 @@ export function Banner({
                         {title}
                     </Heading>
 
-                    <Text
-                        fontSize="2xl"
-                        maxW="620px"
-                        whiteSpace="pre-line"
-                    >
-                        {typedText}
-                    </Text>
+                    <Box position="relative" maxW="620px">
+                        <Text
+                            fontSize="2xl"
+                            whiteSpace="pre-line"
+                            opacity={0}
+                            pointerEvents="none"
+                        >
+                            {description}
+                        </Text>
+                        <Text
+                            position="absolute"
+                            top={0}
+                            left={0}
+                            fontSize="2xl"
+                            whiteSpace="pre-line"
+                        >
+                            {typedText}
+                        </Text>
+                    </Box>
 
                     {extraText && (
                         <Text
