@@ -97,6 +97,10 @@ export function Navigation() {
             borderBottom="1px"
             borderStyle="solid"
             borderColor={useColorModeValue('gray.200', 'gray.900')}
+            zIndex="sticky"
+            position="sticky"
+            top="0"
+            backdropFilter="saturate(180%) blur(8px)"
         >
             <Container maxW="container.xl">
                 <Collapsible.Root>
