@@ -95,7 +95,9 @@
     },
     "contact_us": {
         "title": "Kontakt os",
-        "description": "Vi vil meget gerne høre fra dig! Kontakt os for spørgsmål eller feedback."
+        "description": "Vi vil meget gerne høre fra dig! Kontakt os for spørgsmål eller feedback.",
+        "intro_title": "Har du spørgsmål eller brug for hjælp?",
+        "intro_description": "Vores team står klar til at assistere dig. Uanset om du har spørgsmål om vores produkter, brug for teknisk support eller ønsker at give feedback, er vi her for at hjælpe. Kontakt os via e-mail, telefon eller vores kontaktformular, og vi vil vende tilbage til dig så hurtigt som muligt."
     },
     "newsletter": {
         "join": "Tilmeld dig vores nyhedsbrev",
