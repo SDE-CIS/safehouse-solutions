@@ -51,6 +51,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     bg: "transparent",
                     color: "black",
                     border: "1px solid black",
+                    _dark: {
+                        color: "white",
+                        border: "1px solid white",
+                    },
                     _hover: {
                         bg: "brand.500",
                         color: "white",
