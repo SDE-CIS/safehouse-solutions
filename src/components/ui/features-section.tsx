@@ -1,58 +1,48 @@
-import { Box, Flex, Grid, GridItem, Icon, Text } from '@chakra-ui/react';
+import { Box, Icon, Text, Flex, SimpleGrid } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { useColorModeValue } from "@/components/ui/color-mode.tsx";
+// (keep your useColorModeValue import if you use it)
 
-type Feature = {
-    icon: ReactNode;
-    title: string;
-    text: string;
-};
+type Feature = { icon: ReactNode; title: string; text: string };
+type FeaturesSectionProps = { features: Feature[] };
 
-type FeaturesSectionProps = {
-    features: Feature[];
-};
-
-export function FeaturesSection({ features }: FeaturesSectionProps): JSX.Element {
+export function FeaturesSection({ features }: FeaturesSectionProps) {
     return (
-        <Grid templateColumns="repeat(4, 1fr)" gap="6" display="flex" justifyContent="space-between">
-            {features.map((feature, index) => (
-                <FeatureCard
-                    key={index}
-                    icon={feature.icon}
-                    title={feature.title}
-                    text={feature.text}
-                />
+        <SimpleGrid
+            w="full"
+            columns={{ base: 1, md: 3 }}
+            gap={{ base: 4, md: 6 }}
+        >
+            {features.map((f, i) => (
+                <FeatureCard key={i} icon={f.icon} title={f.title} text={f.text} />
             ))}
-        </Grid>
+        </SimpleGrid>
     );
 }
 
-type FeatureCardProps = {
-    icon: ReactNode;
-    title: string;
-    text: string;
-};
+type FeatureCardProps = { icon: ReactNode; title: string; text: string };
 
-export function FeatureCard({ icon, title, text }: FeatureCardProps): JSX.Element {
+export function FeatureCard({ icon, title, text }: FeatureCardProps) {
     return (
-        <GridItem
+        <Box
+            w="full"
+            h="100%"
+            p={{ base: 4, md: 6 }}
+            borderRadius="xl"
+            boxShadow="md"
+            bg="blackAlpha.500"
             textAlign="center"
-            maxW="300px"
-            minH="300px"
-            transition="all 0.3s ease"
-            _hover={{
-                transform: 'scale(1.05)',
-            }}
+            transition="transform 0.2s ease, box-shadow 0.2s ease"
+            _hover={{ transform: { base: "none", md: "scale(1.03)" }, boxShadow: "lg" }}
         >
-            <Icon boxSize={12} color="white">
+            <Icon boxSize={{ base: 10, md: 12 }} color="white" mb={{ base: 3, md: 4 }}>
                 {icon}
             </Icon>
-            <Text fontSize="xl" fontWeight="bold" mb={2} color="white">
+            <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold" mb={{ base: 1, md: 2 }} color="white">
                 {title}
             </Text>
-            <Text fontSize="md" color="white">
+            <Text fontSize={{ base: "sm", md: "md" }} color="whiteAlpha.900">
                 {text}
             </Text>
-        </GridItem>
+        </Box>
     );
 }
