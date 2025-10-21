@@ -26,7 +26,7 @@ export function LandingRoute() {
     ];
 
     return (
-        <div className="content">
+        <>
             <Banner
                 imageUrl="/images/gradient4.jpg"
                 title={t('landing.welcome')}
@@ -59,6 +59,6 @@ export function LandingRoute() {
                 { title: t('project_smart_home'), description: t('project_smart_home_description'), src: "/images/slideshow/smart_home.jpeg", alt: t('project_smart_home') },
                 { title: t('project_smart_office'), description: t('project_smart_office_description'), src: "/images/slideshow/office.jpeg", alt: t('project_smart_office') },
             ]} />
-        </div>
+        </>
     );
 }

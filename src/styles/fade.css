@@ -1,0 +1,17 @@
+.fade-in-init {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .6s ease, transform .6s ease;
+    will-change: opacity, transform;
+}
+
+.fade-in-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.no-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}

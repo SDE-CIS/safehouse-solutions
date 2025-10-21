@@ -6,7 +6,7 @@ export function PrivacyPolicyRoute(): JSX.Element {
     const { t } = useTranslation();
 
     return (
-        <div className="content">
+        <>
             <Banner
                 imageUrl="/images/privacy-policy.jpg"
                 title={t('privacy_policy.title')}
@@ -37,6 +37,6 @@ export function PrivacyPolicyRoute(): JSX.Element {
                     </Text>
                 </Stack>
             </Container>
-        </div>
+        </>
     );
 }

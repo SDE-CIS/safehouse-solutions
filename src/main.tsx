@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { Provider } from './components/ui/provider.tsx'
 import '@/config/i18n.ts';
+import '@/styles/index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap-utilities.min.css';
 
 createRoot(document.getElementById('root')!).render(
