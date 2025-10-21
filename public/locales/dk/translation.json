@@ -28,7 +28,7 @@
     "go_back": "Tilbage",
     "project_smart_home": "Smart Home Projekt",
     "project_smart_office": "Smart Office Projekt",
-    "project_smart_home_description": "Et omfattende smart home-system, der integrerer sikkerhed, belysning, klima og underholdning for at skabe et intelligent og sammenkoblet hjemmemiljø.",
+    "project_smart_home_description": "Et omfattende smart home-system, der integrerer sikkerhed, belysning, klima og underholdning for at skabe et intelligent og sammenkoblet hjemmemiljø tilpasset brugerens behov.",
     "project_smart_office_description": "En avanceret smart office-løsning, der optimerer arbejdspladsens effektivitet gennem automatisering af belysning, temperaturkontrol, adgangskontrol og mødeplanlægning.",
     "auth": {
         "name": "Navn",
@@ -79,8 +79,8 @@
         "barcode": "Smart adgangskontrol",
         "barcode.description": "Sikre indgange med avanceret RFID-låsesystem, som nemt kan administreres og tilpasses efter familiens behov.",
         "about_title": "Om Safehouse Solutions",
-        "about_description": "Safehouse Solutions blev grundlagt i 2023 med en vision",
-        "about_description2": "om at skabe innovative og brugervenlige smart home-løsninger, der kombinerer avanceret teknologi med enkelhed og pålidelighed. Vores team består af passionerede eksperter inden for IoT, sikkerhed og softwareudvikling, som arbejder dedikeret på at levere produkter og tjenester, der forbedrer hverdagen for vores kunder.",
+        "about_description": "Safehouse Solutions blev grundlagt i 2023 med en vision om at levere innovative og pålidelige smart home-løsninger, der kombinerer avanceret teknologi med brugervenlighed. Vores mission er at skabe sikre, effektive og tilpassede hjemmemiljøer, der forbedrer livskvaliteten for vores kunder.",
+        "about_description2": "Vores team består af passionerede eksperter inden for IoT, sikkerhed og softwareudvikling, der arbejder dedikeret på at levere produkter og tjenester, der gør en forskel i hverdagen.",
         "get_started": "Kom i gang i dag",
         "get_started_description": "Oplev fordelene ved et smart home med Safehouse Solutions. Tilmeld dig nu og få adgang til vores intuitive platform, der gør det nemt at administrere og overvåge dit hjem, uanset hvor du er."
     },

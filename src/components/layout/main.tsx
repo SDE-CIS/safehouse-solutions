@@ -1,7 +1,6 @@
 import { Navigation } from '../navigation';
 import { Footer } from '../footer';
 import { Box, Container } from "@chakra-ui/react";
-import React from "react";
 import ScrollFadeIn from '@/ScrollFadeIn';
 
 type MainLayoutProps = {

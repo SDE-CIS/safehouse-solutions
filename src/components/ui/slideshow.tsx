@@ -30,13 +30,6 @@ export function Slideshow({ slides }: SlideshowProps) {
     const prevSlide = () =>
         setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            nextSlide();
-        }, 10000);
-        return () => clearInterval(interval);
-    }, []);
-
     const slide = slides[current];
 
     return (
@@ -68,6 +61,7 @@ export function Slideshow({ slides }: SlideshowProps) {
                         alt={slide.alt}
                         w="100%"
                         h={["auto", "auto", "400px"]}
+                        minHeight="250px"
                         objectFit="cover"
                         borderRadius="md"
                     />

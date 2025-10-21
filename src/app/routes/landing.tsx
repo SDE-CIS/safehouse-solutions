@@ -37,7 +37,7 @@ export function LandingRoute() {
                 typing={true}
             />
 
-            <Container className="max-w-4xl mx-auto p-5">
+            <Container maxW="container.xl" flex="1" py={10} textAlign="center">
                 <Heading size="4xl" mb={4} textAlign="center">{t('landing.about_title')}</Heading>
                 <Text fontSize="md" mb={4} textAlign="center">
                     {t('landing.about_description')}

@@ -1,4 +1,4 @@
-import { Box, Icon, Text, Flex, SimpleGrid } from "@chakra-ui/react";
+import { Box, Icon, Text, SimpleGrid } from "@chakra-ui/react";
 import { ReactNode } from "react";
 // (keep your useColorModeValue import if you use it)
 
