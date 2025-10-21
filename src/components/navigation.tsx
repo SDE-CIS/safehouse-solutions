@@ -18,7 +18,7 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import { FiMenu } from 'react-icons/fi';
+import { FiLogIn, FiMenu, FiUserPlus } from 'react-icons/fi';
 import { paths } from '@/config/paths';
 import { ColorModeButton, useColorModeValue } from "@/components/ui/color-mode.tsx";
 import logo from '/images/logo.png';
@@ -115,13 +115,6 @@ export function Navigation() {
                         {/* Mobile Menu Button */}
                         <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}
                             alignItems="center">
-                            <Image
-                                src={icon}
-                                alt="Icon"
-                                h={{ base: '25px', lg: '25px' }}
-                                w="auto"
-                                mr={5}
-                            />
                             <Collapsible.Trigger paddingY="3">
                                 <Box><FiMenu /></Box>
                             </Collapsible.Trigger>
@@ -153,16 +146,52 @@ export function Navigation() {
                         {accessToken ? (
                             <ProfileButton />
                         ) : (
-                            <Stack flex={{ base: 1, md: 0 }} justify="flex-end" alignItems="center" direction="row"
-                                gap={6}>
-                                <Button variantStyle="reverse">
-                                    <Link to={paths.auth.login.getHref(location.pathname)}>
-                                        {t('auth.sign_in')}
+                            <Stack
+                                flex={{ base: 1, md: 0 }}
+                                justify="flex-end"
+                                alignItems="center"
+                                direction="row"
+                                gap={{ base: 3, md: 6 }}
+                            >
+                                {/* Sign In */}
+                                <Button
+                                    variantStyle="reverse"
+                                    fontSize={{ base: "sm", md: "md" }}
+                                >
+                                    {/* Icon on mobile, text on desktop */}
+                                    <Link
+                                        to={paths.auth.login.getHref(location.pathname)}
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            gap: "6px",
+                                        }}
+                                    >
+                                        <FiLogIn style={{ display: "inline-block", marginTop: "2px" }} />
+                                        <Text display={{ base: "none", md: "inline" }}>
+                                            {t("auth.sign_in")}
+                                        </Text>
                                     </Link>
                                 </Button>
-                                <Button>
-                                    <Link to={"/auth/register"}>
-                                        {t('auth.sign_up')}
+
+                                {/* Sign Up */}
+                                <Button
+                                    fontSize={{ base: "sm", md: "md" }}
+                                >
+                                    <Link
+                                        to="/auth/register"
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            gap: "6px",
+                                        }}
+                                    >
+                                        <FiUserPlus style={{ display: "inline-block", marginTop: "2px" }} />
+                                        <Text display={{ base: "none", md: "inline" }}>
+                                            {t("auth.sign_up")}
+                                        </Text>
                                     </Link>
                                 </Button>
                             </Stack>
