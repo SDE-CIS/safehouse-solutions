@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {Box, Button, Center, FieldHelperText, Flex, Input, Text} from '@chakra-ui/react';
-import {Field} from '@/components/ui/field';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {useTranslation} from "react-i18next";
-import {Login} from "@/types/api.ts";
-import {useSignInMutation} from "@/services/api.ts";
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { Box, Button, Center, FieldHelperText, Flex, Input, Text } from '@chakra-ui/react';
+import { Field } from '@/components/ui/field';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from "react-i18next";
+import { Login } from "@/types/api.ts";
+import { useSignInMutation } from "@/services/api.ts";
+import { Link } from "react-router-dom";
 
 export function LoginForm() {
-    const {handleSubmit, register, formState: {errors}} = useForm<Login>();
+    const { handleSubmit, register, formState: { errors } } = useForm<Login>();
     const [signIn] = useSignInMutation();
     const [authError, setAuthError] = useState<string | null>(null);
     const [show, setShow] = React.useState(false);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const handleShowHidePass = () => setShow(!show);
 
@@ -39,7 +39,7 @@ export function LoginForm() {
                 borderRadius="md"
                 boxShadow="lg"
                 bg="white"
-                _dark={{bg: 'gray.800'}}
+                _dark={{ bg: 'gray.800' }}
                 width="100%"
                 maxW="400px"
             >
@@ -51,20 +51,20 @@ export function LoginForm() {
                     <Input
                         placeholder={t('auth.enter_username')}
                         borderColor="gray.200"
-                        _dark={{borderColor: 'gray.700'}}
-                        {...register('Username', {required: 'Username is required'})}
+                        _dark={{ borderColor: 'gray.700' }}
+                        {...register('Username', { required: 'Username is required' })}
                     />
                 </Field>
 
                 <Field label="auth.password" mt={5} invalid={Boolean(errors.Password)}
-                       errorText={errors.Password?.message}>
+                    errorText={errors.Password?.message}>
                     <Box position="relative" width="100%">
                         <Input
                             type={show ? 'text' : 'password'}
                             placeholder={t('auth.enter_password')}
                             borderColor="gray.200"
-                            _dark={{borderColor: 'gray.700'}}
-                            {...register('Password', {required: 'Password is required'})}
+                            _dark={{ borderColor: 'gray.700' }}
+                            {...register('Password', { required: 'Password is required' })}
                         />
                         <Button
                             position="absolute"
@@ -82,7 +82,7 @@ export function LoginForm() {
 
                 {/* Submit Button */}
                 <Box textAlign="center" mt="6">
-                    <Button type="submit" bg="brand.600" _hover={{bg: 'brand.400'}} width="100%" color="white">
+                    <Button type="submit" bg="brand.600" _hover={{ bg: 'brand.400' }} width="100%" color="white">
                         {t('auth.login')}
                     </Button>
                 </Box>

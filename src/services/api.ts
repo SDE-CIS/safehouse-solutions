@@ -1,10 +1,10 @@
-import {BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError} from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
 import { RootState } from '../app/store';
 import { loggedIn, loggedOut, tokenReceived } from '@/services/login';
-import {AuthResponse, Login, Product, Employee, User, Role, Keycard, KeycardTier, Package, ExtendedFetchBaseQueryError} from "@/types/api.ts";
+import { AuthResponse, Login, Product, Employee, User, Role, Keycard, KeycardTier, Package, ExtendedFetchBaseQueryError } from "@/types/api.ts";
 
-const baseUrl = 'http://10.130.56.55:4001'
+const baseUrl = 'http://localhost:4000'
 
 const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
@@ -270,7 +270,7 @@ export const api = createApi({
             }),
         }),
         packages: builder.query<Package[], void>({
-           query: () => 'packages',
+            query: () => 'packages',
         }),
     }),
 });

@@ -30,6 +30,8 @@
     "project_smart_office": "Smart Office Projekt",
     "project_smart_home_description": "Et omfattende smart home-system, der integrerer sikkerhed, belysning, klima og underholdning for at skabe et intelligent og sammenkoblet hjemmemiljø tilpasset brugerens behov.",
     "project_smart_office_description": "En avanceret smart office-løsning, der optimerer arbejdspladsens effektivitet gennem automatisering af belysning, temperaturkontrol, adgangskontrol og mødeplanlægning.",
+    "camera_feed": "Kamerafeed",
+    "live": "Live",
     "auth": {
         "name": "Navn",
         "email": "E-mail",

@@ -1,18 +1,14 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
-interface CameraRouteProps {
-    title: string;
-}
-
-export function CameraRoute(props: CameraRouteProps) {
+export function CameraRoute() {
     const streamUrl = "http://192.168.1.131:8080?action=stream";
     const { t } = useTranslation();
 
     return (
-        <Box>
+        <>
             <Button mt={2} mb={4} onClick={() => window.history.back()}>{t("go_back")}</Button>
-            <Heading size="lg">{props.title}</Heading>
+            <Heading size="lg">{t("camera_feed")}</Heading>
 
             <Box
                 borderRadius="md"
@@ -20,7 +16,7 @@ export function CameraRoute(props: CameraRouteProps) {
             >
                 <img
                     src={streamUrl}
-                    alt={`${props.title} feed`}
+                    alt={`${t("camera_feed")} ${t("live")}`}
                     style={{
                         borderRadius: "8px",
                         width: "100%",
@@ -29,6 +25,6 @@ export function CameraRoute(props: CameraRouteProps) {
                     }}
                 />
             </Box>
-        </Box>
+        </>
     );
 }

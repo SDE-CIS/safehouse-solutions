@@ -22,7 +22,6 @@ import { FiLogIn, FiMenu, FiUserPlus } from 'react-icons/fi';
 import { paths } from '@/config/paths';
 import { ColorModeButton, useColorModeValue } from "@/components/ui/color-mode.tsx";
 import logo from '/images/logo.png';
-import icon from '/images/icon.png';
 import { LanguageModeButton } from './ui/language-mode';
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@/hooks";
