@@ -5,6 +5,7 @@ import { MainLayout } from '@/components/layout/main';
 import { Error } from '@/components/ui/error';
 import { DashboardRoot, DashboardRootErrorBoundary } from "@/app/routes/dashboard/root.tsx";
 import { useTranslation } from "react-i18next";
+import RequireAuth from '@/RequireAuth';
 
 const AppRoot = () => (
     <MainLayout>
@@ -67,7 +68,7 @@ export const createAppRouter = () =>
         },
         {
             path: paths.dashboard.root.path,
-            element: <DashboardRoot />,
+            element: <RequireAuth><DashboardRoot /></RequireAuth>,
             ErrorBoundary: DashboardRootErrorBoundary,
             children: [
                 {
