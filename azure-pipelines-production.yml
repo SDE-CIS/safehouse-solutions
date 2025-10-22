@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: SDE
+  name: Production
 
 variables:
   build.ArtifactStagingDirectory: '$(Pipeline.Workspace)/artifacts'
