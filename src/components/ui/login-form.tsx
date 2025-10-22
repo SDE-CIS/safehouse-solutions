@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Button, Center, FieldHelperText, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Input, Text } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
 import { Login } from "@/types/api.ts";
 import { useSignInMutation } from "@/services/api.ts";
 import { Link } from "react-router-dom";
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function LoginForm() {
     const { handleSubmit, register, formState: { errors } } = useForm<Login>();
@@ -17,16 +18,16 @@ export function LoginForm() {
     const handleShowHidePass = () => setShow(!show);
 
     const onSubmit: SubmitHandler<Login> = async (data) => {
-        try {
-            signIn(data);
-            setAuthError(null);
-        } catch (error: any) {
-            if (error.status === 401) {
-                setAuthError('Unauthorized: Incorrect username or password.');
-            } else {
-                setAuthError('An unexpected error occurred. Please try again.');
+        setAuthError(null);
+
+        const res = await signIn(data);
+        if (res.error) {
+            const status = (res.error as FetchBaseQueryError).status;
+            if (status === 401) {
+                setAuthError(t('auth.invalid_credentials'));
             }
-            console.error(error);
+
+            return;
         }
     };
 
@@ -89,9 +90,9 @@ export function LoginForm() {
 
                 {/* Auth Error */}
                 {authError && (
-                    <FieldHelperText color="red.500" textAlign="center">
+                    <Text color="red.500" textAlign="center">
                         {authError}
-                    </FieldHelperText>
+                    </Text>
                 )}
 
                 {/* Secondary Action */}

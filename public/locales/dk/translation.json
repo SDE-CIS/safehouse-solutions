@@ -52,7 +52,11 @@
         "error2": "Stop med at forsøge at logge ind.",
         "register": "Registrer",
         "show": "Vis",
-        "hide": "Skjul"
+        "hide": "Skjul",
+        "username_required": "Brugernavn er påkrævet",
+        "password_required": "Adgangskode er påkrævet",
+        "invalid_credentials": "Forkert brugernavn eller adgangskode.",
+        "unexpected_error": "En uventet fejl opstod. Prøv igen."
     },
     "navigation": {
         "home": "Hjem",
