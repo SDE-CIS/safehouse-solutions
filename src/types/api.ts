@@ -1,9 +1,4 @@
 import { z } from "zod";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
-
-export type ExtendedFetchBaseQueryError = FetchBaseQueryError & {
-    originalStatus?: number;
-};
 
 export interface AuthResponse {
     message: string;

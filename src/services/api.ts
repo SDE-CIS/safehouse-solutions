@@ -2,7 +2,7 @@ import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError 
 import { Mutex } from 'async-mutex';
 import { RootState } from '../app/store';
 import { loggedIn, loggedOut, tokenReceived } from '@/services/login';
-import { AuthResponse, Login, Product, Employee, User, Role, Keycard, KeycardTier, Package, ExtendedFetchBaseQueryError } from "@/types/api.ts";
+import { AuthResponse, Login, Product, Employee, User, Role, Keycard, KeycardTier, Package } from "@/types/api.ts";
 
 const baseUrl = 'http://localhost:4000'
 
@@ -26,9 +26,9 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, extraOptions);
-    const error = result.error as ExtendedFetchBaseQueryError | undefined;
+    const error = result.error as FetchBaseQueryError | undefined;
 
-    if (error?.originalStatus === 401 || error?.status === 401) {
+    if (error?.status === 401) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {
