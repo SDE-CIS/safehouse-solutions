@@ -3,7 +3,7 @@
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 // import { useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery } from "@/services/api";
 // import { Keycard } from "@/types/api/AuthResponse";
 // import { Button } from "@/components/ui/button.tsx";
