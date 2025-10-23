@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     createListCollection,
@@ -11,17 +11,17 @@ import {
     Spinner,
     VStack
 } from "@chakra-ui/react";
-import {useParams} from "react-router-dom";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {useEditUserMutation, useRolesQuery, useUserQuery} from "@/services/api";
-import {User} from "@/types/api";
-import {Button} from "@/components/ui/button.tsx";
-import {Field} from "@/components/ui/field.tsx";
+import { useParams } from "react-router-dom";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useEditUserMutation, useRolesQuery, useUserQuery } from "@/services/api";
+import { User } from "@/types/api/AuthResponse";
+import { Button } from "@/components/ui/button.tsx";
+import { Field } from "@/components/ui/field.tsx";
 
 export function UserRoute() {
-    const {userId} = useParams<{ userId: string }>();
-    const {data: userData, error, isLoading} = useUserQuery(Number(userId));
-    const {data: roleData} = useRolesQuery();
+    const { userId } = useParams<{ userId: string }>();
+    const { data: userData, error, isLoading } = useUserQuery(Number(userId));
+    const { data: roleData } = useRolesQuery();
     const [editUser] = useEditUserMutation();
 
     const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
@@ -31,7 +31,7 @@ export function UserRoute() {
         handleSubmit,
         reset,
         control,
-        formState: {errors},
+        formState: { errors },
     } = useForm<User>({
         defaultValues: {
             Id: 0,
@@ -49,12 +49,12 @@ export function UserRoute() {
     }, [userData, reset]);
 
     const roles = createListCollection({
-        items: roleData?.map((role) => ({label: role.Name, value: role.Name})) || [],
+        items: roleData?.map((role) => ({ label: role.Name, value: role.Name })) || [],
     });
 
     const onSubmit: SubmitHandler<User> = async (data) => {
         try {
-            await editUser({...data, Roles: selectedRoles}).unwrap();
+            await editUser({ ...data, Roles: selectedRoles }).unwrap();
             alert("User updated successfully!");
         } catch (err) {
             console.error("Error updating user:", err);
@@ -65,7 +65,7 @@ export function UserRoute() {
     if (isLoading) {
         return (
             <Box textAlign="center" mt={10}>
-                <Spinner size="xl"/>
+                <Spinner size="xl" />
             </Box>
         );
     }
@@ -91,17 +91,17 @@ export function UserRoute() {
                         <Input
                             placeholder="Enter username"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("Username", {required: "Username is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("Username", { required: "Username is required" })}
                         />
                     </Field>
 
                     <Field label="profile_picture" invalid={Boolean(errors.ProfilePicture)}
-                           errorText={errors.ProfilePicture?.message}>
+                        errorText={errors.ProfilePicture?.message}>
                         <Input
                             placeholder="Enter profile picture URL"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
+                            _dark={{ borderColor: "gray.700" }}
                             {...register("ProfilePicture", {
                                 required: "Profile picture URL is required",
                             })}
@@ -111,7 +111,7 @@ export function UserRoute() {
                     <Controller
                         name="Roles"
                         control={control}
-                        render={({field: {value, onChange}}) => (
+                        render={({ field: { value, onChange } }) => (
                             <SelectRoot
                                 collection={roles}
                                 size="sm"

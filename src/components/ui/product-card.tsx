@@ -1,6 +1,6 @@
 import { Box, Text, Image } from '@chakra-ui/react';
-import {useTranslation} from "react-i18next";
-import {Product} from "@/types/api.ts";
+import { useTranslation } from "react-i18next";
+import { Product } from "@/types/api/AuthResponse";
 
 interface ProductCardProps {
     product: Product;

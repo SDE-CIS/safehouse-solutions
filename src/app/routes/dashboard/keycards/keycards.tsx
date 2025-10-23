@@ -1,13 +1,13 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {Box, Flex, Heading, Input, Spinner, Stack, Table, VStack} from "@chakra-ui/react";
-import {useTranslation} from "react-i18next";
-import {useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery} from "@/services/api";
-import {Keycard} from "@/types/api";
-import {Button} from "@/components/ui/button.tsx";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, Flex, Heading, Input, Spinner, Stack, Table, VStack } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
+import { useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery } from "@/services/api";
+import { Keycard } from "@/types/api/AuthResponse";
+import { Button } from "@/components/ui/button.tsx";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
     DialogBody,
     DialogContent,
@@ -17,13 +17,13 @@ import {
     DialogTitle,
     DialogTrigger
 } from "@/components/ui/dialog.tsx";
-import {Field} from "@/components/ui/field.tsx";
-import {Checkbox} from "@/components/ui/checkbox.tsx";
+import { Field } from "@/components/ui/field.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export function KeycardsRoute() {
-    const {t} = useTranslation();
-    const {data: keycards, isLoading: isKeycardsLoading} = useKeycardsQuery();
-    const {data: employees, isLoading: isEmployeesLoading} = useEmployeesQuery();
+    const { t } = useTranslation();
+    const { data: keycards, isLoading: isKeycardsLoading } = useKeycardsQuery();
+    const { data: employees, isLoading: isEmployeesLoading } = useEmployeesQuery();
     const [addKeycard] = useAddKeycardMutation();
     const [groupedKeycards, setGroupedKeycards] = useState<Record<string, Keycard[]>>({});
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ export function KeycardsRoute() {
         register,
         reset,
         watch,
-        formState: {errors},
+        formState: { errors },
     } = useForm<Keycard>({
         defaultValues: {
             KeycardId: undefined,
@@ -101,7 +101,7 @@ export function KeycardsRoute() {
             </Flex>
 
             {isKeycardsLoading ? (
-                <Spinner size="lg"/>
+                <Spinner size="lg" />
             ) : (
                 <Stack gap="10">
                     {Object.entries(groupedKeycards).sort().map(([accessLevel, keycards]) => (
@@ -124,7 +124,7 @@ export function KeycardsRoute() {
                                         <Table.Row
                                             key={keycard.KeycardId}
                                             onClick={() => navigate(`/dashboard/keycards/${keycard.KeycardId}`)}
-                                            style={{cursor: "pointer"}}
+                                            style={{ cursor: "pointer" }}
                                         >
                                             <Table.Cell>{keycard.RfidTag}</Table.Cell>
                                             <Table.Cell>{keycard.EmployeeId}</Table.Cell>
@@ -143,7 +143,7 @@ export function KeycardsRoute() {
             )}
 
             <DialogRoot open={dialogOpen}>
-                <DialogTrigger/>
+                <DialogTrigger />
                 <DialogContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <DialogHeader>
@@ -155,14 +155,14 @@ export function KeycardsRoute() {
                                     <Input
                                         placeholder={t('keycards.rfid_required')}
                                         borderColor="gray.200"
-                                        _dark={{borderColor: 'gray.700'}}
-                                        {...register('RfidTag', {required: 'RFID is required'})}
+                                        _dark={{ borderColor: 'gray.700' }}
+                                        {...register('RfidTag', { required: 'RFID is required' })}
                                     />
                                 </Field>
 
                                 <Field label="employee" invalid={Boolean(errors.EmployeeId)} errorText={errors.EmployeeId?.message}>
                                     <select
-                                        {...register('EmployeeId', {required: 'Employee is required'})}
+                                        {...register('EmployeeId', { required: 'Employee is required' })}
                                         style={{
                                             width: "100%",
                                             padding: "8px",
@@ -187,7 +187,7 @@ export function KeycardsRoute() {
                                     <Input
                                         type="date"
                                         borderColor="gray.200"
-                                        _dark={{borderColor: 'gray.700'}}
+                                        _dark={{ borderColor: 'gray.700' }}
                                         {...register('IssueDate')}
                                     />
                                 </Field>
@@ -196,7 +196,7 @@ export function KeycardsRoute() {
                                     <Input
                                         type="date"
                                         borderColor="gray.200"
-                                        _dark={{borderColor: 'gray.700'}}
+                                        _dark={{ borderColor: 'gray.700' }}
                                         {...register('ExpireDate')}
                                     />
                                 </Field>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     createListCollection,
@@ -11,12 +11,12 @@ import {
     Spinner,
     VStack,
 } from "@chakra-ui/react";
-import {useParams} from "react-router-dom";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
-import {useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery} from "@/services/api";
-import {Keycard} from "@/types/api";
-import {Button} from "@/components/ui/button.tsx";
-import {Field} from "@/components/ui/field.tsx";
+import { useParams } from "react-router-dom";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery } from "@/services/api";
+import { Keycard } from "@/types/api/AuthResponse";
+import { Button } from "@/components/ui/button.tsx";
+import { Field } from "@/components/ui/field.tsx";
 
 // Utility function to format date as YYYY-MM-DD
 const formatDate = (date: Date): string => {
@@ -24,9 +24,9 @@ const formatDate = (date: Date): string => {
 };
 
 export function KeycardRoute() {
-    const {keycardId} = useParams<{ keycardId: string }>();
-    const {data: keycardData, error, isLoading} = useKeycardQuery(Number(keycardId));
-    const {data: accessLevelData} = useGetKeycardTiersQuery();
+    const { keycardId } = useParams<{ keycardId: string }>();
+    const { data: keycardData, error, isLoading } = useKeycardQuery(Number(keycardId));
+    const { data: accessLevelData } = useGetKeycardTiersQuery();
     const [editKeycard] = useEditKeycardMutation();
     const [selectedAccessLevel, setSelectedAccessLevel] = useState<string[]>([]);
 
@@ -35,7 +35,7 @@ export function KeycardRoute() {
         handleSubmit,
         reset,
         control,
-        formState: {errors},
+        formState: { errors },
     } = useForm<Keycard>({
         defaultValues: {
             RfidTag: "",
@@ -58,12 +58,12 @@ export function KeycardRoute() {
     }, [keycardData, reset]);
 
     const accessLevels = createListCollection({
-        items: accessLevelData?.map((level) => ({label: level.Name, value: level.Name})) || [],
+        items: accessLevelData?.map((level) => ({ label: level.Name, value: level.Name })) || [],
     });
 
     const onSubmit: SubmitHandler<Keycard> = async (data) => {
         try {
-            await editKeycard({...data, AccessLevels: selectedAccessLevel}).unwrap();
+            await editKeycard({ ...data, AccessLevels: selectedAccessLevel }).unwrap();
             alert("Keycard updated successfully!");
         } catch (err) {
             console.error("Error updating keycard:", err);
@@ -74,7 +74,7 @@ export function KeycardRoute() {
     if (isLoading) {
         return (
             <Box textAlign="center" mt={10}>
-                <Spinner size="xl"/>
+                <Spinner size="xl" />
             </Box>
         );
     }
@@ -100,8 +100,8 @@ export function KeycardRoute() {
                         <Input
                             placeholder="Enter RFID Tag"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("RfidTag", {required: "RFID Tag is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("RfidTag", { required: "RFID Tag is required" })}
                         />
                     </Field>
 
@@ -114,8 +114,8 @@ export function KeycardRoute() {
                             placeholder="Enter Employee ID"
                             type="number"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("EmployeeId", {required: "Employee ID is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("EmployeeId", { required: "Employee ID is required" })}
                         />
                     </Field>
 
@@ -127,8 +127,8 @@ export function KeycardRoute() {
                         <Input
                             type="date"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("IssueDate", {required: "Issue Date is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("IssueDate", { required: "Issue Date is required" })}
                         />
                     </Field>
 
@@ -140,15 +140,15 @@ export function KeycardRoute() {
                         <Input
                             type="date"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("ExpireDate", {required: "Expire Date is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("ExpireDate", { required: "Expire Date is required" })}
                         />
                     </Field>
 
                     <Controller
                         name="AccessLevels"
                         control={control}
-                        render={({field: {value, onChange}}) => (
+                        render={({ field: { value, onChange } }) => (
                             <Field label="Access Levels">
                                 <SelectRoot
                                     collection={accessLevels}
@@ -187,8 +187,8 @@ export function KeycardRoute() {
                             type="number"
                             placeholder="Enter Status Type ID"
                             borderColor="gray.200"
-                            _dark={{borderColor: "gray.700"}}
-                            {...register("StatusTypesId", {required: "Status Type is required"})}
+                            _dark={{ borderColor: "gray.700" }}
+                            {...register("StatusTypesId", { required: "Status Type is required" })}
                         />
                     </Field>
 

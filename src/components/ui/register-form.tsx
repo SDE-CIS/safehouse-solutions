@@ -3,7 +3,7 @@ import { Box, Button, Center, FieldHelperText, Flex, Input, Text } from '@chakra
 import { Field } from '@/components/ui/field';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
-import { Register } from "@/types/api.ts";
+import { Register } from "@/types/api/AuthResponse";
 import { Link } from "react-router-dom";
 
 export function RegisterForm() {

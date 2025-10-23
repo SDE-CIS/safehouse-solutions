@@ -154,18 +154,6 @@
         "thank_you": "Tak for din tilmelding!"
     },
     "dashboard": {
-        "title": "Dashboard",
-        "employees": {
-            "title": "Medarbejderoversigt",
-            "total": "Samlede medarbejdere"
-        },
-        "products": {
-            "title": "Produkter der håndteres nu",
-            "no_products": "Der håndteres ingen produkter i øjeblikket"
-        },
-        "error": {
-            "employees": "Kunne ikke indlæse medarbejdere. Prøv igen.",
-            "products": "Kunne ikke indlæse produkter. Prøv igen."
-        }
+        "title": "Dashboard"
     }
 }
