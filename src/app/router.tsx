@@ -63,16 +63,7 @@ export const createAppRouter = () =>
                 newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/todo')),
             ]
         },
-        {
-            path: '*',
-            lazy: async () => {
-                const { NotFoundRoute } = await import('./routes/not-found');
-                return {
-                    Component: NotFoundRoute,
-                };
-            },
-            ErrorBoundary: DashboardRootErrorBoundary,
-        },
+        newRoute('*', 'NotFoundRoute', () => import('./routes/not-found')),
     ]);
 
 export const AppRouter = () => {
