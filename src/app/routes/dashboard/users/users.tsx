@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, Heading, Spinner, Stack, Table } from "@chakra-ui/react";
+// import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+import { Box, Heading } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 // import { useUsersQuery } from "@/services/api";
 // import { User } from "@/types/api/AuthResponse";
-import { Avatar } from "@/components/ui/avatar.tsx";
+// import { Avatar } from "@/components/ui/avatar.tsx";
 
 export function UsersRoute() {
     const { t } = useTranslation();

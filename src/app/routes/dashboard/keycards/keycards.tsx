@@ -2,7 +2,7 @@
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
-import { Box, Flex, Heading, Input, Spinner, Stack, Table, VStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 // import { useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery } from "@/services/api";
 // import { Keycard } from "@/types/api/AuthResponse";
@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 // import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export function KeycardsRoute() {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
     // const { data: keycards, isLoading: isKeycardsLoading } = useKeycardsQuery();
     // const { data: employees, isLoading: isEmployeesLoading } = useEmployeesQuery();
     // const [addKeycard] = useAddKeycardMutation();

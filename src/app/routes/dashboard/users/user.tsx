@@ -1,30 +1,23 @@
 import { useEffect, useState } from "react";
 import {
     Box,
-    createListCollection,
     Heading,
-    Input,
-    SelectContent,
-    SelectItem,
-    SelectRoot,
-    SelectTrigger,
-    Spinner,
-    VStack
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+// import { Controller, SubmitHandler, useForm } from "react-hook-form";
 // import { useEditUserMutation, useRolesQuery, useUserQuery } from "@/services/api";
 // import { User } from "@/types/api/AuthResponse";
-import { Button } from "@/components/ui/button.tsx";
-import { Field } from "@/components/ui/field.tsx";
+// import { Button } from "@/components/ui/button.tsx";
+// import { Field } from "@/components/ui/field.tsx";
 
 export function UserRoute() {
-    const { userId } = useParams<{ userId: string }>();
+    // const { userId } = useParams<{ userId: string }>();
+
     // const { data: userData, error, isLoading } = useUserQuery(Number(userId));
     // const { data: roleData } = useRolesQuery();
     // const [editUser] = useEditUserMutation();
 
-    const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+    // const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
     // const {
     //     register,

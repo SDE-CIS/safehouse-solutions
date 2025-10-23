@@ -1,34 +1,25 @@
-import { useEffect, useState } from "react";
 import {
     Box,
-    createListCollection,
     Heading,
-    Input,
-    SelectContent,
-    SelectItem,
-    SelectRoot,
-    SelectTrigger,
-    Spinner,
-    VStack,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-// import { useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery } from "@/services/api";
-// import { Keycard } from "@/types/api/AuthResponse";
-import { Button } from "@/components/ui/button.tsx";
-import { Field } from "@/components/ui/field.tsx";
+// import { useParams } from "react-router-dom";
+// import { Controller, SubmitHandler, useForm } from "react-hook-form";
+// // import { useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery } from "@/services/api";
+// // import { Keycard } from "@/types/api/AuthResponse";
+// import { Button } from "@/components/ui/button.tsx";
+// import { Field } from "@/components/ui/field.tsx";
 
-// Utility function to format date as YYYY-MM-DD
-const formatDate = (date: Date): string => {
-    return date.toISOString().split("T")[0];
-};
+// // Utility function to format date as YYYY-MM-DD
+// const formatDate = (date: Date): string => {
+//     return date.toISOString().split("T")[0];
+// };
 
 export function KeycardRoute() {
-    const { keycardId } = useParams<{ keycardId: string }>();
+    // const { keycardId } = useParams<{ keycardId: string }>();
     // const { data: keycardData, error, isLoading } = useKeycardQuery(Number(keycardId));
     // const { data: accessLevelData } = useGetKeycardTiersQuery();
     // const [editKeycard] = useEditKeycardMutation();
-    const [selectedAccessLevel, setSelectedAccessLevel] = useState<string[]>([]);
+    // const [selectedAccessLevel, setSelectedAccessLevel] = useState<string[]>([]);
 
     // const {
     //     register,
