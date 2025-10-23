@@ -3,10 +3,10 @@ import { Box, Button, Center, Flex, Input, Text } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
-import { Login } from "@/types/api/AuthResponse";
 import { useSignInMutation } from "@/services/api.ts";
 import { Link } from "react-router-dom";
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { Login } from '@/types/api/Login';
 
 export function LoginForm() {
     const { handleSubmit, register, formState: { errors } } = useForm<Login>();

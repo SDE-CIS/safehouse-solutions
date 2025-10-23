@@ -1,96 +1,96 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import { Box, Flex, Heading, Input, Spinner, Stack, Table, VStack } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery } from "@/services/api";
-import { Keycard } from "@/types/api/AuthResponse";
-import { Button } from "@/components/ui/button.tsx";
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-    DialogBody,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogRoot,
-    DialogTitle,
-    DialogTrigger
-} from "@/components/ui/dialog.tsx";
-import { Field } from "@/components/ui/field.tsx";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
+// import { useAddKeycardMutation, useKeycardsQuery, useEmployeesQuery } from "@/services/api";
+// import { Keycard } from "@/types/api/AuthResponse";
+// import { Button } from "@/components/ui/button.tsx";
+// import { SubmitHandler, useForm } from "react-hook-form";
+// import {
+//     DialogBody,
+//     DialogContent,
+//     DialogFooter,
+//     DialogHeader,
+//     DialogRoot,
+//     DialogTitle,
+//     DialogTrigger
+// } from "@/components/ui/dialog.tsx";
+// import { Field } from "@/components/ui/field.tsx";
+// import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export function KeycardsRoute() {
     const { t } = useTranslation();
-    const { data: keycards, isLoading: isKeycardsLoading } = useKeycardsQuery();
-    const { data: employees, isLoading: isEmployeesLoading } = useEmployeesQuery();
-    const [addKeycard] = useAddKeycardMutation();
-    const [groupedKeycards, setGroupedKeycards] = useState<Record<string, Keycard[]>>({});
-    const navigate = useNavigate();
-    const [dialogOpen, setDialogOpen] = useState(false);
+    // const { data: keycards, isLoading: isKeycardsLoading } = useKeycardsQuery();
+    // const { data: employees, isLoading: isEmployeesLoading } = useEmployeesQuery();
+    // const [addKeycard] = useAddKeycardMutation();
+    // const [groupedKeycards, setGroupedKeycards] = useState<Record<string, Keycard[]>>({});
+    // const navigate = useNavigate();
+    // const [dialogOpen, setDialogOpen] = useState(false);
 
-    const {
-        handleSubmit,
-        register,
-        reset,
-        watch,
-        formState: { errors },
-    } = useForm<Keycard>({
-        defaultValues: {
-            KeycardId: undefined,
-            RfidTag: "",
-            EmployeeId: 0,
-            IssueDate: "",
-            ExpireDate: "",
-            StatusTypesId: 1,
-            AccessLevels: [],
-        },
-    });
+    // const {
+    //     handleSubmit,
+    //     register,
+    //     reset,
+    //     watch,
+    //     formState: { errors },
+    // } = useForm<Keycard>({
+    //     defaultValues: {
+    //         KeycardId: undefined,
+    //         RfidTag: "",
+    //         EmployeeId: 0,
+    //         IssueDate: "",
+    //         ExpireDate: "",
+    //         StatusTypesId: 1,
+    //         AccessLevels: [],
+    //     },
+    // });
 
-    const openDialog = () => {
-        reset({
-            KeycardId: undefined,
-            RfidTag: "",
-            EmployeeId: 0,
-            IssueDate: "",
-            ExpireDate: "",
-            StatusTypesId: 1,
-            AccessLevels: [],
-        });
-        setDialogOpen(true);
-    };
+    // const openDialog = () => {
+    //     reset({
+    //         KeycardId: undefined,
+    //         RfidTag: "",
+    //         EmployeeId: 0,
+    //         IssueDate: "",
+    //         ExpireDate: "",
+    //         StatusTypesId: 1,
+    //         AccessLevels: [],
+    //     });
+    //     setDialogOpen(true);
+    // };
 
-    const closeDialog = () => {
-        setDialogOpen(false);
-    };
+    // const closeDialog = () => {
+    //     setDialogOpen(false);
+    // };
 
-    const onSubmit: SubmitHandler<Keycard> = async (data) => {
-        try {
-            await addKeycard(data).unwrap();
-        } catch (error) {
-            console.error(t("keycards.error"), error);
-        }
-        closeDialog();
-    };
+    // const onSubmit: SubmitHandler<Keycard> = async (data) => {
+    //     try {
+    //         await addKeycard(data).unwrap();
+    //     } catch (error) {
+    //         console.error(t("keycards.error"), error);
+    //     }
+    //     closeDialog();
+    // };
 
-    useEffect(() => {
-        if (keycards) {
-            const grouped = keycards.reduce((acc, keycard) => {
-                keycard.AccessLevels.forEach((level) => {
-                    if (!acc[level]) {
-                        acc[level] = [];
-                    }
-                    acc[level].push(keycard);
-                });
-                return acc;
-            }, {} as Record<string, Keycard[]>);
-            setGroupedKeycards(grouped);
-        }
-    }, [keycards]);
+    // useEffect(() => {
+    //     if (keycards) {
+    //         const grouped = keycards.reduce((acc, keycard) => {
+    //             keycard.AccessLevels.forEach((level) => {
+    //                 if (!acc[level]) {
+    //                     acc[level] = [];
+    //                 }
+    //                 acc[level].push(keycard);
+    //             });
+    //             return acc;
+    //         }, {} as Record<string, Keycard[]>);
+    //         setGroupedKeycards(grouped);
+    //     }
+    // }, [keycards]);
 
     return (
         <Box p={8}>
-            <Heading mb={8} fontSize="2xl">
+            {/* <Heading mb={8} fontSize="2xl">
                 {t("keycards.title")}
             </Heading>
 
@@ -219,7 +219,7 @@ export function KeycardsRoute() {
                         </DialogFooter>
                     </form>
                 </DialogContent>
-            </DialogRoot>
+            </DialogRoot> */}
         </Box>
     );
 }

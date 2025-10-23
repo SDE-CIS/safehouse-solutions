@@ -3,8 +3,8 @@ import { Box, Button, Center, FieldHelperText, Flex, Input, Text } from '@chakra
 import { Field } from '@/components/ui/field';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
-import { Register } from "@/types/api/AuthResponse";
 import { Link } from "react-router-dom";
+import { Register } from '@/types/api/Register';
 
 export function RegisterForm() {
     const { handleSubmit, register, formState: { errors }, watch } = useForm<Register>();
@@ -45,13 +45,23 @@ export function RegisterForm() {
                     {t('auth.register')}
                 </Text>
 
-                {/* Name Field */}
-                <Field label={t('auth.name')} invalid={Boolean(errors.Name)} errorText={errors.Name?.message}>
+                {/* First Name Field */}
+                <Field label={t('auth.first_name')} invalid={Boolean(errors.FirstName)} errorText={errors.FirstName?.message}>
                     <Input
-                        placeholder={t('auth.enter_name')}
+                        placeholder={t('auth.enter_first_name')}
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
-                        {...register('Name', { required: 'Name is required' })}
+                        {...register('FirstName', { required: 'First Name is required' })}
+                    />
+                </Field>
+
+                {/* Last Name Field */}
+                <Field label={t('auth.last_name')} mt={5} invalid={Boolean(errors.LastName)} errorText={errors.LastName?.message}>
+                    <Input
+                        placeholder={t('auth.enter_last_name')}
+                        borderColor="gray.200"
+                        _dark={{ borderColor: 'gray.700' }}
+                        {...register('LastName', { required: 'Last Name is required' })}
                     />
                 </Field>
 

@@ -4,48 +4,48 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Heading, Spinner, Stack, Table } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useUsersQuery } from "@/services/api";
-import { User } from "@/types/api/AuthResponse";
+// import { useUsersQuery } from "@/services/api";
+// import { User } from "@/types/api/AuthResponse";
 import { Avatar } from "@/components/ui/avatar.tsx";
 
 export function UsersRoute() {
     const { t } = useTranslation();
-    const { data: users, isLoading } = useUsersQuery();
-    const [groupedUsers, setGroupedUsers] = useState<Record<string, User[]>>({});
-    const navigate = useNavigate();
+    // const { data: users, isLoading } = useUsersQuery();
+    // const [groupedUsers, setGroupedUsers] = useState<Record<string, User[]>>({});
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log(users)
+    // useEffect(() => {
+    //     console.log(users)
 
-        if (users) {
-            // Group users by roles
-            const savedUsers: string[] = [];
-            const grouped = users.reduce((acc, user) => {
-                if (savedUsers.includes(user.Username)) {
-                    return acc;
-                }
+    //     if (users) {
+    //         // Group users by roles
+    //         const savedUsers: string[] = [];
+    //         const grouped = users.reduce((acc, user) => {
+    //             if (savedUsers.includes(user.Username)) {
+    //                 return acc;
+    //             }
 
-                savedUsers.push(user.Username);
+    //             savedUsers.push(user.Username);
 
-                if (user.Roles.length > 0) {
-                    user.Roles.forEach((role) => {
-                        if (!acc[role]) {
-                            acc[role] = [];
-                        }
-                        acc[role].push(user);
-                    });
-                } else {
-                    if (!acc["_"]) {
-                        acc["_"] = [];
-                    }
-                    acc["_"].push(user);
-                }
+    //             if (user.Roles.length > 0) {
+    //                 user.Roles.forEach((role) => {
+    //                     if (!acc[role]) {
+    //                         acc[role] = [];
+    //                     }
+    //                     acc[role].push(user);
+    //                 });
+    //             } else {
+    //                 if (!acc["_"]) {
+    //                     acc["_"] = [];
+    //                 }
+    //                 acc["_"].push(user);
+    //             }
 
-                return acc;
-            }, {} as Record<string, User[]>);
-            setGroupedUsers(grouped);
-        }
-    }, [users]);
+    //             return acc;
+    //         }, {} as Record<string, User[]>);
+    //         setGroupedUsers(grouped);
+    //     }
+    // }, [users]);
 
     return (
         <Box p={8}>
@@ -53,7 +53,7 @@ export function UsersRoute() {
                 {t("users.title")}
             </Heading>
 
-            {isLoading ? (
+            {/* {isLoading ? (
                 <Spinner size="lg" />
             ) : (
                 <Stack gap="10">
@@ -91,7 +91,7 @@ export function UsersRoute() {
                         </Box>
                     ))}
                 </Stack>
-            )}
+            )} */}
         </Box>
     );
 }

@@ -13,79 +13,79 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useEditUserMutation, useRolesQuery, useUserQuery } from "@/services/api";
-import { User } from "@/types/api/AuthResponse";
+// import { useEditUserMutation, useRolesQuery, useUserQuery } from "@/services/api";
+// import { User } from "@/types/api/AuthResponse";
 import { Button } from "@/components/ui/button.tsx";
 import { Field } from "@/components/ui/field.tsx";
 
 export function UserRoute() {
     const { userId } = useParams<{ userId: string }>();
-    const { data: userData, error, isLoading } = useUserQuery(Number(userId));
-    const { data: roleData } = useRolesQuery();
-    const [editUser] = useEditUserMutation();
+    // const { data: userData, error, isLoading } = useUserQuery(Number(userId));
+    // const { data: roleData } = useRolesQuery();
+    // const [editUser] = useEditUserMutation();
 
     const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        control,
-        formState: { errors },
-    } = useForm<User>({
-        defaultValues: {
-            Id: 0,
-            Username: "",
-            ProfilePicture: "",
-            Roles: [],
-        },
-    });
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     reset,
+    //     control,
+    //     formState: { errors },
+    // } = useForm<User>({
+    //     defaultValues: {
+    //         Id: 0,
+    //         Username: "",
+    //         ProfilePicture: "",
+    //         Roles: [],
+    //     },
+    // });
 
-    useEffect(() => {
-        if (userData) {
-            reset(userData);
-            setSelectedRoles(userData.Roles || []);
-        }
-    }, [userData, reset]);
+    // useEffect(() => {
+    //     if (userData) {
+    //         reset(userData);
+    //         setSelectedRoles(userData.Roles || []);
+    //     }
+    // }, [userData, reset]);
 
-    const roles = createListCollection({
-        items: roleData?.map((role) => ({ label: role.Name, value: role.Name })) || [],
-    });
+    // const roles = createListCollection({
+    //     items: roleData?.map((role) => ({ label: role.Name, value: role.Name })) || [],
+    // });
 
-    const onSubmit: SubmitHandler<User> = async (data) => {
-        try {
-            await editUser({ ...data, Roles: selectedRoles }).unwrap();
-            alert("User updated successfully!");
-        } catch (err) {
-            console.error("Error updating user:", err);
-            alert("Failed to update user.");
-        }
-    };
+    // const onSubmit: SubmitHandler<User> = async (data) => {
+    //     try {
+    //         await editUser({ ...data, Roles: selectedRoles }).unwrap();
+    //         alert("User updated successfully!");
+    //     } catch (err) {
+    //         console.error("Error updating user:", err);
+    //         alert("Failed to update user.");
+    //     }
+    // };
 
-    if (isLoading) {
-        return (
-            <Box textAlign="center" mt={10}>
-                <Spinner size="xl" />
-            </Box>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <Box textAlign="center" mt={10}>
+    //             <Spinner size="xl" />
+    //         </Box>
+    //     );
+    // }
 
-    if (error || !userData) {
-        return (
-            <Box textAlign="center" mt={10}>
-                <Heading size="lg" color="red.500">
-                    Failed to load user data.
-                </Heading>
-            </Box>
-        );
-    }
+    // if (error || !userData) {
+    //     return (
+    //         <Box textAlign="center" mt={10}>
+    //             <Heading size="lg" color="red.500">
+    //                 Failed to load user data.
+    //             </Heading>
+    //         </Box>
+    //     );
+    // }
 
     return (
         <Box p={8}>
             <Heading mb={8} fontSize="2xl">
                 Edit User
             </Heading>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack gap={4} align="stretch">
                     <Field label="username" invalid={Boolean(errors.Username)} errorText={errors.Username?.message}>
                         <Input
@@ -168,7 +168,7 @@ export function UserRoute() {
                         </Button>
                     </VStack>
                 </VStack>
-            </form>
+            </form> */}
         </Box>
     );
 }

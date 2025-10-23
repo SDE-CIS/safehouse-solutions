@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery } from "@/services/api";
-import { Keycard } from "@/types/api/AuthResponse";
+// import { useEditKeycardMutation, useGetKeycardTiersQuery, useKeycardQuery } from "@/services/api";
+// import { Keycard } from "@/types/api/AuthResponse";
 import { Button } from "@/components/ui/button.tsx";
 import { Field } from "@/components/ui/field.tsx";
 
@@ -25,76 +25,76 @@ const formatDate = (date: Date): string => {
 
 export function KeycardRoute() {
     const { keycardId } = useParams<{ keycardId: string }>();
-    const { data: keycardData, error, isLoading } = useKeycardQuery(Number(keycardId));
-    const { data: accessLevelData } = useGetKeycardTiersQuery();
-    const [editKeycard] = useEditKeycardMutation();
+    // const { data: keycardData, error, isLoading } = useKeycardQuery(Number(keycardId));
+    // const { data: accessLevelData } = useGetKeycardTiersQuery();
+    // const [editKeycard] = useEditKeycardMutation();
     const [selectedAccessLevel, setSelectedAccessLevel] = useState<string[]>([]);
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        control,
-        formState: { errors },
-    } = useForm<Keycard>({
-        defaultValues: {
-            RfidTag: "",
-            EmployeeId: 0,
-            IssueDate: "",
-            ExpireDate: "",
-            StatusTypesId: 1,
-            AccessLevels: [],
-        },
-    });
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     reset,
+    //     control,
+    //     formState: { errors },
+    // } = useForm<Keycard>({
+    //     defaultValues: {
+    //         RfidTag: "",
+    //         EmployeeId: 0,
+    //         IssueDate: "",
+    //         ExpireDate: "",
+    //         StatusTypesId: 1,
+    //         AccessLevels: [],
+    //     },
+    // });
 
-    useEffect(() => {
-        if (keycardData) {
-            reset({
-                ...keycardData,
-                IssueDate: formatDate(new Date(keycardData.IssueDate)),
-                ExpireDate: formatDate(new Date(keycardData.ExpireDate)),
-            });
-        }
-    }, [keycardData, reset]);
+    // useEffect(() => {
+    //     if (keycardData) {
+    //         reset({
+    //             ...keycardData,
+    //             IssueDate: formatDate(new Date(keycardData.IssueDate)),
+    //             ExpireDate: formatDate(new Date(keycardData.ExpireDate)),
+    //         });
+    //     }
+    // }, [keycardData, reset]);
 
-    const accessLevels = createListCollection({
-        items: accessLevelData?.map((level) => ({ label: level.Name, value: level.Name })) || [],
-    });
+    // const accessLevels = createListCollection({
+    //     items: accessLevelData?.map((level) => ({ label: level.Name, value: level.Name })) || [],
+    // });
 
-    const onSubmit: SubmitHandler<Keycard> = async (data) => {
-        try {
-            await editKeycard({ ...data, AccessLevels: selectedAccessLevel }).unwrap();
-            alert("Keycard updated successfully!");
-        } catch (err) {
-            console.error("Error updating keycard:", err);
-            alert("Failed to update keycard.");
-        }
-    };
+    // const onSubmit: SubmitHandler<Keycard> = async (data) => {
+    //     try {
+    //         await editKeycard({ ...data, AccessLevels: selectedAccessLevel }).unwrap();
+    //         alert("Keycard updated successfully!");
+    //     } catch (err) {
+    //         console.error("Error updating keycard:", err);
+    //         alert("Failed to update keycard.");
+    //     }
+    // };
 
-    if (isLoading) {
-        return (
-            <Box textAlign="center" mt={10}>
-                <Spinner size="xl" />
-            </Box>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <Box textAlign="center" mt={10}>
+    //             <Spinner size="xl" />
+    //         </Box>
+    //     );
+    // }
 
-    if (error || !keycardData) {
-        return (
-            <Box textAlign="center" mt={10}>
-                <Heading size="lg" color="red.500">
-                    Failed to load keycard data.
-                </Heading>
-            </Box>
-        );
-    }
+    // if (error || !keycardData) {
+    //     return (
+    //         <Box textAlign="center" mt={10}>
+    //             <Heading size="lg" color="red.500">
+    //                 Failed to load keycard data.
+    //             </Heading>
+    //         </Box>
+    //     );
+    // }
 
     return (
         <Box p={8}>
             <Heading mb={8} fontSize="2xl">
                 Edit Keycard
             </Heading>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack gap={4} align="stretch">
                     <Field label="RFID Tag" invalid={Boolean(errors.RfidTag)} errorText={errors.RfidTag?.message}>
                         <Input
@@ -205,7 +205,7 @@ export function KeycardRoute() {
                         </Button>
                     </VStack>
                 </VStack>
-            </form>
+            </form> */}
         </Box>
     );
 }
