@@ -73,6 +73,11 @@ export const paths: Record<string, Path> = {
             label: 'Food',
             path: '/dashboard/food',
             getHref: () => '/dashboard/food',
+        },
+        todo: {
+            label: 'Todo',
+            path: '/dashboard/todo',
+            getHref: () => '/dashboard/todo',
         }
     }
 } as const;

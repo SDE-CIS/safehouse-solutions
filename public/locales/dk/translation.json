@@ -59,6 +59,20 @@
     "export_csv": "Eksporter CSV",
     "export_json": "Eksporter JSON",
     "import": "Importer",
+    "please_enter_task_title": "Indtast venligst en opgavetitel",
+    "what_needs_to_be_done": "Hvad skal der gøres?",
+    "short_notes_optional": "Korte noter (valgfrit)",
+    "add": "Tilføj",
+    "done": "Færdig",
+    "task": "Opgave",
+    "due": "Forfald",
+    "no_tasks_yet_add_your_first_one_above": "Ingen opgaver endnu. Tilføj din første ovenfor.",
+    "mark_done": "Markér som færdig",
+    "delete": "Slet",
+    "todo": "Opgaveliste",
+    "clear_completed": "Ryd færdige",
+    "clear_all": "Ryd alle",
+    "remaining": "Resterende",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
@@ -94,7 +108,8 @@
         "profile": "Åbn Profil",
         "log_out": "Log ud...",
         "dashboard": "Dashboard",
-        "food": "Madplan"
+        "food": "Madplan",
+        "todo": "Opgaveliste"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
