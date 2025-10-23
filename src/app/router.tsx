@@ -22,6 +22,19 @@ const AppRootErrorBoundary = () => {
     );
 };
 
+function newRoute(path: string, route: string, routeImport: () => Promise<any>) {
+    return {
+        path,
+        lazy: async () => {
+            const { [route]: Component } = await routeImport();
+            return {
+                Component,
+            };
+        },
+        ErrorBoundary: AppRootErrorBoundary,
+    };
+}
+
 export const createAppRouter = () =>
     createBrowserRouter([
         {
@@ -29,41 +42,11 @@ export const createAppRouter = () =>
             element: <AppRoot />,
             ErrorBoundary: AppRootErrorBoundary,
             children: [
-                {
-                    path: paths.home.path,
-                    lazy: async () => {
-                        const { LandingRoute } = await import('./routes/landing');
-                        return { Component: LandingRoute };
-                    },
-                },
-                {
-                    path: paths.auth.register.path,
-                    lazy: async () => {
-                        const { RegisterRoute } = await import('./routes/auth/register');
-                        return { Component: RegisterRoute };
-                    },
-                },
-                {
-                    path: paths.auth.login.path,
-                    lazy: async () => {
-                        const { LoginRoute } = await import('./routes/auth/login');
-                        return { Component: LoginRoute };
-                    },
-                },
-                {
-                    path: paths.contact_us.path,
-                    lazy: async () => {
-                        const { ContactUsRoute } = await import('./routes/contact-us');
-                        return { Component: ContactUsRoute };
-                    },
-                },
-                {
-                    path: paths.privacy_policy.path,
-                    lazy: async () => {
-                        const { PrivacyPolicyRoute } = await import('./routes/privacy-policy');
-                        return { Component: PrivacyPolicyRoute };
-                    },
-                },
+                newRoute(paths.home.path, 'LandingRoute', () => import('./routes/landing')),
+                newRoute(paths.auth.register.path, 'RegisterRoute', () => import('./routes/auth/register')),
+                newRoute(paths.auth.login.path, 'LoginRoute', () => import('./routes/auth/login')),
+                newRoute(paths.contact_us.path, "ContactUsRoute", () => import('./routes/contact-us')),
+                newRoute(paths.privacy_policy.path, 'PrivacyPolicyRoute', () => import('./routes/privacy-policy'))
             ],
         },
         {
@@ -71,56 +54,12 @@ export const createAppRouter = () =>
             element: <RequireAuth><DashboardRoot /></RequireAuth>,
             ErrorBoundary: DashboardRootErrorBoundary,
             children: [
-                {
-                    path: paths.dashboard.overview.path,
-                    lazy: async () => {
-                        const { OverviewRoute } = await import('./routes/dashboard/overview');
-                        return {
-                            Component: OverviewRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.cameras.path,
-                    lazy: async () => {
-                        const { CamerasRoute } = await import('./routes/dashboard/cameras/cameras');
-                        return {
-                            Component: CamerasRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.camera.path,
-                    lazy: async () => {
-                        const { CameraRoute } = await import('./routes/dashboard/cameras/camera');
-                        return {
-                            Component: CameraRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.keycards.path,
-                    lazy: async () => {
-                        const { KeycardsRoute } = await import('./routes/dashboard/keycards/keycards');
-                        return {
-                            Component: KeycardsRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
-                {
-                    path: paths.dashboard.keycard.path,
-                    lazy: async () => {
-                        const { KeycardRoute } = await import('./routes/dashboard/keycards/keycard');
-                        return {
-                            Component: KeycardRoute,
-                        };
-                    },
-                    ErrorBoundary: AppRootErrorBoundary,
-                },
+                newRoute(paths.dashboard.overview.path, 'OverviewRoute', () => import('./routes/dashboard/overview')),
+                newRoute(paths.dashboard.cameras.path, 'CamerasRoute', () => import('./routes/dashboard/cameras/cameras')),
+                newRoute(paths.dashboard.camera.path, 'CameraRoute', () => import('./routes/dashboard/cameras/camera')),
+                newRoute(paths.dashboard.keycards.path, 'KeycardsRoute', () => import('./routes/dashboard/keycards/keycards')),
+                newRoute(paths.dashboard.keycard.path, 'KeycardRoute', () => import('./routes/dashboard/keycards/keycard')),
+                newRoute(paths.dashboard.food.path, 'FoodRoute', () => import('./routes/dashboard/food')),
             ]
         },
         {

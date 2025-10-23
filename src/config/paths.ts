@@ -68,6 +68,11 @@ export const paths: Record<string, Path> = {
             label: 'Keycard View',
             path: '/dashboard/keycards/:keycardId',
             getHref: (id: string) => `/dashboard/keycards/${id}`,
+        },
+        food: {
+            label: 'Food',
+            path: '/dashboard/food',
+            getHref: () => '/dashboard/food',
         }
     }
 } as const;
