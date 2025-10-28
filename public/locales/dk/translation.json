@@ -183,6 +183,15 @@
         "email": "E-mail",
         "phone": "Telefon",
         "back": "Tilbage til brugere",
-        "not_found": "Bruger ikke fundet"
+        "not_found": "Bruger ikke fundet",
+        "add_user": "Tilføj bruger",
+        "create_user": "Opret bruger",
+        "details": "Brugeroplysninger",
+        "first_name": "Fornavn",
+        "last_name": "Efternavn",
+        "username": "Brugernavn",
+        "password": "Adgangskode",
+        "cancel": "Annuller",
+        "create": "Opret"
     }
 }

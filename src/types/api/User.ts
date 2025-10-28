@@ -9,7 +9,6 @@ export const UserSchema = z.object({
     Email: z.string().nullable().optional(),
     Brugernavn: z.string(),
     Adgangskode: z.string(),
-    RefreshToken: z.string().optional(),
 });
 
 export type User = z.infer<typeof UserSchema>;

@@ -1,22 +1,172 @@
 "use client";
 
 import { useNavigate } from "react-router-dom";
-import { Box, Heading, Spinner, Stack, Table } from "@chakra-ui/react";
+import {
+    Box,
+    Heading,
+    Spinner,
+    Stack,
+    Table,
+    Dialog,
+    Input,
+    Fieldset,
+    Field,
+} from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useUsersQuery } from "@/services/api";
+import {
+    useUsersQuery,
+    useCreateUserMutation,
+} from "@/services/api";
 import { Avatar } from "@/components/ui/avatar.tsx";
+import { Button } from "@/components/ui/button";
+import { toaster } from "@/components/ui/toaster";
 import { User } from "@/types/api/User";
+import { useState } from "react";
 
 export function UsersRoute() {
     const { t } = useTranslation();
-    const { data: users, isLoading } = useUsersQuery();
     const navigate = useNavigate();
+
+    const { data: users, isLoading, refetch } = useUsersQuery();
+    const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
+
+    const [form, setForm] = useState({
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        PhoneNumber: "",
+        Brugernavn: "",
+        Adgangskode: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleCreate = async () => {
+        try {
+            await createUser(form).unwrap();
+            toaster.create({
+                description: t("users.created"),
+                type: "success",
+                duration: 3000,
+            });
+            refetch();
+            setForm({
+                FirstName: "",
+                LastName: "",
+                Email: "",
+                PhoneNumber: "",
+                Brugernavn: "",
+                Adgangskode: "",
+            });
+        } catch {
+            toaster.create({
+                description: t("users.create_failed"),
+                type: "error",
+                duration: 4000,
+            });
+        }
+    };
 
     return (
         <Box p={8}>
-            <Heading mb={8} fontSize="2xl">
-                {t("users.title")}
-            </Heading>
+            <Stack direction="row" justify="space-between" align="center" mb={8} gap={4}>
+                <Heading fontSize="2xl">{t("users.title")}</Heading>
+
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <Button colorScheme="blue">{t("users.add_user")}</Button>
+                    </Dialog.Trigger>
+
+                    <Dialog.Backdrop />
+
+                    <Dialog.Positioner>
+                        <Dialog.Content>
+                            <Dialog.CloseTrigger />
+
+                            <Dialog.Header>
+                                <Dialog.Title>{t("users.add_user")}</Dialog.Title>
+                            </Dialog.Header>
+
+                            <Dialog.Body gap={6}>
+                                <Fieldset.Root size="lg">
+                                    <Fieldset.Legend>{t("users.details")}</Fieldset.Legend>
+
+                                    <Fieldset.Content gap={4}>
+                                        <Field.Root>
+                                            <Field.Label>{t("users.first_name")}</Field.Label>
+                                            <Input
+                                                name="FirstName"
+                                                value={form.FirstName}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+
+                                        <Field.Root>
+                                            <Field.Label>{t("users.last_name")}</Field.Label>
+                                            <Input
+                                                name="LastName"
+                                                value={form.LastName}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+
+                                        <Field.Root>
+                                            <Field.Label>{t("users.email")}</Field.Label>
+                                            <Input
+                                                name="Email"
+                                                type="email"
+                                                value={form.Email}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+
+                                        <Field.Root>
+                                            <Field.Label>{t("users.phone")}</Field.Label>
+                                            <Input
+                                                name="PhoneNumber"
+                                                value={form.PhoneNumber}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+
+                                        <Field.Root>
+                                            <Field.Label>{t("users.username")}</Field.Label>
+                                            <Input
+                                                name="Brugernavn"
+                                                value={form.Brugernavn}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+
+                                        <Field.Root>
+                                            <Field.Label>{t("users.password")}</Field.Label>
+                                            <Input
+                                                name="Adgangskode"
+                                                type="password"
+                                                value={form.Adgangskode}
+                                                onChange={handleChange}
+                                            />
+                                        </Field.Root>
+                                    </Fieldset.Content>
+                                </Fieldset.Root>
+                            </Dialog.Body>
+
+                            <Dialog.Footer gap={4}>
+                                <Button variant="ghost">{t("users.cancel")}</Button>
+                                <Button
+                                    colorScheme="blue"
+                                    onClick={handleCreate}
+                                    disabled={isCreating}
+                                >
+                                    {isCreating ? t("users.loading") : t("users.create")}
+                                </Button>
+                            </Dialog.Footer>
+                        </Dialog.Content>
+                    </Dialog.Positioner>
+                </Dialog.Root>
+            </Stack>
 
             {isLoading ? (
                 <Spinner size="lg" />
@@ -29,14 +179,8 @@ export function UsersRoute() {
                     _hover={{ boxShadow: "md" }}
                     transition="box-shadow 0.2s ease-in-out"
                 >
-                    <Table.Root
-                        size="lg"
-                        variant="outline"
-                    >
-                        <Table.Header
-                            bg="gray.100"
-                            _dark={{ bg: "gray.800" }}
-                        >
+                    <Table.Root size="lg" variant="outline">
+                        <Table.Header bg="gray.100" _dark={{ bg: "gray.800" }}>
                             <Table.Row>
                                 <Table.Cell fontWeight="bold">{t("users.name")}</Table.Cell>
                                 <Table.Cell fontWeight="bold">{t("users.email")}</Table.Cell>

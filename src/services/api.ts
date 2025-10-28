@@ -12,6 +12,7 @@ import { AuthResponse } from "@/types/api/AuthResponse";
 import { Login } from "@/types/api/Login";
 import { UnitsResponse, UnitsResponseSchema } from "@/types/api/Unit";
 import {
+    User,
     UserResponse,
     UserResponseSchema,
     UsersResponse,
@@ -94,11 +95,19 @@ export const api = createApi({
             query: () => "auth/refresh",
         }),
 
+        /* 
+            Unit Endpoints
+        */
+
         units: builder.query<UnitsResponse, void>({
             query: () => "units",
             transformResponse: (response: unknown) =>
                 UnitsResponseSchema.parse(response),
         }),
+
+        /* 
+            User Endpoints 
+        */
 
         users: builder.query<UsersResponse, void>({
             query: () => "users",
@@ -111,6 +120,16 @@ export const api = createApi({
             transformResponse: (response: unknown) =>
                 UserResponseSchema.parse(response),
         }),
+
+        createUser: builder.mutation<UserResponse, Partial<User>>({
+            query: (body) => ({
+                url: "users",
+                method: "POST",
+                body,
+            }),
+            transformResponse: (response: unknown) =>
+                UserResponseSchema.parse(response),
+        }),
     }),
 });
 
@@ -120,4 +139,5 @@ export const {
     useUnitsQuery,
     useUsersQuery,
     useUserQuery,
+    useCreateUserMutation,
 } = api;
