@@ -13,7 +13,7 @@ interface ButtonLoadingProps {
     loadingText?: React.ReactNode
 }
 
-type ButtonVariant = "filled" | "reverse" | "outline" // ✅ Added
+type ButtonVariant = "filled" | "reverse" | "outline"
 
 export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {
     variantStyle?: ButtonVariant
