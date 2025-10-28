@@ -7,8 +7,8 @@ export const UserSchema = z.object({
     LastName: z.string(),
     PhoneNumber: z.string().nullable().optional(),
     Email: z.string().nullable().optional(),
-    Brugernavn: z.string(),
-    Adgangskode: z.string(),
+    Username: z.string(),
+    Password: z.string(),
 });
 
 export type User = z.infer<typeof UserSchema>;

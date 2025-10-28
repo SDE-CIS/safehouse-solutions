@@ -50,7 +50,7 @@ export function UserRoute() {
                             <Heading fontSize="2xl">
                                 {user.data.FirstName} {user.data.LastName}
                             </Heading>
-                            <Text color="gray.500">{user.data.Brugernavn}</Text>
+                            <Text color="gray.500">{user.data.Username}</Text>
                         </Box>
 
                         <Box w="full">

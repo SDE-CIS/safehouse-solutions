@@ -36,8 +36,8 @@ export function UsersRoute() {
         LastName: "",
         Email: "",
         PhoneNumber: "",
-        Brugernavn: "",
-        Adgangskode: "",
+        Username: "",
+        Password: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,8 +58,8 @@ export function UsersRoute() {
                 LastName: "",
                 Email: "",
                 PhoneNumber: "",
-                Brugernavn: "",
-                Adgangskode: "",
+                Username: "",
+                Password: "",
             });
         } catch {
             toaster.create({
@@ -138,8 +138,8 @@ export function UsersRoute() {
                                         <Field.Root>
                                             <Field.Label>{t("users.username")}</Field.Label>
                                             <Input
-                                                name="Brugernavn"
-                                                value={form.Brugernavn}
+                                                name="Username"
+                                                value={form.Username}
                                                 onChange={handleChange}
                                             />
                                         </Field.Root>
@@ -147,9 +147,9 @@ export function UsersRoute() {
                                         <Field.Root>
                                             <Field.Label>{t("users.password")}</Field.Label>
                                             <Input
-                                                name="Adgangskode"
+                                                name="Password"
                                                 type="password"
-                                                value={form.Adgangskode}
+                                                value={form.Password}
                                                 onChange={handleChange}
                                             />
                                         </Field.Root>
