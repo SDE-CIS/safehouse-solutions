@@ -21,7 +21,7 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
 import { toaster } from "@/components/ui/toaster";
 import { User } from "@/types/api/User";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function UsersRoute() {
     const { t } = useTranslation();
@@ -29,6 +29,7 @@ export function UsersRoute() {
 
     const { data: users, isLoading, refetch } = useUsersQuery();
     const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
+    const ref = useRef<HTMLInputElement | null>(null)
 
     const [form, setForm] = useState({
         FirstName: "",
@@ -74,7 +75,9 @@ export function UsersRoute() {
             <Stack direction="row" justify="space-between" align="center" mb={8} gap={4}>
                 <Heading fontSize="2xl">{t("users.title")}</Heading>
 
-                <Dialog.Root>
+                <Dialog.Root initialFocusEl={() => ref.current}>
+                    <Dialog.Backdrop />
+
                     <Dialog.Trigger asChild>
                         <Button colorScheme="blue">{t("users.add_user")}</Button>
                     </Dialog.Trigger>
@@ -100,6 +103,7 @@ export function UsersRoute() {
                                                 name="FirstName"
                                                 value={form.FirstName}
                                                 onChange={handleChange}
+                                                ref={ref}
                                             />
                                         </Field.Root>
 
@@ -154,7 +158,10 @@ export function UsersRoute() {
                             </Dialog.Body>
 
                             <Dialog.Footer gap={4}>
-                                <Button variant="ghost">{t("users.cancel")}</Button>
+                                <Dialog.CloseTrigger asChild>
+                                    <Button variant="ghost">{t("users.cancel")}</Button>
+                                </Dialog.CloseTrigger>
+
                                 <Button
                                     colorScheme="blue"
                                     onClick={handleCreate}

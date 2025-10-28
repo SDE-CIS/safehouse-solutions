@@ -121,14 +121,12 @@ export const api = createApi({
                 UserResponseSchema.parse(response),
         }),
 
-        createUser: builder.mutation<UserResponse, Partial<User>>({
+        createUser: builder.mutation<UserResponse, { message: string }>({
             query: (body) => ({
                 url: "users",
                 method: "POST",
                 body,
             }),
-            transformResponse: (response: unknown) =>
-                UserResponseSchema.parse(response),
         }),
     }),
 });
