@@ -34,7 +34,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const getContent = (content: React.ReactNode) =>
             typeof content === "string" ? t(content) : content
 
-        // ✅ Style logic with "outline" variant included
         const baseStyles =
             variantStyle === "filled"
                 ? {
