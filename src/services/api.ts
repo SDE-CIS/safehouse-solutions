@@ -137,6 +137,13 @@ export const api = createApi({
                 body: data,
             })
         }),
+
+        deleteUser: builder.mutation<{ message: string }, number>({
+            query: (id) => ({
+                url: `users/${id}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
@@ -148,4 +155,5 @@ export const {
     useUserQuery,
     useCreateUserMutation,
     useUpdateUserMutation,
+    useDeleteUserMutation,
 } = api;

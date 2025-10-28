@@ -195,6 +195,8 @@
         "create": "Opret",
         "update": "Opdater",
         "updating": "Opdaterer...",
-        "edit_user": "Rediger bruger"
+        "edit_user": "Rediger bruger",
+        "delete": "Slet",
+        "actions": "Handlinger"
     }
 }

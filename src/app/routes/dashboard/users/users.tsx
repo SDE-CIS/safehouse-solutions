@@ -16,12 +16,14 @@ import { useTranslation } from "react-i18next";
 import {
     useUsersQuery,
     useCreateUserMutation,
+    useDeleteUserMutation,
 } from "@/services/api";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
 import { toaster } from "@/components/ui/toaster";
 import { User } from "@/types/api/User";
 import { useRef, useState } from "react";
+import { Trash2 } from "lucide-react"; // Optional: for a nice delete icon
 
 export function UsersRoute() {
     const { t } = useTranslation();
@@ -29,7 +31,8 @@ export function UsersRoute() {
 
     const { data: users, isLoading, refetch } = useUsersQuery();
     const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
-    const ref = useRef<HTMLInputElement | null>(null)
+    const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+    const ref = useRef<HTMLInputElement | null>(null);
 
     const [form, setForm] = useState({
         FirstName: "",
@@ -70,6 +73,24 @@ export function UsersRoute() {
         }
     };
 
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteUser(id).unwrap();
+            toaster.create({
+                description: t("users.deleted"),
+                type: "success",
+                duration: 3000,
+            });
+            refetch();
+        } catch {
+            toaster.create({
+                description: t("users.delete_failed"),
+                type: "error",
+                duration: 4000,
+            });
+        }
+    };
+
     return (
         <Box p={8}>
             <Stack direction="row" justify="space-between" align="center" mb={8} gap={4}>
@@ -81,8 +102,6 @@ export function UsersRoute() {
                     <Dialog.Trigger asChild>
                         <Button colorScheme="blue">{t("users.add_user")}</Button>
                     </Dialog.Trigger>
-
-                    <Dialog.Backdrop />
 
                     <Dialog.Positioner>
                         <Dialog.Content>
@@ -192,6 +211,9 @@ export function UsersRoute() {
                                 <Table.Cell fontWeight="bold">{t("users.name")}</Table.Cell>
                                 <Table.Cell fontWeight="bold">{t("users.email")}</Table.Cell>
                                 <Table.Cell fontWeight="bold">{t("users.phone")}</Table.Cell>
+                                <Table.Cell fontWeight="bold" textAlign="center">
+                                    {t("users.actions")}
+                                </Table.Cell>
                             </Table.Row>
                         </Table.Header>
 
@@ -199,7 +221,6 @@ export function UsersRoute() {
                             {users?.data.map((user: User, index: number) => (
                                 <Table.Row
                                     key={user.ID}
-                                    onClick={() => navigate(`/dashboard/users/${user.ID}`)}
                                     cursor="pointer"
                                     transition="all 0.15s ease-in-out"
                                     bg={index % 2 === 0 ? "transparent" : "gray.50"}
@@ -212,7 +233,7 @@ export function UsersRoute() {
                                         transform: "scale(1.01)",
                                     }}
                                 >
-                                    <Table.Cell>
+                                    <Table.Cell onClick={() => navigate(`/dashboard/users/${user.ID}`)}>
                                         <Stack direction="row" align="center" gap={4}>
                                             <Avatar name={`${user.FirstName} ${user.LastName}`} />
                                             <Box>
@@ -220,8 +241,23 @@ export function UsersRoute() {
                                             </Box>
                                         </Stack>
                                     </Table.Cell>
-                                    <Table.Cell>{user.Email ?? t("users.no_email")}</Table.Cell>
-                                    <Table.Cell>{user.PhoneNumber ?? t("users.no_phone")}</Table.Cell>
+                                    <Table.Cell onClick={() => navigate(`/dashboard/users/${user.ID}`)}>
+                                        {user.Email ?? t("users.no_email")}
+                                    </Table.Cell>
+                                    <Table.Cell onClick={() => navigate(`/dashboard/users/${user.ID}`)}>
+                                        {user.PhoneNumber ?? t("users.no_phone")}
+                                    </Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                        <Button
+                                            colorScheme="red"
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleDelete(user.ID)}
+                                            disabled={isDeleting}
+                                        >
+                                            {t("users.delete")}
+                                        </Button>
+                                    </Table.Cell>
                                 </Table.Row>
                             ))}
                         </Table.Body>
