@@ -61,6 +61,8 @@ export const createAppRouter = () =>
                 newRoute(paths.dashboard.keycard.path, 'KeycardRoute', () => import('./routes/dashboard/keycards/keycard')),
                 newRoute(paths.dashboard.food.path, 'FoodRoute', () => import('./routes/dashboard/food')),
                 newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/todo')),
+                newRoute(paths.dashboard.users.path, 'UsersRoute', () => import('./routes/dashboard/users/users')),
+                newRoute(paths.dashboard.user.path, 'UserRoute', () => import('./routes/dashboard/users/user')),
             ]
         },
         newRoute('*', 'NotFoundRoute', () => import('./routes/not-found')),

@@ -125,7 +125,8 @@
         "log_out": "Log ud...",
         "dashboard": "Dashboard",
         "food": "Madplan",
-        "todo": "Opgaveliste"
+        "todo": "Opgaveliste",
+        "users": "Åbn brugere"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
@@ -171,5 +172,16 @@
     },
     "dashboard": {
         "title": "Dashboard"
+    },
+    "users": {
+        "title": "Brugere",
+        "no_users": "Ingen brugere fundet.",
+        "loading": "Indlæser...",
+        "no_email": "Ingen e-mail",
+        "no_phone": "Ingen telefon",
+        "name": "Navn",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "back": "Tilbage til brugere"
     }
 }

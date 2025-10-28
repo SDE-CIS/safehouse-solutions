@@ -1,167 +1,72 @@
-// import { useEffect, useState } from "react";
-import {
-    Box,
-    Heading,
-} from "@chakra-ui/react";
-// import { useParams } from "react-router-dom";
-// import { Controller, SubmitHandler, useForm } from "react-hook-form";
-// import { useEditUserMutation, useRolesQuery, useUserQuery } from "@/services/api";
-// import { User } from "@/types/api/AuthResponse";
-// import { Button } from "@/components/ui/button.tsx";
-// import { Field } from "@/components/ui/field.tsx";
+"use client";
+
+import { useParams, useNavigate } from "react-router-dom";
+import { Box, Heading, Spinner, Stack, Text, Button } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
+import { useUserQuery } from "@/services/api";
+import { Avatar } from "@/components/ui/avatar.tsx";
 
 export function UserRoute() {
-    // const { userId } = useParams<{ userId: string }>();
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+    const { id } = useParams<{ id: string }>();
+    const userId = Number(id);
 
-    // const { data: userData, error, isLoading } = useUserQuery(Number(userId));
-    // const { data: roleData } = useRolesQuery();
-    // const [editUser] = useEditUserMutation();
+    console.log("User ID from params:", userId);
 
-    // const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+    if (isNaN(userId)) {
+        return <Text color="red.500">Invalid user ID</Text>;
+    }
 
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     reset,
-    //     control,
-    //     formState: { errors },
-    // } = useForm<User>({
-    //     defaultValues: {
-    //         Id: 0,
-    //         Username: "",
-    //         ProfilePicture: "",
-    //         Roles: [],
-    //     },
-    // });
-
-    // useEffect(() => {
-    //     if (userData) {
-    //         reset(userData);
-    //         setSelectedRoles(userData.Roles || []);
-    //     }
-    // }, [userData, reset]);
-
-    // const roles = createListCollection({
-    //     items: roleData?.map((role) => ({ label: role.Name, value: role.Name })) || [],
-    // });
-
-    // const onSubmit: SubmitHandler<User> = async (data) => {
-    //     try {
-    //         await editUser({ ...data, Roles: selectedRoles }).unwrap();
-    //         alert("User updated successfully!");
-    //     } catch (err) {
-    //         console.error("Error updating user:", err);
-    //         alert("Failed to update user.");
-    //     }
-    // };
-
-    // if (isLoading) {
-    //     return (
-    //         <Box textAlign="center" mt={10}>
-    //             <Spinner size="xl" />
-    //         </Box>
-    //     );
-    // }
-
-    // if (error || !userData) {
-    //     return (
-    //         <Box textAlign="center" mt={10}>
-    //             <Heading size="lg" color="red.500">
-    //                 Failed to load user data.
-    //             </Heading>
-    //         </Box>
-    //     );
-    // }
+    const { data: user, isLoading } = useUserQuery(userId);
 
     return (
         <Box p={8}>
-            <Heading mb={8} fontSize="2xl">
-                Edit User
-            </Heading>
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                <VStack gap={4} align="stretch">
-                    <Field label="username" invalid={Boolean(errors.Username)} errorText={errors.Username?.message}>
-                        <Input
-                            placeholder="Enter username"
-                            borderColor="gray.200"
-                            _dark={{ borderColor: "gray.700" }}
-                            {...register("Username", { required: "Username is required" })}
+            <Button
+                onClick={() => navigate("/dashboard/users")}
+                mb={6}
+                variant="outline"
+            >
+                {t("users.back")}
+            </Button>
+
+            {isLoading ? (
+                <Spinner size="lg" />
+            ) : user ? (
+                <Box
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={8}
+                    boxShadow="md"
+                    maxW="xl"
+                    mx="auto"
+                    bg="white"
+                    _dark={{ bg: "gray.800" }}
+                >
+                    <Stack align="center" gap={6}>
+                        <Avatar
+                            name={`${user.data.FirstName} ${user.data.LastName}`}
+                            size="xl"
                         />
-                    </Field>
+                        <Box textAlign="center">
+                            <Heading fontSize="2xl">
+                                {user.data.FirstName} {user.data.LastName}
+                            </Heading>
+                            <Text color="gray.500">{user.data.Brugernavn}</Text>
+                        </Box>
 
-                    <Field label="profile_picture" invalid={Boolean(errors.ProfilePicture)}
-                        errorText={errors.ProfilePicture?.message}>
-                        <Input
-                            placeholder="Enter profile picture URL"
-                            borderColor="gray.200"
-                            _dark={{ borderColor: "gray.700" }}
-                            {...register("ProfilePicture", {
-                                required: "Profile picture URL is required",
-                            })}
-                        />
-                    </Field>
-
-                    <Controller
-                        name="Roles"
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                            <SelectRoot
-                                collection={roles}
-                                size="sm"
-                                value={value || []}
-                                onValueChange={(selectedDetails) => {
-
-                                    console.log(selectedDetails.value[0]);
-
-                                    const selectedValues = Array.isArray(selectedDetails)
-                                        ? selectedDetails.map((detail) => detail.value)
-                                        : [];
-                                    const roleIds = selectedValues.map((id) =>
-                                        roleData?.find((role) => role.Id.toString() === id)?.Id.toString() || ""
-                                    );
-
-                                    setSelectedRoles((selected) => {
-                                        if (selected.includes(selectedDetails.value[0])) {
-                                            return selected.filter((role) => role !== selectedDetails.value[0]);
-                                        }
-                                        return [...selected, selectedDetails.value[0]];
-                                    });
-
-                                    onChange(roleIds);
-                                }}
-                                multiple
-                            >
-                                <SelectTrigger>
-                                    {selectedRoles?.length ? selectedRoles.join(", ") : "None"}
-                                </SelectTrigger>
-                                <SelectContent position="absolute" mt={10}>
-                                    {roles.items.map((role) => (
-                                        <SelectItem item={role} key={role.value}>
-                                            {role.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </SelectRoot>
-                        )}
-                    />
-
-                    <VStack gap={4} pt={4}>
-                        <Button type="submit" colorScheme="blue">
-                            Save
-                        </Button>
-                        <Button
-                            variant="outline"
-                            onClick={() => {
-                                reset(userData);
-                                setSelectedRoles(userData.Roles || []);
-                            }}
-                            colorScheme="gray"
-                        >
-                            Reset
-                        </Button>
-                    </VStack>
-                </VStack>
-            </form> */}
+                        <Box w="full">
+                            <Stack gap={3}>
+                                <Text><strong>{t("users.email")}:</strong> {user.data.Email ?? t("users.no_email")}</Text>
+                                <Text><strong>{t("users.phone")}:</strong> {user.data.PhoneNumber ?? t("users.no_phone")}</Text>
+                                <Text><strong>ID:</strong> {user.data.ID}</Text>
+                            </Stack>
+                        </Box>
+                    </Stack>
+                </Box>
+            ) : (
+                <Text>{t("users.not_found")}</Text>
+            )}
         </Box>
     );
 }

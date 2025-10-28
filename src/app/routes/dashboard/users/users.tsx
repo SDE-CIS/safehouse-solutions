@@ -1,51 +1,16 @@
 "use client";
 
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import { Box, Heading } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Box, Heading, Spinner, Stack, Table } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-// import { useUsersQuery } from "@/services/api";
-// import { User } from "@/types/api/AuthResponse";
-// import { Avatar } from "@/components/ui/avatar.tsx";
+import { useUsersQuery } from "@/services/api";
+import { Avatar } from "@/components/ui/avatar.tsx";
+import { User } from "@/types/api/User";
 
 export function UsersRoute() {
     const { t } = useTranslation();
-    // const { data: users, isLoading } = useUsersQuery();
-    // const [groupedUsers, setGroupedUsers] = useState<Record<string, User[]>>({});
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     console.log(users)
-
-    //     if (users) {
-    //         // Group users by roles
-    //         const savedUsers: string[] = [];
-    //         const grouped = users.reduce((acc, user) => {
-    //             if (savedUsers.includes(user.Username)) {
-    //                 return acc;
-    //             }
-
-    //             savedUsers.push(user.Username);
-
-    //             if (user.Roles.length > 0) {
-    //                 user.Roles.forEach((role) => {
-    //                     if (!acc[role]) {
-    //                         acc[role] = [];
-    //                     }
-    //                     acc[role].push(user);
-    //                 });
-    //             } else {
-    //                 if (!acc["_"]) {
-    //                     acc["_"] = [];
-    //                 }
-    //                 acc["_"].push(user);
-    //             }
-
-    //             return acc;
-    //         }, {} as Record<string, User[]>);
-    //         setGroupedUsers(grouped);
-    //     }
-    // }, [users]);
+    const { data: users, isLoading } = useUsersQuery();
+    const navigate = useNavigate();
 
     return (
         <Box p={8}>
@@ -53,45 +18,65 @@ export function UsersRoute() {
                 {t("users.title")}
             </Heading>
 
-            {/* {isLoading ? (
+            {isLoading ? (
                 <Spinner size="lg" />
             ) : (
-                <Stack gap="10">
-                    {Object.entries(groupedUsers).sort().map(([role, users]) => (
-                        <Box key={role}>
-                            <Heading fontSize="lg" mb={4}>
-                                {t(`roles.${role.toLowerCase()}`, role)}
-                            </Heading>
-                            <Table.Root size="lg" variant="outline">
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.ColumnHeader>{t("users.username")}</Table.ColumnHeader>
-                                        <Table.ColumnHeader>{t("users.roles")}</Table.ColumnHeader>
-                                        <Table.ColumnHeader textAlign="end"></Table.ColumnHeader>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {users.map((user) => (
-                                        <Table.Row
-                                            key={user.Id}
-                                            onClick={() => navigate(`/dashboard/users/${user.Id}`)}
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <Table.Cell>{user.Username}</Table.Cell>
-                                            <Table.Cell>
-                                                {user.Roles.map((role) => role).join(", ")}
-                                            </Table.Cell>
-                                            <Table.Cell textAlign="end">
-                                                <Avatar src={user.ProfilePicture} name={user.Username} size="sm" />
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    ))}
-                                </Table.Body>
-                            </Table.Root>
-                        </Box>
-                    ))}
-                </Stack>
-            )} */}
+                <Box
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    overflow="hidden"
+                    boxShadow="sm"
+                    _hover={{ boxShadow: "md" }}
+                    transition="box-shadow 0.2s ease-in-out"
+                >
+                    <Table.Root
+                        size="lg"
+                        variant="outline"
+                    >
+                        <Table.Header
+                            bg="gray.100"
+                            _dark={{ bg: "gray.800" }}
+                        >
+                            <Table.Row>
+                                <Table.Cell fontWeight="bold">{t("users.name")}</Table.Cell>
+                                <Table.Cell fontWeight="bold">{t("users.email")}</Table.Cell>
+                                <Table.Cell fontWeight="bold">{t("users.phone")}</Table.Cell>
+                            </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+                            {users?.data.map((user: User, index: number) => (
+                                <Table.Row
+                                    key={user.ID}
+                                    onClick={() => navigate(`/dashboard/users/${user.ID}`)}
+                                    cursor="pointer"
+                                    transition="all 0.15s ease-in-out"
+                                    bg={index % 2 === 0 ? "transparent" : "gray.50"}
+                                    _dark={{
+                                        bg: index % 2 === 0 ? "transparent" : "gray.700",
+                                    }}
+                                    _hover={{
+                                        bg: "gray.100",
+                                        _dark: { bg: "gray.600" },
+                                        transform: "scale(1.01)",
+                                    }}
+                                >
+                                    <Table.Cell>
+                                        <Stack direction="row" align="center" gap={4}>
+                                            <Avatar name={`${user.FirstName} ${user.LastName}`} />
+                                            <Box>
+                                                {user.FirstName} {user.LastName}
+                                            </Box>
+                                        </Stack>
+                                    </Table.Cell>
+                                    <Table.Cell>{user.Email ?? t("users.no_email")}</Table.Cell>
+                                    <Table.Cell>{user.PhoneNumber ?? t("users.no_phone")}</Table.Cell>
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+                    </Table.Root>
+                </Box>
+            )}
         </Box>
     );
 }

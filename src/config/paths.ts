@@ -78,6 +78,18 @@ export const paths: Record<string, Path> = {
             label: 'Todo',
             path: '/dashboard/todo',
             getHref: () => '/dashboard/todo',
-        }
+        },
+        users: {
+            label: 'Users',
+            hidden: true,
+            path: '/dashboard/users',
+            getHref: () => '/dashboard/users',
+        },
+        user: {
+            label: 'User View',
+            hidden: true,
+            path: '/dashboard/users/:id',
+            getHref: (id: string) => `/dashboard/users/${id}`,
+        },
     }
 } as const;

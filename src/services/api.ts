@@ -6,6 +6,8 @@ import { loggedIn, loggedOut, tokenReceived } from '@/services/login';
 import { AuthResponse } from "@/types/api/AuthResponse";
 import { Login } from '@/types/api/Login';
 import { UnitResponse, UnitResponseSchema } from '@/types/api/Unit';
+import { User, UserResponse, UserResponseSchema } from '@/types/api/User';
+import { ApiResponse } from '@/types/api/ApiResponse';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -88,7 +90,18 @@ export const api = createApi({
                 return UnitResponseSchema.parse(response);
             },
         }),
+
+        users: builder.query<UserResponse, void>({
+            query: () => 'users',
+            transformResponse: (response: unknown) => {
+                return UserResponseSchema.parse(response);
+            },
+        }),
+
+        user: builder.query<ApiResponse<User>, number>({
+            query: (id) => `users/${id}`
+        })
     }),
 });
 
-export const { useSignInMutation, useRefreshTokenQuery, useUnitsQuery } = api;
+export const { useSignInMutation, useRefreshTokenQuery, useUnitsQuery, useUsersQuery, useUserQuery } = api;

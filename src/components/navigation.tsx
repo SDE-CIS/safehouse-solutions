@@ -265,10 +265,9 @@ const ProfileButton = () => {
                     </Link>
                 </MenuItem>
 
-                {/* Profile Link */}
-                <MenuItem value="profile" style={{ padding: 0 }}>
+                <MenuItem value="users" style={{ padding: 0 }}>
                     <Link
-                        to="/dashboard/profile"
+                        to="/dashboard/users"
                         style={{
                             display: 'block',
                             width: '100%',
@@ -278,7 +277,7 @@ const ProfileButton = () => {
                             color: 'inherit',
                         }}
                     >
-                        {t('navigation.profile')}
+                        {t('navigation.users')}
                     </Link>
                 </MenuItem>
 
