@@ -18,6 +18,7 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button";
 import { toaster } from "@/components/ui/toaster";
 import { useState, useEffect } from "react";
+import { ArrowBigLeft } from "lucide-react";
 
 export function UserRoute() {
     const navigate = useNavigate();
@@ -78,7 +79,7 @@ export function UserRoute() {
     return (
         <Box p={8}>
             <Button onClick={() => navigate("/dashboard/users")} mb={6} variant="outline">
-                {t("users.back")}
+                <ArrowBigLeft size={16} />
             </Button>
 
             {isLoading ? (
