@@ -192,6 +192,9 @@
         "username": "Brugernavn",
         "password": "Adgangskode",
         "cancel": "Annuller",
-        "create": "Opret"
+        "create": "Opret",
+        "update": "Opdater",
+        "updating": "Opdaterer...",
+        "edit_user": "Rediger bruger"
     }
 }

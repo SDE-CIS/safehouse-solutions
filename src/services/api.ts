@@ -22,6 +22,7 @@ import {
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const mutex = new Mutex();
+
 const baseQuery = fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
@@ -32,62 +33,68 @@ const baseQuery = fetchBaseQuery({
     responseHandler: (response) => response.json(),
 });
 
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
-    async (args, api, extraOptions) => {
-        await mutex.waitForUnlock();
-        let result = await baseQuery(args, api, extraOptions);
-        const error = result.error as FetchBaseQueryError | undefined;
+const baseQueryWithReauth: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+    await mutex.waitForUnlock();
+    let result = await baseQuery(args, api, extraOptions);
+    const error = result.error as FetchBaseQueryError | undefined;
 
-        if (error?.status === 401) {
-            if (!mutex.isLocked()) {
-                const release = await mutex.acquire();
-                try {
-                    const state = api.getState() as RootState;
-                    const refreshToken = state.loginSlice.refreshToken;
+    if (error?.status === 401) {
+        if (!mutex.isLocked()) {
+            const release = await mutex.acquire();
+            try {
+                const state = api.getState() as RootState;
+                const refreshToken = state.loginSlice.refreshToken;
 
-                    if (!refreshToken) {
-                        api.dispatch(loggedOut());
-                    }
-
-                    const refreshResult = await baseQuery(
-                        {
-                            url: "/auth/refresh",
-                            method: "POST",
-                            body: { refreshToken },
-                        },
-                        api,
-                        extraOptions
-                    );
-
-                    if (refreshResult.data) {
-                        api.dispatch(tokenReceived(refreshResult.data));
-                        result = await baseQuery(args, api, extraOptions);
-                    } else {
-                        api.dispatch(loggedOut());
-                    }
-                } finally {
-                    release();
+                if (!refreshToken) {
+                    api.dispatch(loggedOut());
                 }
-            } else {
-                await mutex.waitForUnlock();
-                result = await baseQuery(args, api, extraOptions);
-            }
-        }
 
-        return result;
-    };
+                const refreshResult = await baseQuery(
+                    {
+                        url: "/auth/refresh",
+                        method: "POST",
+                        body: { refreshToken },
+                    },
+                    api,
+                    extraOptions
+                );
+
+                if (refreshResult.data) {
+                    api.dispatch(tokenReceived(refreshResult.data));
+                    result = await baseQuery(args, api, extraOptions);
+                } else {
+                    api.dispatch(loggedOut());
+                }
+            } finally {
+                release();
+            }
+        } else {
+            await mutex.waitForUnlock();
+            result = await baseQuery(args, api, extraOptions);
+        }
+    }
+
+    return result;
+};
 
 export const api = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
+        /* ─────────────── AUTH ─────────────── */
         signIn: builder.mutation<AuthResponse, Login>({
             query: (body) => ({ url: "auth", method: "POST", body }),
             async onQueryStarted(_, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     dispatch(loggedIn(data));
-                } catch { }
+                } catch {
+                    /* silent */
+                }
             },
         }),
 
@@ -95,20 +102,14 @@ export const api = createApi({
             query: () => "auth/refresh",
         }),
 
-        /* 
-            Unit Endpoints
-        */
-
+        /* ─────────────── UNITS ─────────────── */
         units: builder.query<UnitsResponse, void>({
             query: () => "units",
             transformResponse: (response: unknown) =>
                 UnitsResponseSchema.parse(response),
         }),
 
-        /* 
-            User Endpoints 
-        */
-
+        /* ─────────────── USERS ─────────────── */
         users: builder.query<UsersResponse, void>({
             query: () => "users",
             transformResponse: (response: unknown) =>
@@ -121,12 +122,20 @@ export const api = createApi({
                 UserResponseSchema.parse(response),
         }),
 
-        createUser: builder.mutation<UserResponse, { message: string }>({
+        createUser: builder.mutation<UserResponse, Partial<User>>({
             query: (body) => ({
                 url: "users",
                 method: "POST",
                 body,
-            }),
+            })
+        }),
+
+        updateUser: builder.mutation<UserResponse, { id: number; data: Partial<User> }>({
+            query: ({ id, data }) => ({
+                url: `users/${id}`,
+                method: "PUT",
+                body: data,
+            })
         }),
     }),
 });
@@ -138,4 +147,5 @@ export const {
     useUsersQuery,
     useUserQuery,
     useCreateUserMutation,
+    useUpdateUserMutation,
 } = api;

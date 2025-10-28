@@ -26,3 +26,5 @@ Det gik hurtigt at opsætte en hjemmeside, da vi brugte en boilerplate.
 Ivana fik dårlig hardware til staging serveren.
 Sebastian havde problemer med RDP licenser til produktionsserveren.
 Christian skulle bruge mere tid på at finde et godt kamera, som ikke virkede.
+## Hvad kan vi tage ved lære
+Husk og snak og planlæg ER-diagram fælles i gruppen før det implementeres i den endelige database.
