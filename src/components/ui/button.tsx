@@ -13,7 +13,7 @@ interface ButtonLoadingProps {
     loadingText?: React.ReactNode
 }
 
-type ButtonVariant = "filled" | "reverse"
+type ButtonVariant = "filled" | "reverse" | "outline" // ✅ Added
 
 export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {
     variantStyle?: ButtonVariant
@@ -34,7 +34,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const getContent = (content: React.ReactNode) =>
             typeof content === "string" ? t(content) : content
 
-        // Style logic based on variantStyle
+        // ✅ Style logic with "outline" variant included
         const baseStyles =
             variantStyle === "filled"
                 ? {
@@ -47,20 +47,40 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         border: "1px solid black",
                     },
                 }
-                : {
-                    bg: "transparent",
-                    color: "black",
-                    border: "1px solid black",
-                    _dark: {
-                        color: "white",
-                        border: "1px solid white",
-                    },
-                    _hover: {
-                        bg: "brand.500",
-                        color: "white",
-                        border: "1px solid transparent",
-                    },
-                }
+                : variantStyle === "reverse"
+                    ? {
+                        bg: "transparent",
+                        color: "black",
+                        border: "1px solid black",
+                        _dark: {
+                            color: "white",
+                            border: "1px solid white",
+                        },
+                        _hover: {
+                            bg: "brand.500",
+                            color: "white",
+                            border: "1px solid transparent",
+                        },
+                    }
+                    : {
+                        // outline variant
+                        bg: "transparent",
+                        color: "brand.500",
+                        border: "1px solid",
+                        borderColor: "brand.500",
+                        _hover: {
+                            bg: "brand.500",
+                            color: "white",
+                        },
+                        _dark: {
+                            color: "brand.300",
+                            borderColor: "brand.300",
+                            _hover: {
+                                bg: "brand.300",
+                                color: "black",
+                            },
+                        },
+                    }
 
         return (
             <ChakraButton

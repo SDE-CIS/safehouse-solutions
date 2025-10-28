@@ -251,11 +251,11 @@ export function UsersRoute() {
                                         <Button
                                             colorScheme="red"
                                             size="sm"
-                                            variant="outline"
+                                            variantStyle="outline"
                                             onClick={() => handleDelete(user.ID)}
                                             disabled={isDeleting}
                                         >
-                                            {t("users.delete")}
+                                            <Trash2 size={16} />
                                         </Button>
                                     </Table.Cell>
                                 </Table.Row>
