@@ -182,6 +182,7 @@
         "name": "Navn",
         "email": "E-mail",
         "phone": "Telefon",
-        "back": "Tilbage til brugere"
+        "back": "Tilbage til brugere",
+        "not_found": "Bruger ikke fundet"
     }
 }

@@ -12,10 +12,8 @@ export function UserRoute() {
     const { id } = useParams<{ id: string }>();
     const userId = Number(id);
 
-    console.log("User ID from params:", userId);
-
     if (isNaN(userId)) {
-        return <Text color="red.500">Invalid user ID</Text>;
+        return <Text>{t("users.not_found")}</Text>;
     }
 
     const { data: user, isLoading } = useUserQuery(userId);
