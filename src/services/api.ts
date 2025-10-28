@@ -7,7 +7,7 @@ import { AuthResponse } from "@/types/api/AuthResponse";
 import { Login } from '@/types/api/Login';
 import { UnitResponse, UnitResponseSchema } from '@/types/api/Unit';
 
-const baseUrl = 'http://localhost:4000';
+const baseUrl = import.meta.env.API_BASE_URL;
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
