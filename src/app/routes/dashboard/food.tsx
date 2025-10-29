@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+"use client"
+
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
     Box,
     Button,
@@ -8,10 +10,12 @@ import {
     Textarea,
     VStack,
     Text,
-    Table,
-} from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import { toaster } from "@/components/ui/toaster";
+    HStack,
+    Card,
+} from "@chakra-ui/react"
+import { useTranslation } from "react-i18next"
+import { toaster } from "@/components/ui/toaster"
+import { useColorModeValue } from "@/components/ui/color-mode"
 
 type DayKey =
     | "Monday"
@@ -20,18 +24,18 @@ type DayKey =
     | "Thursday"
     | "Friday"
     | "Saturday"
-    | "Sunday";
+    | "Sunday"
 
 type MealEntry = {
-    breakfast: string;
-    lunch: string;
-    dinner: string;
-    notes: string;
-};
+    breakfast: string
+    lunch: string
+    dinner: string
+    notes: string
+}
 
-type MealPlan = Record<DayKey, MealEntry>;
+type MealPlan = Record<DayKey, MealEntry>
 
-const STORAGE_KEY = "foodPlanner.v3";
+const STORAGE_KEY = "foodPlanner.v3"
 
 const DEFAULT_PLAN: MealPlan = {
     Monday: { breakfast: "", lunch: "", dinner: "", notes: "" },
@@ -41,109 +45,105 @@ const DEFAULT_PLAN: MealPlan = {
     Friday: { breakfast: "", lunch: "", dinner: "", notes: "" },
     Saturday: { breakfast: "", lunch: "", dinner: "", notes: "" },
     Sunday: { breakfast: "", lunch: "", dinner: "", notes: "" },
-};
+}
 
 function toCSV(plan: MealPlan): string {
-    const header = ["Day", "Breakfast", "Lunch", "Dinner", "Notes"];
+    const header = ["Day", "Breakfast", "Lunch", "Dinner", "Notes"]
     const rows = (Object.keys(plan) as DayKey[]).map((day) => [
         day,
         plan[day].breakfast,
         plan[day].lunch,
         plan[day].dinner,
         plan[day].notes,
-    ]);
+    ])
     const escape = (s: string) => {
-        if (s == null) return "";
-        const needsQuotes = /[",\n]/.test(s);
-        const escaped = s.replace(/"/g, '""');
-        return needsQuotes ? `"${escaped}"` : escaped;
-    };
-    return [header.join(","), ...rows.map((r) => r.map(escape).join(","))].join("\n");
+        if (s == null) return ""
+        const needsQuotes = /[",\n]/.test(s)
+        const escaped = s.replace(/"/g, '""')
+        return needsQuotes ? `"${escaped}"` : escaped
+    }
+    return [header.join(","), ...rows.map((r) => r.map(escape).join(","))].join("\n")
 }
 
 function splitCSVLine(line: string): string[] {
-    const out: string[] = [];
-    let cur = "";
-    let inQuotes = false;
+    const out: string[] = []
+    let cur = ""
+    let inQuotes = false
     for (let i = 0; i < line.length; i++) {
-        const ch = line[i];
+        const ch = line[i]
         if (inQuotes) {
             if (ch === '"') {
                 if (line[i + 1] === '"') {
-                    cur += '"';
-                    i++;
+                    cur += '"'
+                    i++
                 } else {
-                    inQuotes = false;
+                    inQuotes = false
                 }
             } else {
-                cur += ch;
+                cur += ch
             }
         } else {
-            if (ch === '"') {
-                inQuotes = true;
-            } else if (ch === ",") {
-                out.push(cur);
-                cur = "";
-            } else {
-                cur += ch;
-            }
+            if (ch === '"') inQuotes = true
+            else if (ch === ",") {
+                out.push(cur)
+                cur = ""
+            } else cur += ch
         }
     }
-    out.push(cur);
-    return out;
+    out.push(cur)
+    return out
 }
 
 function fromCSV(csvText: string): MealPlan {
-    const lines = csvText.trim().split(/\r?\n/);
-    if (lines.length < 2) throw new Error("CSV has no data");
+    const lines = csvText.trim().split(/\r?\n/)
+    if (lines.length < 2) throw new Error("CSV has no data")
 
-    const plan: MealPlan = { ...DEFAULT_PLAN };
+    const plan: MealPlan = { ...DEFAULT_PLAN }
 
     for (let i = 1; i < lines.length; i++) {
-        const cols = splitCSVLine(lines[i]);
-        const [day, breakfast, lunch, dinner, notes] = cols;
-        if (!day) continue;
+        const cols = splitCSVLine(lines[i])
+        const [day, breakfast, lunch, dinner, notes] = cols
+        if (!day) continue
         if (day in plan) {
             plan[day as DayKey] = {
                 breakfast: breakfast || "",
                 lunch: lunch || "",
                 dinner: dinner || "",
                 notes: notes || "",
-            };
+            }
         }
     }
 
-    return plan;
+    return plan
 }
 
 function download(filename: string, text: string, mime = "text/plain;charset=utf-8") {
-    const blob = new Blob([text], { type: mime });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
+    const blob = new Blob([text], { type: mime })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
 }
 
 export const FoodRoute = () => {
-    const { t } = useTranslation();
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const { t } = useTranslation()
+    const fileInputRef = useRef<HTMLInputElement | null>(null)
     const [plan, setPlan] = useState<MealPlan>(() => {
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? (JSON.parse(raw) as MealPlan) : DEFAULT_PLAN;
+            const raw = localStorage.getItem(STORAGE_KEY)
+            return raw ? (JSON.parse(raw) as MealPlan) : DEFAULT_PLAN
         } catch {
-            return DEFAULT_PLAN;
+            return DEFAULT_PLAN
         }
-    });
+    })
 
-    // Auto-save
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(plan));
-    }, [plan]);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(plan))
+    }, [plan])
 
-    const days = useMemo(() => Object.keys(plan) as DayKey[], [plan]);
+    const days = useMemo(() => Object.keys(plan) as DayKey[], [plan])
 
     const handleChange =
         (day: DayKey, field: keyof MealEntry) =>
@@ -151,68 +151,70 @@ export const FoodRoute = () => {
                 setPlan((prev) => ({
                     ...prev,
                     [day]: { ...prev[day], [field]: e.target.value },
-                }));
-            };
+                }))
+            }
 
     const handleExportCSV = () => {
-        download("meal-plan.csv", toCSV(plan), "text/csv");
+        download("meal-plan.csv", toCSV(plan), "text/csv")
         toaster.create({
             title: t("exported_csv"),
             description: t("meal_plan_saved_as_csv"),
-        });
-    };
+        })
+    }
 
     const handleExportJSON = () => {
-        download("meal-plan.json", JSON.stringify(plan, null, 2), "application/json");
+        download("meal-plan.json", JSON.stringify(plan, null, 2), "application/json")
         toaster.create({
             title: t("exported_json"),
             description: t("meal_plan_saved_as_json"),
-        });
-    };
+        })
+    }
 
-    const handleImportClick = () => fileInputRef.current?.click();
+    const handleImportClick = () => fileInputRef.current?.click()
 
     const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const file = e.target.files?.[0]
+        if (!file) return
 
         try {
-            const text = await file.text();
+            const text = await file.text()
             const imported = text.trim().startsWith("{")
                 ? (JSON.parse(text) as MealPlan)
-                : fromCSV(text);
-            setPlan(imported);
+                : fromCSV(text)
+            setPlan(imported)
             toaster.create({
                 title: t("ui_imported"),
                 description: t("meal_plan_imported_successfully"),
-            });
+            })
         } catch (err: any) {
             toaster.create({
                 title: t("import_failed"),
                 description: err?.message || t("could_not_import_meal_plan"),
-            });
+            })
         } finally {
-            if (fileInputRef.current) fileInputRef.current.value = "";
+            if (fileInputRef.current) fileInputRef.current.value = ""
         }
-    };
+    }
 
     const handleClear = () => {
-        setPlan(DEFAULT_PLAN);
+        setPlan(DEFAULT_PLAN)
         toaster.create({
             title: t("cleared"),
             description: t("meal_plan_cleared"),
-        });
-    };
+        })
+    }
+
+    const lineColor = useColorModeValue("brand.500", "brand.300")
 
     return (
         <Box px={{ base: 4, md: 8 }} py={6} maxW="1200px" mx="auto">
-            <Flex align="center" mb={6}>
+            <Flex align="center" mb={8} wrap="wrap" gap={3}>
                 <Heading size="lg">{t("weekly_food_planner")}</Heading>
-                <Flex ml="auto" gap={2}>
-                    <Button onClick={handleExportCSV} variant="outline">
+                <Flex ml="auto" gap={2} wrap="wrap">
+                    <Button variant="outline" onClick={handleExportCSV}>
                         {t("export_csv")}
                     </Button>
-                    <Button onClick={handleExportJSON} variant="outline">
+                    <Button variant="outline" onClick={handleExportJSON}>
                         {t("export_json")}
                     </Button>
                     <Button onClick={handleImportClick}>{t("import")}</Button>
@@ -223,70 +225,90 @@ export const FoodRoute = () => {
                         style={{ display: "none" }}
                         onChange={handleImportFile}
                     />
-                    <Button colorPalette="red" variant="ghost" onClick={handleClear}>
+                    <Button colorScheme="red" variant="ghost" onClick={handleClear}>
                         {t("clear")}
                     </Button>
                 </Flex>
             </Flex>
 
-            <Text mb={4} color="fg.muted">
+            <Text mb={8} color="fg.muted">
                 {t("plan_your_meals_for_the_week_here")}
             </Text>
 
-            <Table.Root size="md" variant="outline">
-                <Table.Header>
-                    <Table.Row>
-                        <Table.ColumnHeader>{t("day")}</Table.ColumnHeader>
-                        <Table.ColumnHeader>{t("breakfast")}</Table.ColumnHeader>
-                        <Table.ColumnHeader>{t("lunch")}</Table.ColumnHeader>
-                        <Table.ColumnHeader>{t("dinner")}</Table.ColumnHeader>
-                        <Table.ColumnHeader>{t("notes")}</Table.ColumnHeader>
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    {days.map((day) => (
-                        <Table.Row key={day}>
-                            <Table.Cell fontWeight="medium">{t(day)}</Table.Cell>
-                            <Table.Cell>
-                                <Input
-                                    placeholder={t("e_g_oatmeal_fruit")}
-                                    value={plan[day].breakfast}
-                                    onChange={handleChange(day, "breakfast")}
-                                />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Input
-                                    placeholder={t("e_g_sandwich_salad")}
-                                    value={plan[day].lunch}
-                                    onChange={handleChange(day, "lunch")}
-                                />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Input
-                                    placeholder={t("e_g_pasta_veggies")}
-                                    value={plan[day].dinner}
-                                    onChange={handleChange(day, "dinner")}
-                                />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Textarea
-                                    placeholder={t("groceries_or_notes")}
-                                    value={plan[day].notes}
-                                    onChange={handleChange(day, "notes")}
-                                    rows={2}
-                                />
-                            </Table.Cell>
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-            </Table.Root>
+            <VStack align="stretch" gap={6}>
+                {days.map((day) => (
+                    <Card.Root
+                        key={day}
+                        bg="bg.surface"
+                        borderRadius="xl"
+                        boxShadow="md"
+                        transition="all 0.25s ease-in-out"
+                        _hover={{
+                            transform: "scale(1.02)",
+                            boxShadow: "xl",
+                            bg: useColorModeValue("brand.50", "gray.700"),
+                        }}
+                    >
+                        <Card.Body gap={6}>
+                            <Heading size="md" color={lineColor}>
+                                {t(day)}
+                            </Heading>
 
-            <VStack align="stretch" gap={3} mt={6}>
-                <Heading size="sm">{t("tips")}</Heading>
-                <Text color="fg.muted">{t("use_export_to_save_your_plan_locally")}</Text>
-                <Text color="fg.muted">{t("use_import_to_load_a_saved_plan")}</Text>
-                <Text color="fg.muted">{t("your_plan_autosaves_in_the_browser")}</Text>
+                            <Box position="relative" w="full" px={4}>
+                                <HStack justify="space-between" align="center" gap={6} flexWrap="wrap">
+                                    {(["breakfast", "lunch", "dinner"] as (keyof MealEntry)[]).map((meal) => (
+                                        <VStack
+                                            key={meal}
+                                            align="center"
+                                            flex="1"
+                                            gap={2}
+                                            zIndex={1}
+                                            _hover={{ transform: "scale(1.05)" }}
+                                            transition="0.2s"
+                                        >
+                                            <Box
+                                                w={4}
+                                                h={4}
+                                                borderRadius="full"
+                                                bg={lineColor}
+                                                border="2px solid"
+                                                borderColor={useColorModeValue("white", "gray.700")}
+                                            />
+                                            <Input
+                                                placeholder={t(
+                                                    meal === "breakfast"
+                                                        ? "e_g_oatmeal_fruit"
+                                                        : meal === "lunch"
+                                                            ? "e_g_sandwich_salad"
+                                                            : "e_g_pasta_veggies"
+                                                )}
+                                                value={plan[day][meal]}
+                                                onChange={handleChange(day, meal)}
+                                                textAlign="center"
+                                                maxW={{ base: "100%", md: "200px" }}
+                                            />
+                                            <Text fontSize="sm" color="fg.muted">
+                                                {t(meal)}
+                                            </Text>
+                                        </VStack>
+                                    ))}
+                                </HStack>
+                            </Box>
+
+                            <Textarea
+                                placeholder={t("groceries_or_notes")}
+                                value={plan[day].notes}
+                                onChange={handleChange(day, "notes")}
+                                rows={3}
+                                resize="vertical"
+                            />
+                        </Card.Body>
+                        <Card.Footer justifyContent="flex-end" gap={2}>
+                            <Button variant="outline">{t("save")}</Button>
+                        </Card.Footer>
+                    </Card.Root>
+                ))}
             </VStack>
         </Box>
-    );
-};
+    )
+}
