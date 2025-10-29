@@ -89,6 +89,8 @@
     "no_units_available.": "Ingen enheder tilgængelige.",
     "invalid_api_response_schema.": "Ugyldigt API-responsskema.",
     "there_was_a_problem_loading_units.": "Der opstod et problem med indlæsning af enheder.",
+    "add_new_task": "Tilføj ny opgave",
+    "todo_list": "Opgaveliste",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
