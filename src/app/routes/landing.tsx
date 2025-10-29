@@ -78,7 +78,7 @@ export function LandingRoute() {
             </Banner>
 
             {/* How it Works */}
-            <Box py={20} bg={useColorModeValue("gray.200", "gray.900")}>
+            <Box py={20}>
                 <Container maxW="container.lg">
                     <Heading size="4xl" mb={12} textAlign="center">
                         {t("landing.how_it_works")}
@@ -134,57 +134,60 @@ export function LandingRoute() {
             </Box>
 
             {/* Testimonials */}
-            <Container maxW="container.xl" py={20}>
-                <Heading size="4xl" mb={12} textAlign="center">
-                    {t("landing.testimonials")}
-                </Heading>
-                <Stack
-                    direction={{ base: "column", md: "row" }}
-                    gap={8}
-                    justify="center"
-                    align="stretch"
-                >
-                    {[
-                        {
-                            name: "Alex Jensen",
-                            quote: t("landing.testimonial1"),
-                            role: t("landing.role1"),
-                        },
-                        {
-                            name: "Sophia Eriksen",
-                            quote: t("landing.testimonial2"),
-                            role: t("landing.role2"),
-                        },
-                        {
-                            name: "Solsol Lemansen",
-                            quote: t("landing.testimonial3"),
-                            role: t("landing.role3"),
-                        },
-                    ].map((p, i) => (
-                        <Card.Root
-                            key={i}
-                            border="1px solid"
-                            borderColor={borderCard}
-                            bg={bgCard}
-                            borderRadius="2xl"
-                            boxShadow="md"
-                            p={6}
-                            transition="all 0.25s"
-                            _hover={{ transform: "translateY(-6px)", boxShadow: "xl" }}
-                        >
-                            <Card.Body gap={4}>
-                                <Text fontStyle="italic" color="fg.muted">
-                                    “{p.quote}”
-                                </Text>
-                                <Text fontWeight="bold">{p.name}</Text>
-                                <Text fontSize="sm" color="fg.muted">
-                                    {p.role}
-                                </Text>
-                            </Card.Body>
-                        </Card.Root>
-                    ))}
-                </Stack>
-            </Container>
+            <Box bg={useColorModeValue("gray.200", "gray.900")}>
+                <Container maxW="container.xl" py={20}>
+                    <Heading size="4xl" mb={12} textAlign="center">
+                        {t("landing.testimonials")}
+                    </Heading>
+                    <Stack
+                        direction={{ base: "column", md: "row" }}
+                        gap={8}
+                        justify="center"
+                        align="stretch"
+                    >
+                        {[
+                            {
+                                name: "Alex Jensen",
+                                quote: t("landing.testimonial1"),
+                                role: t("landing.role1"),
+                            },
+                            {
+                                name: "Sophia Eriksen",
+                                quote: t("landing.testimonial2"),
+                                role: t("landing.role2"),
+                            },
+                            {
+                                name: "Solsol Lemansen",
+                                quote: t("landing.testimonial3"),
+                                role: t("landing.role3"),
+                            },
+                        ].map((p, i) => (
+                            <Card.Root
+                                key={i}
+                                border="1px solid"
+                                borderColor={borderCard}
+                                bg={bgCard}
+                                borderRadius="2xl"
+                                boxShadow="md"
+                                p={6}
+                                transition="all 0.25s"
+                                _hover={{ transform: "translateY(-6px)", boxShadow: "xl" }}
+                            >
+                                <Card.Body gap={4}>
+                                    <Text fontStyle="italic" color="fg.muted">
+                                        “{p.quote}”
+                                    </Text>
+                                    <Text fontWeight="bold">{p.name}</Text>
+                                    <Text fontSize="sm" color="fg.muted">
+                                        {p.role}
+                                    </Text>
+                                </Card.Body>
+                            </Card.Root>
+                        ))}
+                    </Stack>
+                </Container>
+            </Box>
+
 
             {/* Projects Showcase */}
             <Slideshow
