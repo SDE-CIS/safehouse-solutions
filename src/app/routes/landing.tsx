@@ -156,7 +156,7 @@ export function LandingRoute() {
                             role: t("landing.role2"),
                         },
                         {
-                            name: "Mark Fischer",
+                            name: "Solsol Lemansen",
                             quote: t("landing.testimonial3"),
                             role: t("landing.role3"),
                         },
