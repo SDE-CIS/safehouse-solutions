@@ -4,6 +4,7 @@ import { ApiResponseSchema } from "./ApiResponse";
 export const VideoSchema = z.object({
     name: z.string(),
     url: z.string().url(),
+    thumbnail: z.string(),
 });
 
 export type Video = z.infer<typeof VideoSchema>;

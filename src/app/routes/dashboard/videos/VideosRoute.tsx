@@ -11,25 +11,27 @@ import { useVideosQuery } from "@/services/api";
 import { useNavigate } from "react-router-dom";
 import { FaPlay, FaVideo } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 export function VideosRoute() {
     const { data, isLoading, error } = useVideosQuery();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <Container maxW="container.xl" py={10}>
             <Heading size="2xl" textAlign="center" mb={8}>
-                Video Archive
+                {t("videos.archive")}
             </Heading>
 
             {isLoading ? (
                 <Box textAlign="center" py={16}>
                     <Spinner size="xl" />
-                    <Text mt={4}>Loading videos...</Text>
+                    <Text mt={4}>{t("videos.loading")}</Text>
                 </Box>
             ) : error ? (
                 <Text textAlign="center" color="red.500">
-                    Failed to load videos.
+                    {t("videos.error")}
                 </Text>
             ) : data && data.data.length > 0 ? (
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={8}>
@@ -51,17 +53,27 @@ export function VideosRoute() {
                             onClick={() => navigate(`/dashboard/videos/${encodeURIComponent(video.name)}`)}
                         >
                             <Box position="relative" aspectRatio={16 / 9} bg="gray.100">
-                                <FaVideo
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        left: "50%",
-                                        transform: "translate(-50%, -50%)",
-                                        fontSize: "3rem",
-                                        color: "#3182CE",
-                                        opacity: 0.8,
-                                    }}
-                                />
+                                {video.thumbnail ? (
+                                    <Box
+                                        as="img"
+                                        src={video.thumbnail}
+                                        alt={video.name}
+                                        objectFit="cover"
+                                        width="100%"
+                                        height="100%"
+                                    />
+                                ) : (
+                                    <FaVideo
+                                        style={{
+                                            position: "absolute",
+                                            top: "50%",
+                                            left: "50%",
+                                            transform: "translate(-50%, -50%)",
+                                            fontSize: "3rem",
+                                            color: "#3182CE",
+                                            opacity: 0.8,
+                                        }}
+                                    />)}
                             </Box>
 
                             <Card.Body textAlign="center" py={4} gap={2}>
@@ -75,7 +87,7 @@ export function VideosRoute() {
                                     size="sm"
                                     mt={2}
                                 >
-                                    Watch
+                                    {t("videos.watch")}
                                 </Button>
                             </Card.Body>
                         </Card.Root>

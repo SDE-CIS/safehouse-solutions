@@ -130,12 +130,23 @@
         "dashboard": "Dashboard",
         "food": "Madplan",
         "todo": "Opgaveliste",
-        "users": "Åbn brugere"
+        "users": "Åbn brugere",
+        "videos": "Videoer"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
         "no_cameras": "Ingen kameraer fundet.",
         "add_camera": "Tilføj kamera"
+    },
+    "videos": {
+        "archive": "Videoarkiv",
+        "no_videos": "Ingen videoer fundet.",
+        "loading": "Indlæser...",
+        "error": "Kunne ikke indlæse videoer.",
+        "watch": "Se",
+        "avi_file": "Denne video er i AVI-format og kan ikke afspilles i browseren.",
+        "download": "Download video",
+        "no_video_found": "Ingen video fundet"
     },
     "landing": {
         "welcome": "Velkommen til Safehouse Solutions",

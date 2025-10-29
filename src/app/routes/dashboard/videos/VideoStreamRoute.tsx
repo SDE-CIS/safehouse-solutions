@@ -11,6 +11,7 @@ import { useVideoStreamQuery } from "@/services/api";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 export function VideoStreamRoute() {
     const { filename } = useParams<{ filename: string }>();
@@ -21,6 +22,7 @@ export function VideoStreamRoute() {
 
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const isAvi = filename?.toLowerCase().endsWith(".avi");
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (blob) {
@@ -38,7 +40,7 @@ export function VideoStreamRoute() {
                 variantStyle="outline"
                 mb={4}
             >
-                Back to list
+
             </Button>
 
             <Heading size="lg" mb={6} textAlign="center" wordBreak="break-all">
@@ -48,17 +50,17 @@ export function VideoStreamRoute() {
             {isFetching ? (
                 <Box textAlign="center" py={16}>
                     <Spinner size="xl" />
-                    <Text mt={4}>Loading video stream...</Text>
+                    <Text mt={4}>{t("videos.loading")}</Text>
                 </Box>
             ) : error ? (
                 <Text textAlign="center" color="red.500">
-                    Failed to load video.
+                    {t("videos.error")}
                 </Text>
             ) : videoUrl ? (
                 isAvi ? (
                     <Box textAlign="center" >
                         <Text fontSize="lg" mb={4}>
-                            This video format (.avi) is not supported for browser playback.
+                            {t("videos.avi_file")}
                         </Text>
                         <Button
                             as="a"
@@ -66,7 +68,7 @@ export function VideoStreamRoute() {
                             download
                             colorScheme="blue"
                         >
-                            Download Video
+                            {t("videos.download")}
                         </Button>
                     </Box>
                 ) : (
@@ -78,7 +80,7 @@ export function VideoStreamRoute() {
                     />
                 )
             ) : (
-                <Text textAlign="center">No video found.</Text>
+                <Text textAlign="center">{t("videos.no_video_found")}</Text>
             )}
         </Container >
     );
