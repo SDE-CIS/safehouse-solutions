@@ -62,6 +62,8 @@ export const createAppRouter = () =>
                 newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/todo')),
                 newRoute(paths.dashboard.users.path, 'UsersRoute', () => import('./routes/dashboard/users/users')),
                 newRoute(paths.dashboard.user.path, 'UserRoute', () => import('./routes/dashboard/users/user')),
+                newRoute(paths.dashboard.videos.path, 'VideosRoute', () => import('./routes/dashboard/videos/VideosRoute')),
+                newRoute(paths.dashboard.video.path, 'VideoStreamRoute', () => import('./routes/dashboard/videos/VideoStreamRoute')),
             ]
         },
         newRoute('*', 'NotFoundRoute', () => import('./routes/not-found')),

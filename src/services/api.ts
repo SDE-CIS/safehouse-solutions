@@ -19,6 +19,7 @@ import {
     UsersResponseSchema,
 } from "@/types/api/User";
 import { Keycard, KeycardResponse, KeycardResponseSchema, KeycardsResponse, KeycardsResponseSchema } from "@/types/api/Keycard";
+import { VideosResponse, VideosResponseSchema } from "@/types/api/Video";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -181,6 +182,23 @@ export const api = createApi({
                 method: "DELETE",
             }),
         }),
+
+        /* ─────────────── VIDEOS ─────────────── */
+        videos: builder.query<VideosResponse, void>({
+            query: () => "videos",
+            transformResponse: (response: unknown) =>
+                VideosResponseSchema.parse(response),
+        }),
+
+        videoStream: builder.query<Blob, string>({
+            query: (filename) => ({
+                url: `videos/stream/${encodeURIComponent(filename)}`,
+                responseHandler: async (response) => {
+                    const blob = await response.blob();
+                    return blob;
+                },
+            }),
+        }),
     }),
 });
 
@@ -198,4 +216,6 @@ export const {
     useCreateKeycardMutation,
     useUpdateKeycardMutation,
     useDeleteKeycardMutation,
+    useVideosQuery,
+    useVideoStreamQuery,
 } = api;
