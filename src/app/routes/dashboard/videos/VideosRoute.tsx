@@ -51,13 +51,12 @@ export function VideosRoute() {
                         >
                             <Box position="relative" aspectRatio={16 / 9} bg="gray.100">
                                 {video.thumbnail ? (
-                                    <Box
-                                        as="img"
+                                    <img
                                         src={video.thumbnail}
                                         alt={video.name}
-                                        objectFit="cover"
                                         width="100%"
                                         height="100%"
+                                        style={{ objectFit: "cover" }}
                                     />
                                 ) : (
                                     <FaVideo

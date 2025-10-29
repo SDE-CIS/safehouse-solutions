@@ -3,6 +3,7 @@ import {
     Box,
     Container,
     Heading,
+    Link,
     Spinner,
     Text,
 } from "@chakra-ui/react";
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { Download } from "lucide-react";
 
 export function VideoStreamRoute() {
     const { filename } = useParams<{ filename: string }>();
@@ -62,14 +64,9 @@ export function VideoStreamRoute() {
                         <Text fontSize="lg" mb={4}>
                             {t("videos.avi_file")}
                         </Text>
-                        <Button
-                            as="a"
-                            href={`${import.meta.env.VITE_API_BASE_URL}/videos/stream/${filename}`}
-                            download
-                            colorScheme="brand"
-                        >
-                            {t("videos.download")}
-                        </Button>
+                        <Link href={`${import.meta.env.VITE_API_BASE_URL}/videos/stream/${filename}`} download>
+                            <Button leftIcon={<Download />} colorScheme="brand">Download</Button>
+                        </Link>
                     </Box>
                 ) : (
                     <video
