@@ -78,7 +78,7 @@ export function UserRoute() {
 
     return (
         <Box p={8}>
-            <Button onClick={() => navigate("/dashboard/users")} mb={6} variant="outline">
+            <Button onClick={() => navigate("/dashboard/users")} mb={6} variantStyle="outline">
                 <ArrowBigLeft size={16} />
             </Button>
 
@@ -193,7 +193,7 @@ export function UserRoute() {
 
                                     <Dialog.Footer gap={4}>
                                         <Dialog.CloseTrigger asChild>
-                                            <Button variant="ghost">{t("users.cancel")}</Button>
+                                            <Button variantStyle="outline">{t("users.cancel")}</Button>
                                         </Dialog.CloseTrigger>
                                         <Button
                                             colorScheme="blue"
