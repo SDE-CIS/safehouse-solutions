@@ -178,7 +178,7 @@ export function UsersRoute() {
 
                             <Dialog.Footer gap={4}>
                                 <Dialog.CloseTrigger asChild>
-                                    <Button variant="ghost">{t("users.cancel")}</Button>
+                                    <Button variantStyle="outline">{t("users.cancel")}</Button>
                                 </Dialog.CloseTrigger>
 
                                 <Button
