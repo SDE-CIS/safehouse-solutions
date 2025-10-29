@@ -18,6 +18,7 @@ import {
     UsersResponse,
     UsersResponseSchema,
 } from "@/types/api/User";
+import { Keycard, KeycardResponse, KeycardResponseSchema, KeycardsResponse, KeycardsResponseSchema } from "@/types/api/Keycard";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -144,6 +145,42 @@ export const api = createApi({
                 method: "DELETE",
             }),
         }),
+
+        /* ─────────────── KEYCARDS ─────────────── */
+        keycards: builder.query<KeycardsResponse, void>({
+            query: () => "keycards",
+            transformResponse: (response: unknown) =>
+                KeycardsResponseSchema.parse(response),
+        }),
+
+        keycard: builder.query<KeycardResponse, number>({
+            query: (id) => `keycards/${id}`,
+            transformResponse: (response: unknown) =>
+                KeycardResponseSchema.parse(response),
+        }),
+
+        createKeycard: builder.mutation<KeycardResponse, Partial<Keycard>>({
+            query: (body) => ({
+                url: "keycards",
+                method: "POST",
+                body,
+            })
+        }),
+
+        updateKeycard: builder.mutation<KeycardResponse, { id: number; data: Partial<Keycard> }>({
+            query: ({ id, data }) => ({
+                url: `keycards/${id}`,
+                method: "PUT",
+                body: data,
+            })
+        }),
+
+        deleteKeycard: builder.mutation<{ message: string }, number>({
+            query: (id) => ({
+                url: `keycards/${id}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
@@ -156,4 +193,9 @@ export const {
     useCreateUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
+    useKeycardsQuery,
+    useKeycardQuery,
+    useCreateKeycardMutation,
+    useUpdateKeycardMutation,
+    useDeleteKeycardMutation,
 } = api;

@@ -198,5 +198,32 @@
         "edit_user": "Rediger bruger",
         "delete": "Slet",
         "actions": "Handlinger"
+    },
+    "keycards": {
+        "title": "Nøglekort",
+        "id": "ID",
+        "rfid_tag": "RFID-tag",
+        "rfid_placeholder": "Indtast RFID-tag",
+        "details": "Nøglekortoplysninger",
+        "add": "Tilføj nøglekort",
+        "add_keycard": "Opret nyt nøglekort",
+        "edit": "Rediger",
+        "edit_keycard": "Rediger nøglekort",
+        "delete": "Slet",
+        "actions": "Handlinger",
+        "cancel": "Annuller",
+        "create": "Opret",
+        "creating": "Opretter...",
+        "save": "Gem",
+        "saving": "Gemmer...",
+        "created": "Nøglekort oprettet succesfuldt!",
+        "create_failed": "Kunne ikke oprette nøglekort.",
+        "updated": "Nøglekort opdateret succesfuldt!",
+        "update_failed": "Kunne ikke opdatere nøglekort.",
+        "deleted": "Nøglekort slettet succesfuldt!",
+        "delete_failed": "Kunne ikke slette nøglekort.",
+        "no_keycards": "Ingen nøglekort fundet.",
+        "loading": "Indlæser nøglekort...",
+        "update": "Opdater"
     }
 }

@@ -1,9 +1,12 @@
-import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react"
+"use client"
+
 import {
     AbsoluteCenter,
     Button as ChakraButton,
     Spinner,
     Text as Span,
+    type ButtonProps as ChakraButtonProps,
+    HStack,
 } from "@chakra-ui/react"
 import * as React from "react"
 import { useTranslation } from "react-i18next"
@@ -15,8 +18,12 @@ interface ButtonLoadingProps {
 
 type ButtonVariant = "filled" | "reverse" | "outline"
 
-export interface ButtonProps extends ChakraButtonProps, ButtonLoadingProps {
+export interface ButtonProps
+    extends Omit<ChakraButtonProps, "variant">,
+    ButtonLoadingProps {
     variantStyle?: ButtonVariant
+    leftIcon?: React.ReactNode
+    rightIcon?: React.ReactNode
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -27,8 +34,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             loadingText,
             children,
             variantStyle = "filled",
+            leftIcon,
+            rightIcon,
             ...rest
         } = props
+
         const { t } = useTranslation()
 
         const getContent = (content: React.ReactNode) =>
@@ -62,7 +72,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         },
                     }
                     : {
-                        // outline variant
                         bg: "transparent",
                         color: "brand.500",
                         border: "1px solid",
@@ -105,7 +114,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         {getContent(loadingText)}
                     </>
                 ) : (
-                    getContent(children)
+                    <HStack gap={2}>
+                        {leftIcon && <>{leftIcon}</>}
+                        {getContent(children)}
+                        {rightIcon && <>{rightIcon}</>}
+                    </HStack>
                 )}
             </ChakraButton>
         )
