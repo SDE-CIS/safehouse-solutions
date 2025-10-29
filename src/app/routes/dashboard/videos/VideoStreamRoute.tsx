@@ -66,7 +66,7 @@ export function VideoStreamRoute() {
                             as="a"
                             href={`${import.meta.env.VITE_API_BASE_URL}/videos/stream/${filename}`}
                             download
-                            colorScheme="blue"
+                            colorScheme="brand"
                         >
                             {t("videos.download")}
                         </Button>

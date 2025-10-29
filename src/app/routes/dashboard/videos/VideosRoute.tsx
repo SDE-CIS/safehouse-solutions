@@ -38,16 +38,13 @@ export function VideosRoute() {
                     {data.data.map((video) => (
                         <Card.Root
                             key={video.name}
-                            border="1px solid"
-                            borderColor="gray.200"
                             borderRadius="xl"
                             overflow="hidden"
-                            bg="white"
                             transition="all 0.25s ease"
                             _hover={{
-                                transform: "translateY(-8px)",
+                                transform: "translateY(-2px)",
                                 boxShadow: "xl",
-                                borderColor: "blue.300",
+                                borderColor: "brand.300",
                             }}
                             cursor="pointer"
                             onClick={() => navigate(`/dashboard/videos/${encodeURIComponent(video.name)}`)}
@@ -82,7 +79,7 @@ export function VideosRoute() {
                                 </Text>
                                 <Button
                                     leftIcon={<FaPlay />}
-                                    colorScheme="blue"
+                                    colorScheme="brand"
                                     variantStyle="filled"
                                     size="sm"
                                     mt={2}
