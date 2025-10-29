@@ -58,6 +58,17 @@ export const paths: Record<string, Path> = {
             path: '/dashboard/cameras/:cameraId',
             getHref: (id: string) => `/dashboard/cameras/${id}`,
         },
+        videos: {
+            label: 'Videos',
+            path: '/dashboard/videos',
+            getHref: () => '/dashboard/videos',
+        },
+        video: {
+            label: 'Video Stream',
+            hidden: true,
+            path: '/dashboard/videos/:filename',
+            getHref: (filename: string) => `/dashboard/videos/${filename}`,
+        },
         keycards: {
             label: 'Keycards',
             path: '/dashboard/keycards',
@@ -84,17 +95,6 @@ export const paths: Record<string, Path> = {
             hidden: true,
             path: '/dashboard/users/:id',
             getHref: (id: string) => `/dashboard/users/${id}`,
-        },
-        videos: {
-            label: 'Videos',
-            path: '/dashboard/videos',
-            getHref: () => '/dashboard/videos',
-        },
-        video: {
-            label: 'Video Stream',
-            hidden: true,
-            path: '/dashboard/videos/:filename',
-            getHref: (filename: string) => `/dashboard/videos/${filename}`,
         },
     }
 } as const;
