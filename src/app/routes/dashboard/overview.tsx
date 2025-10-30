@@ -1,92 +1,58 @@
-import { useEffect, useMemo } from "react";
 import {
     Box,
     Container,
     Heading,
-    HStack,
-    Text,
-    Badge,
     Table,
-    Skeleton,
 } from "@chakra-ui/react";
-import { useUnitsQuery } from "@/services/api";
 import { useTranslation } from "react-i18next";
-import { toaster } from "@/components/ui/toaster";
-
-function StatCard({
-    label,
-    value,
-}: {
-    label: string;
-    value: string | number;
-}) {
-    return (
-        <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            p={4}
-            bg="bg"
-            _dark={{ bg: "gray.800", borderColor: "gray.700" }}
-            flex="1"
-            minW="180px"
-        >
-            <Text fontSize="sm" color="fg.muted">
-                {label}
-            </Text>
-            <Text fontSize="2xl" fontWeight="semibold">
-                {value}
-            </Text>
-        </Box>
-    );
-}
 
 export function OverviewRoute() {
-    const { data, error, isLoading, isError } = useUnitsQuery();
+    // const { data, error, isLoading, isError } = useUnitsQuery();
     const { t } = useTranslation();
 
-    const isSchemaError =
-        isError &&
-        typeof (error as any)?.status !== "number" &&
-        ((error as any)?.status === "PARSING_ERROR" ||
-            String((error as any)?.error ?? "").includes("Zod"));
+    // const isSchemaError =
+    //     isError &&
+    //     typeof (error as any)?.status !== "number" &&
+    //     ((error as any)?.status === "PARSING_ERROR" ||
+    //         String((error as any)?.error ?? "").includes("Zod"));
 
-    useEffect(() => {
-        if (isSchemaError) {
-            toaster.create({
-                title: t("error"),
-                description: t("the_api_response_schema_is_invalid"),
-            });
-        }
-    }, [isSchemaError, t]);
+    // useEffect(() => {
+    //     if (isSchemaError) {
+    //         toaster.create({
+    //             title: t("error"),
+    //             description: t("the_api_response_schema_is_invalid"),
+    //         });
+    //     }
+    // }, [isSchemaError, t]);
 
-    const units = data?.data ?? [];
+    // const units = data?.data ?? [];
 
-    const stats = useMemo(() => {
-        if (!units.length) {
-            return {
-                total: 0,
-                active: 0,
-                inactive: 0,
-                locations: 0,
-                sensorTypes: 0,
-            };
-        }
-        const active = units.filter((u) => u.Active).length;
-        const locations = new Set(units.map((u) => u.LocationID)).size;
-        const sensorTypes = new Set(units.map((u) => u.SensorTypeID)).size;
-        return {
-            total: units.length,
-            active,
-            inactive: units.length - active,
-            locations,
-            sensorTypes,
-        };
-    }, [units]);
+    // const stats = useMemo(() => {
+    //     if (!units.length) {
+    //         return {
+    //             total: 0,
+    //             active: 0,
+    //             inactive: 0,
+    //             locations: 0,
+    //             sensorTypes: 0,
+    //         };
+    //     }
+    //     const active = units.filter((u) => u.Active).length;
+    //     const locations = new Set(units.map((u) => u.LocationID)).size;
+    //     const sensorTypes = new Set(units.map((u) => u.SensorTypeID)).size;
+    //     return {
+    //         total: units.length,
+    //         active,
+    //         inactive: units.length - active,
+    //         locations,
+    //         sensorTypes,
+    //     };
+    // }, [units]);
 
-    const formatDate = (s: string) => {
-        const d = new Date(s);
-        return isNaN(d.getTime()) ? s : d.toLocaleString();
-    };
+    // const formatDate = (s: string) => {
+    //     const d = new Date(s);
+    //     return isNaN(d.getTime()) ? s : d.toLocaleString();
+    // };
 
     return (
         <Container maxW="container.xl" py={8}>
@@ -95,13 +61,13 @@ export function OverviewRoute() {
             </Heading>
 
             {/* Quick stats */}
-            <HStack gap={4} wrap="wrap" mb={6}>
+            {/* <HStack gap={4} wrap="wrap" mb={6}>
                 <StatCard label={t("total_units")} value={stats.total} />
                 <StatCard label={t("active")} value={stats.active} />
                 <StatCard label={t("inactive")} value={stats.inactive} />
                 <StatCard label={t("locations")} value={stats.locations} />
                 <StatCard label={t("sensor_types")} value={stats.sensorTypes} />
-            </HStack>
+            </HStack> */}
 
             <Box
                 borderWidth="1px"
@@ -124,7 +90,7 @@ export function OverviewRoute() {
                         </Table.Row>
                     </Table.Header>
 
-                    <Table.Body>
+                    {/* <Table.Body>
                         {isLoading ? (
                             // Skeleton rows while loading
                             Array.from({ length: 5 }).map((_, i) => (
@@ -161,18 +127,18 @@ export function OverviewRoute() {
                                 </Table.Row>
                             ))
                         )}
-                    </Table.Body>
+                    </Table.Body> */}
                 </Table.Root>
             </Box>
 
-            {isError && !isSchemaError && (
+            {/* {isError && !isSchemaError && (
                 <Box mt={4} color="fg.muted">
                     <Text fontSize="sm">
                         {t("there_was_a_problem_loading_units.")}{" "}
                         {(error as any)?.status && `(${(error as any).status})`}
                     </Text>
                 </Box>
-            )}
+            )} */}
         </Container>
     );
 }

@@ -10,7 +10,6 @@ import { RootState } from "../app/store";
 import { loggedIn, loggedOut, tokenReceived } from "@/services/login";
 import { AuthResponse } from "@/types/api/AuthResponse";
 import { Login } from "@/types/api/Login";
-import { UnitsResponse, UnitsResponseSchema } from "@/types/api/Unit";
 import {
     User,
     UserResponse,
@@ -104,13 +103,6 @@ export const api = createApi({
             query: () => "auth/refresh",
         }),
 
-        /* ─────────────── UNITS ─────────────── */
-        units: builder.query<UnitsResponse, void>({
-            query: () => "units",
-            transformResponse: (response: unknown) =>
-                UnitsResponseSchema.parse(response),
-        }),
-
         /* ─────────────── USERS ─────────────── */
         users: builder.query<UsersResponse, void>({
             query: () => "users",
@@ -138,6 +130,28 @@ export const api = createApi({
                 method: "PUT",
                 body: data,
             })
+        }),
+
+        updateUserAvatar: builder.mutation<{ success: boolean; message: string }, { id: number; file?: File; url?: string }>({
+            query: ({ id, file, url }) => {
+                if (file) {
+                    const formData = new FormData();
+                    formData.append("file", file);
+
+                    return {
+                        url: `users/avatar/${id}`,
+                        method: "PUT",
+                        body: formData,
+                    };
+                }
+
+                return {
+                    url: `users/avatar/${id}`,
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ ProfilePicture: url }),
+                };
+            },
         }),
 
         deleteUser: builder.mutation<{ message: string }, number>({
@@ -205,11 +219,11 @@ export const api = createApi({
 export const {
     useSignInMutation,
     useRefreshTokenQuery,
-    useUnitsQuery,
     useUsersQuery,
     useUserQuery,
     useCreateUserMutation,
     useUpdateUserMutation,
+    useUpdateUserAvatarMutation,
     useDeleteUserMutation,
     useKeycardsQuery,
     useKeycardQuery,

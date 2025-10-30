@@ -11,10 +11,7 @@ export const AuthResponseSchema = z.object({
         lastname: z.string().optional(),
         phoneNumber: z.string().optional(),
         email: z.string().optional(),
-        pfp: z.object({
-            type: z.string(),
-            data: z.array(z.number()),
-        }).optional(),
+        avatar: z.string().optional(),
     })
 });
 export type AuthResponse = z.infer<typeof AuthResponseSchema>;

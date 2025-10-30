@@ -1,9 +1,8 @@
 'use client';
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
     Box,
-    Center,
     Collapsible,
     Container,
     Flex,
@@ -11,10 +10,6 @@ import {
     HoverCardRoot,
     HoverCardTrigger,
     Image,
-    MenuContent,
-    MenuItem,
-    MenuRoot,
-    MenuTrigger,
     Stack,
     Text,
 } from '@chakra-ui/react';
@@ -24,10 +19,10 @@ import { ColorModeButton, useColorModeValue } from "@/components/ui/color-mode.t
 import logo from '/images/logo.png';
 import { LanguageModeButton } from './ui/language-mode';
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { loggedOut, selectCurrentAccessToken, selectUsername } from "@/services/login.ts";
-import { Avatar } from "@/components/ui/avatar.tsx";
+import { useAppSelector } from "@/hooks";
+import { selectCurrentAccessToken } from "@/services/login.ts";
 import { Button } from './ui/button';
+import { ProfileButton } from './ProfileButton.tsx';
 
 export function DashboardNavigation() {
     const { t } = useTranslation();
@@ -204,106 +199,6 @@ export function Navigation() {
             </Container>
         </Box >
     );
-}
-
-const ProfileButton = () => {
-    const username = useAppSelector(selectUsername);
-    const dispatch = useAppDispatch();
-    const { t } = useTranslation();
-    const navigate = useNavigate();
-
-    const onLogout = () => {
-        dispatch(loggedOut())
-        navigate('/')
-    }
-
-    return (
-        <MenuRoot>
-            <MenuTrigger asChild>
-                <Avatar
-                    size={'sm'}
-                    src={'https://avatars.dicebear.com/api/male/username.svg'}
-                    cursor="pointer"
-                />
-            </MenuTrigger>
-            <MenuContent
-                style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '84%',
-                    zIndex: 1000,
-                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    minWidth: '200px',
-                }}
-            >
-                <Center mb={4}>
-                    <Avatar
-                        size={'2xl'}
-                        src={'https://avatars.dicebear.com/api/male/username.svg'}
-                    />
-                </Center>
-                <Center mb={4}>
-                    <p>{username}</p>
-                </Center>
-
-                {/* Dashboard Link */}
-                <MenuItem value="dashboard" style={{ padding: 0 }}>
-                    <Link
-                        to="/dashboard"
-                        style={{
-                            display: 'block',
-                            width: '100%',
-                            height: '100%',
-                            padding: '8px 16px',
-                            textDecoration: 'none',
-                            color: 'inherit',
-                        }}
-                    >
-                        {t('navigation.app')}
-                    </Link>
-                </MenuItem>
-
-                <MenuItem value="users" style={{ padding: 0 }}>
-                    <Link
-                        to="/dashboard/users"
-                        style={{
-                            display: 'block',
-                            width: '100%',
-                            height: '100%',
-                            padding: '8px 16px',
-                            textDecoration: 'none',
-                            color: 'inherit',
-                        }}
-                    >
-                        {t('navigation.users')}
-                    </Link>
-                </MenuItem>
-
-                {/* Log Out */}
-                <MenuItem
-                    value="log-out"
-                    style={{ color: 'red.500', padding: 0 }}
-                    onClick={onLogout}
-                >
-                    <Text
-                        style={{
-                            display: 'block',
-                            width: '100%',
-                            height: '100%',
-                            padding: '8px 16px',
-                            textDecoration: 'none',
-                            color: 'red',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        {t('navigation.log_out')}
-                    </Text>
-                </MenuItem>
-            </MenuContent>
-        </MenuRoot>
-    )
 }
 
 const DesktopNav = () => {
