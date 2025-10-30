@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
 import { RootState } from "../app/store";
-import { loggedIn, loggedOut, tokenReceived } from "@/services/login";
+import { avatarReceived, loggedIn, loggedOut, tokenReceived } from "@/services/login";
 import { AuthResponse } from "@/types/api/AuthResponse";
 import { Login } from "@/types/api/Login";
 import {
@@ -132,7 +132,7 @@ export const api = createApi({
             })
         }),
 
-        updateUserAvatar: builder.mutation<{ success: boolean; message: string }, { id: number; file?: File; url?: string }>({
+        updateUserAvatar: builder.mutation<{ success: boolean; message: string, url: string }, { id: number; file?: File; url?: string }>({
             query: ({ id, file, url }) => {
                 if (file) {
                     const formData = new FormData();
@@ -151,6 +151,15 @@ export const api = createApi({
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ ProfilePicture: url }),
                 };
+            },
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data.url);
+                    dispatch(avatarReceived({ avatar: data.url }));
+                } catch {
+                    /* silent */
+                }
             },
         }),
 

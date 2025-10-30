@@ -31,6 +31,10 @@ export const loginSlice = createSlice({
             setRawCookie('accessToken', action.payload.accessToken);
             state.accessToken = action.payload.accessToken;
         },
+        avatarReceived: (state, action) => {
+            setRawCookie('avatar', action.payload.avatar);
+            state.avatar = action.payload.avatar;
+        },
         loggedIn: (state, action) => {
             setRawCookie('id', action.payload.user.id);
             setRawCookie('username', action.payload.user.username);
@@ -61,6 +65,6 @@ export const selectUsername = (state: RootState) => state.loginSlice.username;
 export const selectAvatar = (state: RootState) => state.loginSlice.avatar;
 export const selectCurrentAccessToken = (state: RootState) => state.loginSlice.accessToken;
 
-export const { tokenReceived, loggedIn, loggedOut } = loginSlice.actions;
+export const { tokenReceived, avatarReceived, loggedIn, loggedOut } = loginSlice.actions;
 
 export default loginSlice.reducer;

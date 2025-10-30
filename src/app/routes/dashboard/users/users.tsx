@@ -235,7 +235,7 @@ export function UsersRoute() {
                                 >
                                     <Table.Cell onClick={() => navigate(`/dashboard/users/${user.ID}`)}>
                                         <Stack direction="row" align="center" gap={4}>
-                                            <Avatar name={`${user.FirstName} ${user.LastName}`} />
+                                            <Avatar name={`${user.FirstName} ${user.LastName}`} src={user.ProfilePicture} />
                                             <Box>
                                                 {user.FirstName} {user.LastName}
                                             </Box>
