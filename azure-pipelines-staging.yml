@@ -1,0 +1,50 @@
+trigger:
+- main
+
+pool:
+  name: Production
+
+variables:
+  build.ArtifactStagingDirectory: '$(Pipeline.Workspace)/artifacts'
+
+steps:
+# Install Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+# Install dependencies
+- script: |
+    npm ci
+  displayName: 'Install dependencies'
+
+# Run type-check, lint, and tests
+- script: |
+    npm run type-check
+    npm run lint
+    npm run test
+  displayName: 'Run type-check, lint, and tests'
+
+# Build the app
+- script: |
+    echo "Building with API base URL: $env:VITE_API_BASE_URL"
+    npm run build
+  displayName: 'Build the app'
+  env:
+    VITE_API_BASE_URL: 'http://192.168.1.129:4001'
+
+# Copy built files to staging directory
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'dist'
+    Contents: '**'
+    TargetFolder: '$(build.ArtifactStagingDirectory)'
+  displayName: 'Copy files to artifact staging directory'
+
+# Publish build artifacts
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(build.ArtifactStagingDirectory)'
+    artifact: 'safehouse-solutions'
+  displayName: 'Publish build artifacts'
