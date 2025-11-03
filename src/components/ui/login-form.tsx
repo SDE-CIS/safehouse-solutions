@@ -18,6 +18,19 @@ export function LoginForm() {
 
     const handleShowHidePass = () => setShow(!show);
 
+    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX / innerWidth) * 100;
+        const y = (e.clientY / innerHeight) * 100;
+
+        const offsetX = 50 + (x - 50) / 10;
+        const offsetY = 50 + (y - 50) / 10;
+
+        setBgPosition({ x: offsetX, y: offsetY });
+    };
+
     const onSubmit: SubmitHandler<Login> = async (data) => {
         setAuthError(null);
 
@@ -33,7 +46,16 @@ export function LoginForm() {
     };
 
     return (
-        <Center h="75vh">
+        <Center
+            pt={16}
+            pb={16}
+            onMouseMove={handleMouseMove}
+            bgImage={`url(/images/login.jpg)`}
+            bgSize="110%"
+            bgPos={`${bgPosition.x}% ${bgPosition.y}%`}
+            transition="background-position 0.2s ease-out"
+            minH="100vh"
+        >
             <Box
                 as="form"
                 onSubmit={handleSubmit(onSubmit)}
