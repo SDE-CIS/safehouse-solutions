@@ -1,9 +1,17 @@
 import { useState } from 'react';
-import { Box, Button, Center, FieldHelperText, Flex, Input, Text } from '@chakra-ui/react';
-import { Field } from '@/components/ui/field';
+import {
+    Box,
+    Button,
+    Center,
+    Field,
+    FieldHelperText,
+    Flex,
+    Input,
+    Text
+} from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Register } from '@/types/api/Register';
 import { useCreateUserMutation } from '@/services/api';
 
@@ -14,18 +22,27 @@ export function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<Register> = async (_data) => {
         try {
-            await createUser(_data).unwrap();
-            setAuthError(null);
-        } catch (error: any) {
-            if (error.status === 409) {
-                setAuthError('Username or email already exists.');
-            } else {
-                setAuthError('An unexpected error occurred. Please try again.');
+            const response = await createUser(_data);
+
+            if ('error' in response) {
+                const status = response.error?.status;
+                if (status === 409) {
+                    setAuthError('Username or email already exists.');
+                } else {
+                    setAuthError('An unexpected error occurred. Please try again.');
+                }
+                return;
             }
-            console.error(error);
+
+            setAuthError(null);
+            navigate('/dashboard');
+        } catch (err: any) {
+            console.error('Unexpected error:', err);
+            setAuthError('An unexpected error occurred. Please try again.');
         }
     };
 
@@ -40,7 +57,7 @@ export function RegisterForm() {
                 bg="white"
                 _dark={{ bg: 'gray.800' }}
                 width="100%"
-                maxW="600px" // widened from 400px
+                maxW="600px"
             >
                 <Text fontSize="2xl" fontWeight="bold" mb="6" textAlign="center">
                     {t('auth.register')}
@@ -48,47 +65,50 @@ export function RegisterForm() {
 
                 {/* First + Last Name Row */}
                 <Flex gap={4}>
-                    <Field
-                        label={t('auth.first_name')}
-                        flex="1"
-                        invalid={Boolean(errors.FirstName)}
-                        errorText={errors.FirstName?.message}
-                    >
+                    <Field.Root invalid={Boolean(errors.FirstName)} flex="1">
+                        <Field.Label>{t('auth.first_name')}</Field.Label>
+
                         <Input
                             placeholder={t('auth.enter_first_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('FirstName', { required: 'First Name is required' })}
                         />
-                    </Field>
 
-                    <Field
-                        label={t('auth.last_name')}
-                        flex="1"
-                        invalid={Boolean(errors.LastName)}
-                        errorText={errors.LastName?.message}
-                    >
+                        {errors.FirstName && <Field.ErrorText>{errors.FirstName.message}</Field.ErrorText>}
+                    </Field.Root>
+
+                    <Field.Root invalid={Boolean(errors.LastName)} flex="1">
+                        <Field.Label>{t('auth.last_name')}</Field.Label>
+
                         <Input
                             placeholder={t('auth.enter_last_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('LastName', { required: 'Last Name is required' })}
                         />
-                    </Field>
+
+                        {errors.LastName && <Field.ErrorText>{errors.LastName.message}</Field.ErrorText>}
+                    </Field.Root>
                 </Flex>
 
-                {/* Username Field */}
-                <Field label={t('auth.username')} mt={5} invalid={Boolean(errors.Username)} errorText={errors.Username?.message}>
+                {/* Username */}
+                <Field.Root mt={5} invalid={Boolean(errors.Username)}>
+                    <Field.Label>{t('auth.username')}</Field.Label>
+
                     <Input
                         placeholder={t('auth.enter_username')}
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
                         {...register('Username', { required: 'Username is required' })}
                     />
-                </Field>
 
-                {/* Email Field */}
-                <Field label={t('auth.email')} mt={5} invalid={Boolean(errors.Email)} errorText={errors.Email?.message}>
+                    {errors.Username && <Field.ErrorText>{errors.Username.message}</Field.ErrorText>}
+                </Field.Root>
+
+                {/* Email */}
+                <Field.Root mt={5} invalid={Boolean(errors.Email)}>
+                    <Field.Label>{t('auth.email')}</Field.Label>
                     <Input
                         type="email"
                         placeholder={t('auth.enter_email')}
@@ -102,17 +122,22 @@ export function RegisterForm() {
                             }
                         })}
                     />
-                </Field>
+                    {errors.Email && <Field.ErrorText>{errors.Email.message}</Field.ErrorText>}
+                </Field.Root>
 
-                {/* Password Field */}
-                <Field label={t('auth.password')} mt={5} invalid={Boolean(errors.Password)} errorText={errors.Password?.message}>
+                {/* Password */}
+                <Field.Root mt={5} invalid={Boolean(errors.Password)}>
+                    <Field.Label>{t('auth.password')}</Field.Label>
                     <Box position="relative" width="100%">
                         <Input
                             type={showPassword ? 'text' : 'password'}
                             placeholder={t('auth.enter_password')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
-                            {...register('Password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
+                            {...register('Password', {
+                                required: 'Password is required',
+                                minLength: { value: 6, message: 'Password must be at least 6 characters' }
+                            })}
                         />
                         <Button
                             position="absolute"
@@ -126,10 +151,12 @@ export function RegisterForm() {
                             {showPassword ? t('auth.hide') : t('auth.show')}
                         </Button>
                     </Box>
-                </Field>
+                    {errors.Password && <Field.ErrorText>{errors.Password.message}</Field.ErrorText>}
+                </Field.Root>
 
-                {/* Confirm Password Field */}
-                <Field label={t('auth.confirm_password')} mt={5} invalid={Boolean(errors.ConfirmPassword)} errorText={errors.ConfirmPassword?.message}>
+                {/* Confirm Password */}
+                <Field.Root mt={5} invalid={Boolean(errors.ConfirmPassword)}>
+                    <Field.Label>{t('auth.confirm_password')}</Field.Label>
                     <Box position="relative" width="100%">
                         <Input
                             type={showConfirmPassword ? 'text' : 'password'}
@@ -157,21 +184,24 @@ export function RegisterForm() {
                             {showConfirmPassword ? t('auth.hide') : t('auth.show')}
                         </Button>
                     </Box>
-                </Field>
+                    {errors.ConfirmPassword && <Field.ErrorText>{errors.ConfirmPassword.message}</Field.ErrorText>}
+                </Field.Root>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <Box textAlign="center" mt="6">
                     <Button type="submit" bg="brand.600" _hover={{ bg: 'brand.400' }} width="100%" color="white">
                         {t('auth.register')}
                     </Button>
                 </Box>
 
-                {/* Auth Error */}
-                {authError && (
-                    <FieldHelperText color="red.500" textAlign="center">
-                        {authError}
-                    </FieldHelperText>
-                )}
+                <Field.Root mt={4}>
+                    {/* Auth Error */}
+                    {authError && (
+                        <FieldHelperText color="red.500" mt={3}>
+                            {authError}
+                        </FieldHelperText>
+                    )}
+                </Field.Root>
 
                 {/* Secondary Action */}
                 <Flex alignItems="center" flexDirection="column" mt="5">
