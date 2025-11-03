@@ -5,10 +5,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Register } from '@/types/api/Register';
+import { useCreateUserMutation } from '@/services/api';
 
 export function RegisterForm() {
     const { handleSubmit, register, formState: { errors }, watch } = useForm<Register>();
-    // const [signUp] = useSignUpMutation();
+    const [createUser] = useCreateUserMutation();
     const [authError, setAuthError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -16,7 +17,7 @@ export function RegisterForm() {
 
     const onSubmit: SubmitHandler<Register> = async (_data) => {
         try {
-            // await signUp(data).unwrap();
+            await createUser(_data).unwrap();
             setAuthError(null);
         } catch (error: any) {
             if (error.status === 409) {
@@ -29,7 +30,7 @@ export function RegisterForm() {
     };
 
     return (
-        <Center h="75vh">
+        <Center h="75vh" mt={20} mb={20}>
             <Box
                 as="form"
                 onSubmit={handleSubmit(onSubmit)}
@@ -39,31 +40,42 @@ export function RegisterForm() {
                 bg="white"
                 _dark={{ bg: 'gray.800' }}
                 width="100%"
-                maxW="400px"
+                maxW="600px" // widened from 400px
             >
                 <Text fontSize="2xl" fontWeight="bold" mb="6" textAlign="center">
                     {t('auth.register')}
                 </Text>
 
-                {/* First Name Field */}
-                <Field label={t('auth.first_name')} invalid={Boolean(errors.FirstName)} errorText={errors.FirstName?.message}>
-                    <Input
-                        placeholder={t('auth.enter_first_name')}
-                        borderColor="gray.200"
-                        _dark={{ borderColor: 'gray.700' }}
-                        {...register('FirstName', { required: 'First Name is required' })}
-                    />
-                </Field>
+                {/* First + Last Name Row */}
+                <Flex gap={4}>
+                    <Field
+                        label={t('auth.first_name')}
+                        flex="1"
+                        invalid={Boolean(errors.FirstName)}
+                        errorText={errors.FirstName?.message}
+                    >
+                        <Input
+                            placeholder={t('auth.enter_first_name')}
+                            borderColor="gray.200"
+                            _dark={{ borderColor: 'gray.700' }}
+                            {...register('FirstName', { required: 'First Name is required' })}
+                        />
+                    </Field>
 
-                {/* Last Name Field */}
-                <Field label={t('auth.last_name')} mt={5} invalid={Boolean(errors.LastName)} errorText={errors.LastName?.message}>
-                    <Input
-                        placeholder={t('auth.enter_last_name')}
-                        borderColor="gray.200"
-                        _dark={{ borderColor: 'gray.700' }}
-                        {...register('LastName', { required: 'Last Name is required' })}
-                    />
-                </Field>
+                    <Field
+                        label={t('auth.last_name')}
+                        flex="1"
+                        invalid={Boolean(errors.LastName)}
+                        errorText={errors.LastName?.message}
+                    >
+                        <Input
+                            placeholder={t('auth.enter_last_name')}
+                            borderColor="gray.200"
+                            _dark={{ borderColor: 'gray.700' }}
+                            {...register('LastName', { required: 'Last Name is required' })}
+                        />
+                    </Field>
+                </Flex>
 
                 {/* Username Field */}
                 <Field label={t('auth.username')} mt={5} invalid={Boolean(errors.Username)} errorText={errors.Username?.message}>

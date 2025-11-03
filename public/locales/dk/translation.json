@@ -117,7 +117,11 @@
         "username_required": "Brugernavn er påkrævet",
         "password_required": "Adgangskode er påkrævet",
         "invalid_credentials": "Forkert brugernavn eller adgangskode.",
-        "unexpected_error": "En uventet fejl opstod. Prøv igen."
+        "unexpected_error": "En uventet fejl opstod. Prøv igen.",
+        "enter_first_name": "Indtast fornavn",
+        "enter_last_name": "Indtast efternavn",
+        "first_name": "Fornavn",
+        "last_name": "Efternavn"
     },
     "navigation": {
         "home": "Hjem",
