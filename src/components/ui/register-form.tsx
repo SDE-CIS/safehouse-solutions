@@ -24,10 +24,23 @@ export function RegisterForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
+    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 }); // percentage-based
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX / innerWidth) * 100;
+        const y = (e.clientY / innerHeight) * 100;
+
+        // Move slightly around the center
+        const offsetX = 50 + (x - 50) / 10;
+        const offsetY = 50 + (y - 50) / 10;
+
+        setBgPosition({ x: offsetX, y: offsetY });
+    };
+
     const onSubmit: SubmitHandler<Register> = async (_data) => {
         try {
             const response = await createUser(_data);
-
             if ('error' in response) {
                 const status = (response.error as any).status;
                 if (status === 409) {
@@ -37,7 +50,6 @@ export function RegisterForm() {
                 }
                 return;
             }
-
             setAuthError(null);
             navigate('/dashboard');
         } catch (err: any) {
@@ -47,7 +59,16 @@ export function RegisterForm() {
     };
 
     return (
-        <Center pt={16} pb={16} bgImage={`url(/images/space.jpeg)`} bgSize="cover" bgPos="center">
+        <Center
+            pt={16}
+            pb={16}
+            onMouseMove={handleMouseMove}
+            bgImage={`url(/images/space.jpeg)`}
+            bgSize="110%"
+            bgPos={`${bgPosition.x}% ${bgPosition.y}%`}
+            transition="background-position 0.2s ease-out"
+            minH="100vh"
+        >
             <Box
                 as="form"
                 onSubmit={handleSubmit(onSubmit)}
@@ -67,27 +88,23 @@ export function RegisterForm() {
                 <Flex gap={4}>
                     <Field.Root invalid={Boolean(errors.FirstName)} flex="1">
                         <Field.Label>{t('auth.first_name')}</Field.Label>
-
                         <Input
                             placeholder={t('auth.enter_first_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('FirstName', { required: 'First Name is required' })}
                         />
-
                         {errors.FirstName && <Field.ErrorText>{errors.FirstName.message}</Field.ErrorText>}
                     </Field.Root>
 
                     <Field.Root invalid={Boolean(errors.LastName)} flex="1">
                         <Field.Label>{t('auth.last_name')}</Field.Label>
-
                         <Input
                             placeholder={t('auth.enter_last_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('LastName', { required: 'Last Name is required' })}
                         />
-
                         {errors.LastName && <Field.ErrorText>{errors.LastName.message}</Field.ErrorText>}
                     </Field.Root>
                 </Flex>
@@ -95,14 +112,12 @@ export function RegisterForm() {
                 {/* Username */}
                 <Field.Root mt={5} invalid={Boolean(errors.Username)}>
                     <Field.Label>{t('auth.username')}</Field.Label>
-
                     <Input
                         placeholder={t('auth.enter_username')}
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
                         {...register('Username', { required: 'Username is required' })}
                     />
-
                     {errors.Username && <Field.ErrorText>{errors.Username.message}</Field.ErrorText>}
                 </Field.Root>
 
