@@ -29,7 +29,7 @@ export function RegisterForm() {
             const response = await createUser(_data);
 
             if ('error' in response) {
-                const status = response.error?.status;
+                const status = (response.error as any).status;
                 if (status === 409) {
                     setAuthError('Username or email already exists.');
                 } else {
