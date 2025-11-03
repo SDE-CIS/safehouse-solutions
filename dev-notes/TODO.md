@@ -11,3 +11,7 @@
 	- [ ] Tænde/slukke vifte
 	- [ ] Vise kamera feed
 	- [ ] Vise og bruge MQTT forbindelser
+
+- [ ] Profile picture failed upload
+- [ ] Logged out
+- [ ] Missing images on live on video archive

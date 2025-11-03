@@ -220,11 +220,11 @@ export function RegisterForm() {
                 {/* Secondary Action */}
                 <Flex alignItems="center" flexDirection="column" mt="5">
                     <Text pb={2}>{t('auth.already_have_account')}</Text>
-                    <Button variant="ghost">
-                        <Link to={"/auth/login"}>
+                    <Link to={"/auth/login"}>
+                        <Button variant="ghost">
                             {t('auth.login')}
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </Flex>
             </Box>
         </Center>

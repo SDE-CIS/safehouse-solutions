@@ -98,11 +98,11 @@ export function LoginForm() {
                 {/* Secondary Action */}
                 <Flex alignItems="center" flexDirection="column" mt="5">
                     <Text pb={2}>{t('auth.no_account')}</Text>
-                    <Button variant="ghost">
-                        <Link to={"/auth/register"}>
+                    <Link to={"/auth/register"}>
+                        <Button variant="ghost">
                             {t('auth.register')}
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </Flex>
             </Box>
         </Center>
