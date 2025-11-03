@@ -133,7 +133,8 @@
         "username_or_email_exists": "Потребителското име или имейлът вече съществуват.",
         "data_consent_required": "Необходимо е съгласие за обработка на данни.",
         "email_required": "Имейлът е задължителен.",
-        "password_min_length": "Паролата трябва да е поне 6 знака."
+        "password_min_length": "Паролата трябва да е поне 6 знака.",
+        "logging_in": "Влизане..."
     },
     "navigation": {
         "home": "Начало",

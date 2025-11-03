@@ -133,7 +133,8 @@
         "username_or_email_exists": "Brugernavn eller e-mail eksisterer allerede.",
         "data_consent_required": "Databeskyttelsessamtykke er påkrævet.",
         "email_required": "E-mail er påkrævet.",
-        "password_min_length": "Adgangskode skal være mindst 6 tegn lang."
+        "password_min_length": "Adgangskode skal være mindst 6 tegn lang.",
+        "logging_in": "Logger ind..."
     },
     "navigation": {
         "home": "Hjem",
