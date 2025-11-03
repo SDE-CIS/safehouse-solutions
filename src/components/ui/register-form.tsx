@@ -24,14 +24,13 @@ export function RegisterForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 }); // percentage-based
+    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const { innerWidth, innerHeight } = window;
         const x = (e.clientX / innerWidth) * 100;
         const y = (e.clientY / innerHeight) * 100;
 
-        // Move slightly around the center
         const offsetX = 50 + (x - 50) / 10;
         const offsetY = 50 + (y - 50) / 10;
 
