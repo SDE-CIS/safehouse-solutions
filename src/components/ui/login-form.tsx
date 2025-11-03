@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Center, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Center, Flex, Input, Text } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { useSignInMutation } from "@/services/api.ts";
 import { Link } from "react-router-dom";
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Login } from '@/types/api/Login';
+import { Button } from './button';
 
 export function LoginForm() {
     const { handleSubmit, register, formState: { errors } } = useForm<Login>();
@@ -70,10 +71,10 @@ export function LoginForm() {
                         <Button
                             position="absolute"
                             top="50%"
-                            right="10px"
+                            right="0"
                             transform="translateY(-50%)"
                             size="sm"
-                            variant="ghost"
+                            variantStyle={"outline"}
                             onClick={handleShowHidePass}
                         >
                             {show ? t('auth.hide') : t('auth.show')}
@@ -83,7 +84,7 @@ export function LoginForm() {
 
                 {/* Submit Button */}
                 <Box textAlign="center" mt="6">
-                    <Button type="submit" bg="brand.600" _hover={{ bg: 'brand.400' }} width="100%" color="white">
+                    <Button type="submit" width="100%">
                         {t('auth.login')}
                     </Button>
                 </Box>
@@ -99,7 +100,7 @@ export function LoginForm() {
                 <Flex alignItems="center" flexDirection="column" mt="5">
                     <Text pb={2}>{t('auth.no_account')}</Text>
                     <Link to={"/auth/register"}>
-                        <Button variant="ghost">
+                        <Button variantStyle={"reverse"}>
                             {t('auth.register')}
                         </Button>
                     </Link>

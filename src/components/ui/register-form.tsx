@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     Box,
-    Button,
     Center,
     Field,
     FieldHelperText,
@@ -14,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { Register } from '@/types/api/Register';
 import { useCreateUserMutation } from '@/services/api';
+import { Button } from './button';
 
 export function RegisterForm() {
     const { handleSubmit, register, formState: { errors }, watch } = useForm<Register>();
@@ -156,10 +156,10 @@ export function RegisterForm() {
                         <Button
                             position="absolute"
                             top="50%"
-                            right="10px"
+                            right="0"
                             transform="translateY(-50%)"
                             size="sm"
-                            variant="ghost"
+                            variantStyle={"outline"}
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? t('auth.hide') : t('auth.show')}
@@ -189,10 +189,10 @@ export function RegisterForm() {
                         <Button
                             position="absolute"
                             top="50%"
-                            right="10px"
+                            right="0"
                             transform="translateY(-50%)"
                             size="sm"
-                            variant="ghost"
+                            variantStyle={"outline"}
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
                             {showConfirmPassword ? t('auth.hide') : t('auth.show')}
@@ -221,7 +221,7 @@ export function RegisterForm() {
                 <Flex alignItems="center" flexDirection="column" mt="5">
                     <Text pb={2}>{t('auth.already_have_account')}</Text>
                     <Link to={"/auth/login"}>
-                        <Button variant="ghost">
+                        <Button variantStyle={"outline"}>
                             {t('auth.login')}
                         </Button>
                     </Link>
