@@ -63,7 +63,7 @@ export function LoginForm() {
                         placeholder={t('auth.enter_username')}
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
-                        {...register('Username', { required: 'Username is required' })}
+                        {...register('Username', { required: t('auth.username_required') })}
                     />
                 </Field>
 
@@ -75,7 +75,7 @@ export function LoginForm() {
                             placeholder={t('auth.enter_password')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
-                            {...register('Password', { required: 'Password is required' })}
+                            {...register('Password', { required: t('auth.password_required') })}
                         />
                         <Button
                             position="absolute"
