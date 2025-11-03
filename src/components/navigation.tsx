@@ -147,47 +147,48 @@ export function Navigation() {
                                 direction="row"
                                 gap={{ base: 3, md: 6 }}
                             >
-                                {/* Sign In */}
-                                <Button
-                                    variantStyle="reverse"
-                                    fontSize={{ base: "sm", md: "md" }}
+                                <Link
+                                    to={paths.auth.login.getHref(location.pathname)}
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "6px",
+                                    }}
                                 >
-                                    {/* Icon on mobile, text on desktop */}
-                                    <Link
-                                        to={paths.auth.login.getHref(location.pathname)}
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            gap: "6px",
-                                        }}
+                                    {/* Sign In */}
+                                    <Button
+                                        variantStyle="reverse"
+                                        fontSize={{ base: "sm", md: "md" }}
                                     >
+
                                         <FiLogIn style={{ display: "inline-block", marginTop: "2px" }} />
                                         <Text display={{ base: "none", md: "inline" }}>
                                             {t("auth.sign_in")}
                                         </Text>
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
 
                                 {/* Sign Up */}
-                                <Button
-                                    fontSize={{ base: "sm", md: "md" }}
+                                <Link
+                                    to="/auth/register"
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "6px",
+                                    }}
                                 >
-                                    <Link
-                                        to="/auth/register"
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            gap: "6px",
-                                        }}
+                                    <Button
+                                        fontSize={{ base: "sm", md: "md" }}
                                     >
+
                                         <FiUserPlus style={{ display: "inline-block", marginTop: "2px" }} />
                                         <Text display={{ base: "none", md: "inline" }}>
                                             {t("auth.sign_up")}
                                         </Text>
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </Stack>
                         )}
                     </Flex>
