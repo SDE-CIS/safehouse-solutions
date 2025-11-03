@@ -34,17 +34,16 @@ export function RegisterForm() {
             if ('error' in response) {
                 const status = (response.error as any).status;
                 if (status === 409) {
-                    setAuthError('Username or email already exists.');
+                    setAuthError(t('auth.username_or_email_exists'));
                 } else {
-                    setAuthError('An unexpected error occurred. Please try again.');
+                    setAuthError(t('auth.unexpected_error'));
                 }
                 return;
             }
             setAuthError(null);
             navigate('/dashboard');
         } catch (err: any) {
-            console.error('Unexpected error:', err);
-            setAuthError('An unexpected error occurred. Please try again.');
+            setAuthError(t('auth.unexpected_error'));
         }
     };
 
@@ -81,7 +80,7 @@ export function RegisterForm() {
                             placeholder={t('auth.enter_first_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
-                            {...register('FirstName', { required: 'First Name is required' })}
+                            {...register('FirstName', { required: t('auth.first_name_required') })}
                         />
                         {errors.FirstName && <Field.ErrorText>{errors.FirstName.message}</Field.ErrorText>}
                     </Field.Root>
@@ -92,7 +91,7 @@ export function RegisterForm() {
                             placeholder={t('auth.enter_last_name')}
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
-                            {...register('LastName', { required: 'Last Name is required' })}
+                            {...register('LastName', { required: t('auth.last_name_required') })}
                         />
                         {errors.LastName && <Field.ErrorText>{errors.LastName.message}</Field.ErrorText>}
                     </Field.Root>
@@ -105,7 +104,7 @@ export function RegisterForm() {
                         placeholder={t('auth.enter_username')}
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
-                        {...register('Username', { required: 'Username is required' })}
+                        {...register('Username', { required: t('auth.username_required') })}
                     />
                     {errors.Username && <Field.ErrorText>{errors.Username.message}</Field.ErrorText>}
                 </Field.Root>
@@ -119,10 +118,10 @@ export function RegisterForm() {
                         borderColor="gray.200"
                         _dark={{ borderColor: 'gray.700' }}
                         {...register('Email', {
-                            required: 'Email is required',
+                            required: t('auth.email_required'),
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: 'Invalid email address'
+                                message: t('auth.invalid_email')
                             }
                         })}
                     />
@@ -139,8 +138,8 @@ export function RegisterForm() {
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('Password', {
-                                required: 'Password is required',
-                                minLength: { value: 6, message: 'Password must be at least 6 characters' }
+                                required: t('auth.password_required'),
+                                minLength: { value: 6, message: t('auth.password_min_length') }
                             })}
                         />
                         <Button
@@ -168,10 +167,10 @@ export function RegisterForm() {
                             borderColor="gray.200"
                             _dark={{ borderColor: 'gray.700' }}
                             {...register('ConfirmPassword', {
-                                required: 'Please confirm your password',
+                                required: t('auth.confirm_password_required'),
                                 validate: (val: string) => {
                                     if (watch('Password') !== val) {
-                                        return 'Your passwords do not match';
+                                        return t('auth.passwords_do_not_match');
                                     }
                                 }
                             })}
@@ -195,7 +194,7 @@ export function RegisterForm() {
                 <Field.Root mt={6} invalid={Boolean(errors.DataConsent)}>
                     <Checkbox.Root
                         {...register("DataConsent", {
-                            required: "You must consent to data usage to register",
+                            required: t('auth.must_accept_data_consent')
                         })}
                     >
                         <Checkbox.HiddenInput />
@@ -204,13 +203,13 @@ export function RegisterForm() {
                         </Checkbox.Control>
 
                         <Checkbox.Label>
-                            I consent to my personal data (such as name, email, and username) being stored and used in accordance with the{" "}
+                            {t('auth.data_consent_text')}{' '}
                             <ChakraLink
                                 href="/privacy-policy"
                                 color="brand.500"
                                 textDecoration="underline"
                             >
-                                Privacy Policy
+                                {t('auth.privacy_policy')}
                             </ChakraLink>.
                         </Checkbox.Label>
                     </Checkbox.Root>

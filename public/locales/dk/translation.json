@@ -121,7 +121,19 @@
         "enter_first_name": "Indtast fornavn",
         "enter_last_name": "Indtast efternavn",
         "first_name": "Fornavn",
-        "last_name": "Efternavn"
+        "last_name": "Efternavn",
+        "data_consent_text": "Jeg giver samtykke til, at mine personlige oplysninger (såsom navn, e-mail og brugernavn) bliver gemt og brugt i overensstemmelse med",
+        "privacy_policy": "Privatpolitikken",
+        "must_accept_data_consent": "Du skal acceptere databeskyttelsessamtykke for at fortsætte.",
+        "invalid_email": "Ugyldig e-mailadresse",
+        "last_name_required": "Efternavn er påkrævet",
+        "first_name_required": "Fornavn er påkrævet",
+        "confirm_password_required": "Bekræft adgangskode er påkrævet",
+        "passwords_do_not_match": "Dine adgangskoder stemmer ikke overens",
+        "username_or_email_exists": "Brugernavn eller e-mail eksisterer allerede.",
+        "data_consent_required": "Databeskyttelsessamtykke er påkrævet.",
+        "email_required": "E-mail er påkrævet.",
+        "password_min_length": "Adgangskode skal være mindst 6 tegn lang."
     },
     "navigation": {
         "home": "Hjem",
