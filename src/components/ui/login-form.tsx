@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Login } from '@/types/api/Login';
 import { Button } from './button';
+import { useParallaxBackground } from '@/hooks/useParallaxBackground';
 
 export function LoginForm() {
     const { handleSubmit, register, formState: { errors } } = useForm<Login>();
@@ -15,21 +16,8 @@ export function LoginForm() {
     const [authError, setAuthError] = useState<string | null>(null);
     const [show, setShow] = React.useState(false);
     const { t } = useTranslation();
-
     const handleShowHidePass = () => setShow(!show);
-
-    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { innerWidth, innerHeight } = window;
-        const x = (e.clientX / innerWidth) * 100;
-        const y = (e.clientY / innerHeight) * 100;
-
-        const offsetX = 50 + (x - 50) / 10;
-        const offsetY = 50 + (y - 50) / 10;
-
-        setBgPosition({ x: offsetX, y: offsetY });
-    };
+    const { bgPosition, transition } = useParallaxBackground({ strength: 10 })
 
     const onSubmit: SubmitHandler<Login> = async (data) => {
         setAuthError(null);
@@ -49,11 +37,10 @@ export function LoginForm() {
         <Center
             pt={16}
             pb={16}
-            onMouseMove={handleMouseMove}
             bgImage={`url(/images/login.jpg)`}
             bgSize="110%"
-            bgPos={`${bgPosition.x}% ${bgPosition.y}%`}
-            transition="background-position 0.2s ease-out"
+            bgPos={bgPosition}
+            transition={transition}
             minH="100vh"
         >
             <Box

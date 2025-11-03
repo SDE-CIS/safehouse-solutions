@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Register } from '@/types/api/Register';
 import { useCreateUserMutation } from '@/services/api';
 import { Button } from './button';
+import { useParallaxBackground } from '@/hooks/useParallaxBackground';
 
 export function RegisterForm() {
     const { handleSubmit, register, formState: { errors }, watch } = useForm<Register>();
@@ -23,19 +24,7 @@ export function RegisterForm() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-
-    const [bgPosition, setBgPosition] = useState({ x: 50, y: 50 });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { innerWidth, innerHeight } = window;
-        const x = (e.clientX / innerWidth) * 100;
-        const y = (e.clientY / innerHeight) * 100;
-
-        const offsetX = 50 + (x - 50) / 10;
-        const offsetY = 50 + (y - 50) / 10;
-
-        setBgPosition({ x: offsetX, y: offsetY });
-    };
+    const { bgPosition, transition } = useParallaxBackground({ strength: 10 })
 
     const onSubmit: SubmitHandler<Register> = async (_data) => {
         try {
@@ -61,11 +50,10 @@ export function RegisterForm() {
         <Center
             pt={16}
             pb={16}
-            onMouseMove={handleMouseMove}
             bgImage={`url(/images/space.jpeg)`}
             bgSize="110%"
-            bgPos={`${bgPosition.x}% ${bgPosition.y}%`}
-            transition="background-position 0.2s ease-out"
+            bgPos={bgPosition}
+            transition={transition}
             minH="100vh"
         >
             <Box
