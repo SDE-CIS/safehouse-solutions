@@ -47,7 +47,7 @@ export function RegisterForm() {
     };
 
     return (
-        <Center h="75vh" mt={20} mb={20}>
+        <Center pt={16} pb={16} bgImage={`url(/images/space.jpeg)`} bgSize="cover" bgPos="center">
             <Box
                 as="form"
                 onSubmit={handleSubmit(onSubmit)}
