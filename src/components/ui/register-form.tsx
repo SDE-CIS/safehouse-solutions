@@ -6,7 +6,9 @@ import {
     FieldHelperText,
     Flex,
     Input,
-    Text
+    Text,
+    Checkbox,
+    Link as ChakraLink,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from "react-i18next";
@@ -24,7 +26,7 @@ export function RegisterForm() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { bgPosition, transition } = useParallaxBackground({ strength: 10 })
+    const { bgPosition, transition } = useParallaxBackground({ strength: 10 });
 
     const onSubmit: SubmitHandler<Register> = async (_data) => {
         try {
@@ -147,7 +149,7 @@ export function RegisterForm() {
                             right="0"
                             transform="translateY(-50%)"
                             size="sm"
-                            variantStyle={"outline"}
+                            variantStyle="outline"
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? t('auth.hide') : t('auth.show')}
@@ -180,7 +182,7 @@ export function RegisterForm() {
                             right="0"
                             transform="translateY(-50%)"
                             size="sm"
-                            variantStyle={"outline"}
+                            variantStyle="outline"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
                             {showConfirmPassword ? t('auth.hide') : t('auth.show')}
@@ -188,6 +190,36 @@ export function RegisterForm() {
                     </Box>
                     {errors.ConfirmPassword && <Field.ErrorText>{errors.ConfirmPassword.message}</Field.ErrorText>}
                 </Field.Root>
+
+                {/* GDPR Consent Checkbox */}
+                <Field.Root mt={6} invalid={Boolean(errors.DataConsent)}>
+                    <Checkbox.Root
+                        {...register("DataConsent", {
+                            required: "You must consent to data usage to register",
+                        })}
+                    >
+                        <Checkbox.HiddenInput />
+                        <Checkbox.Control>
+                            <Checkbox.Indicator />
+                        </Checkbox.Control>
+
+                        <Checkbox.Label>
+                            I consent to my personal data (such as name, email, and username) being stored and used in accordance with the{" "}
+                            <ChakraLink
+                                href="/privacy-policy"
+                                color="brand.500"
+                                textDecoration="underline"
+                            >
+                                Privacy Policy
+                            </ChakraLink>.
+                        </Checkbox.Label>
+                    </Checkbox.Root>
+
+                    {errors.DataConsent && (
+                        <Field.ErrorText>{errors.DataConsent.message}</Field.ErrorText>
+                    )}
+                </Field.Root>
+
 
                 {/* Submit */}
                 <Box textAlign="center" mt="6">
@@ -197,7 +229,6 @@ export function RegisterForm() {
                 </Box>
 
                 <Field.Root mt={4}>
-                    {/* Auth Error */}
                     {authError && (
                         <FieldHelperText color="red.500" mt={3}>
                             {authError}
@@ -208,10 +239,8 @@ export function RegisterForm() {
                 {/* Secondary Action */}
                 <Flex alignItems="center" flexDirection="column" mt="5">
                     <Text pb={2}>{t('auth.already_have_account')}</Text>
-                    <Link to={"/auth/login"}>
-                        <Button variantStyle={"outline"}>
-                            {t('auth.login')}
-                        </Button>
+                    <Link to="/auth/login">
+                        <Button variantStyle="outline">{t('auth.login')}</Button>
                     </Link>
                 </Flex>
             </Box>

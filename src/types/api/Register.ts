@@ -6,4 +6,5 @@ export interface Register {
     Password: string;
     ConfirmPassword: string;
     PhoneNumber?: string;
+    DataConsent: boolean;
 }
