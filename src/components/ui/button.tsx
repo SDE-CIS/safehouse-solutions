@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react"
 import * as React from "react"
 import { useTranslation } from "react-i18next"
+import { useColorModeValue } from "./color-mode"
 
 interface ButtonLoadingProps {
     loading?: boolean
@@ -28,6 +29,8 @@ export interface ButtonProps
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     function Button(props, ref) {
+        const outlineColor = useColorModeValue("black", "white")
+
         const {
             loading,
             disabled,
@@ -52,8 +55,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     border: "1px solid transparent",
                     _hover: {
                         bg: "transparent",
-                        color: "black",
-                        border: "1px solid black",
+                        color: outlineColor,
+                        border: `1px solid ${outlineColor}`,
                     },
                 }
                 : variantStyle === "reverse"

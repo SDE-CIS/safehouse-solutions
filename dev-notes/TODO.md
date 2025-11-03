@@ -12,6 +12,6 @@
 	- [ ] Vise kamera feed
 	- [ ] Vise og bruge MQTT forbindelser
 
-- [ ] Profile picture failed upload
-- [ ] Logged out
-- [ ] Missing images on live on video archive
+- [x] Profile picture failed upload
+- [x] Logged out
+- [x] Missing images on live on video archive
