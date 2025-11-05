@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { useFansQuery, useTemperatureLogsQuery } from "@/services/api";
+import { useActivateFanMutation, useFansQuery, useTemperatureLogsQuery } from "@/services/api";
 import { useEffect, useMemo, useState } from "react";
 import { Fan, Thermometer, Gauge, Activity } from "lucide-react";
 import {
@@ -23,6 +23,7 @@ import {
     Tooltip,
 } from "recharts";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { Button } from "@/components/ui/button";
 
 const MotionBox = motion(Box);
 
@@ -85,8 +86,9 @@ function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
 
 export function OverviewRoute() {
     const { t } = useTranslation();
-    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError } = useFansQuery();
+    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError, refetch: fansRefetch } = useFansQuery();
     const { data: tempsData, error: _tempsError, isLoading: _tempsLoading, isError: _tempsIsError } = useTemperatureLogsQuery();
+    const [activateFan] = useActivateFanMutation();
 
     const fans = fansData?.data ?? [];
     const temps = tempsData?.data ?? [];
@@ -116,6 +118,16 @@ export function OverviewRoute() {
     }));
 
     const chartBg = useColorModeValue("gray.100", "gray.800");
+
+    const onFanActivate = (fanId: number, mode: string) => {
+        activateFan({
+            Activation: 1,
+            DeviceID: fanId,
+            Location: "stue",
+            FanMode: mode
+        });
+        fansRefetch();
+    };
 
     return (
         <Container maxW="container.xl" py={8}>
@@ -195,16 +207,17 @@ export function OverviewRoute() {
                             <Text fontWeight="bold">
                                 Fan #{fan.ID} – #{fan.DeviceID}
                             </Text>
-                            <Box
+                            <Button
                                 px={3}
                                 py={1}
                                 borderRadius="md"
                                 bg={fan.FanOn ? "green.400" : "gray.600"}
                                 color="white"
                                 fontSize="xs"
+                                onClick={() => onFanActivate(fan.DeviceID, fan.FanOn ? "off" : "on")}
                             >
                                 {fan.FanOn ? t("on") : t("off")}
-                            </Box>
+                            </Button>
                         </Flex>
                         <VStack align="start" gap={1}>
                             <Text fontSize="sm">

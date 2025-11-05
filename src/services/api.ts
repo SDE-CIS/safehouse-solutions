@@ -21,6 +21,7 @@ import { Keycard, KeycardResponse, KeycardResponseSchema, KeycardsResponse, Keyc
 import { VideosResponse, VideosResponseSchema } from "@/types/api/Video";
 import { FansResponse } from "@/types/api/Fan";
 import { TemperaturesResponse } from "@/types/api/Temperature";
+import { FanActivity } from "@/types/api/FanActivity";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -233,6 +234,14 @@ export const api = createApi({
         temperatureLogs: builder.query<TemperaturesResponse, void>({
             query: () => "temperature",
         }),
+
+        activateFan: builder.mutation<{ success: boolean }, FanActivity>({
+            query: (activity) => ({
+                url: `temperature/fan`,
+                method: "POST",
+                body: activity,
+            }),
+        }),
     }),
 });
 
@@ -254,4 +263,5 @@ export const {
     useVideoStreamQuery,
     useFansQuery,
     useTemperatureLogsQuery,
+    useActivateFanMutation,
 } = api;

@@ -288,6 +288,7 @@
         "delete_failed": "Kunne ikke slette nøglekort.",
         "no_keycards": "Ingen nøglekort fundet.",
         "loading": "Indlæser nøglekort...",
-        "update": "Opdater"
+        "update": "Opdater",
+        "name": "Navn"
     }
 }
