@@ -36,7 +36,6 @@ type StatCardProps = {
 
 function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
     const [displayValue, setDisplayValue] = useState(0);
-    const bg = useColorModeValue("white", "gray.800");
 
     useEffect(() => {
         let start = 0;
@@ -86,8 +85,8 @@ function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
 
 export function OverviewRoute() {
     const { t } = useTranslation();
-    const { data: fansData, error: fansError, isLoading: fansLoading, isError: fansIsError } = useFansQuery();
-    const { data: tempsData, error: tempsError, isLoading: tempsLoading, isError: tempsIsError } = useTemperatureLogsQuery();
+    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError } = useFansQuery();
+    const { data: tempsData, error: _tempsError, isLoading: _tempsLoading, isError: _tempsIsError } = useTemperatureLogsQuery();
 
     const fans = fansData?.data ?? [];
     const temps = tempsData?.data ?? [];
