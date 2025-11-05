@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
     Box,
@@ -10,57 +10,52 @@ import {
     Input,
     Fieldset,
     Field,
-} from "@chakra-ui/react"
-import { useTranslation } from "react-i18next"
+} from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import {
     useKeycardsQuery,
     useCreateKeycardMutation,
     useUpdateKeycardMutation,
     useDeleteKeycardMutation,
-} from "@/services/api"
-import { Button } from "@/components/ui/button"
-import { toaster } from "@/components/ui/toaster"
-import { Keycard } from "@/types/api/Keycard"
-import { Edit3, Trash2, Plus } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import { useMqtt } from "@/hooks/useMqtt"
+} from "@/services/api";
+import { Button } from "@/components/ui/button";
+import { toaster } from "@/components/ui/toaster";
+import { Keycard } from "@/types/api/Keycard";
+import { Edit3, Trash2, Plus } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { useMqtt } from "@/hooks/useMqtt";
 
 export function KeycardsRoute() {
-    const { t } = useTranslation()
-    const { data: keycards, isLoading, refetch } = useKeycardsQuery()
-    const [createKeycard] = useCreateKeycardMutation()
-    const [updateKeycard] = useUpdateKeycardMutation()
-    const [deleteKeycard, { isLoading: isDeleting }] = useDeleteKeycardMutation()
+    const { t } = useTranslation();
+    const { data: keycards, isLoading, refetch } = useKeycardsQuery();
+    const [createKeycard] = useCreateKeycardMutation();
+    const [updateKeycard] = useUpdateKeycardMutation();
+    const [deleteKeycard, { isLoading: isDeleting }] = useDeleteKeycardMutation();
 
-    const [form, setForm] = useState({ RfidTag: "" })
-    const [editingKeycard, setEditingKeycard] = useState<Keycard | null>(null)
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [form, setForm] = useState({ RfidTag: "" });
+    const [editingKeycard, setEditingKeycard] = useState<Keycard | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const ref = useRef<HTMLInputElement | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+        setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
 
     const resetForm = () => {
-        setForm({ RfidTag: "" })
-        setEditingKeycard(null)
-    }
+        setForm({ RfidTag: "" });
+        setEditingKeycard(null);
+    };
 
     const handleOpenCreate = () => {
-        resetForm()
-        setIsDialogOpen(true)
-    }
+        resetForm();
+        setIsDialogOpen(true);
+    };
 
     const handleOpenEdit = (keycard: Keycard) => {
-        setEditingKeycard(keycard)
-        setForm({ RfidTag: keycard.RfidTag })
-        setIsDialogOpen(true)
-    }
-
-    const handleCloseDialog = () => {
-        setIsDialogOpen(false)
-        resetForm()
-    }
+        setEditingKeycard(keycard);
+        setForm({ RfidTag: keycard.RfidTag });
+        setIsDialogOpen(true);
+    };
 
     const handleSubmit = async () => {
         try {
@@ -68,56 +63,62 @@ export function KeycardsRoute() {
                 await updateKeycard({
                     id: editingKeycard.ID,
                     data: form,
-                }).unwrap()
-                toaster.create({ description: t("keycards.updated"), type: "success" })
+                }).unwrap();
+                toaster.create({ description: t("keycards.updated"), type: "success" });
             } else {
-                await createKeycard(form).unwrap()
-                toaster.create({ description: t("keycards.created"), type: "success" })
+                await createKeycard(form).unwrap();
+                toaster.create({ description: t("keycards.created"), type: "success" });
             }
-
-            refetch()
-            handleCloseDialog()
+            refetch();
+            setIsDialogOpen(false);
+            setTimeout(resetForm, 200);
         } catch {
             toaster.create({
                 description: t("keycards.action_failed"),
                 type: "error",
-            })
+            });
         }
-    }
+    };
 
     const handleDelete = async (id: number) => {
         try {
-            await deleteKeycard(id).unwrap()
+            await deleteKeycard(id).unwrap();
             toaster.create({
                 description: t("keycards.deleted"),
                 type: "success",
-            })
-            refetch()
+            });
+            refetch();
         } catch {
             toaster.create({
                 description: t("keycards.delete_failed"),
                 type: "error",
-            })
+            });
         }
-    }
+    };
 
+    // ✅ Listen for new keycards scanned by your device
     const { message: scannedKeycard } = useMqtt({
-        server: '192.168.1.127',
+        server: "192.168.1.127",
         port: 8080,
-        username: 'admin',
-        password: 'admin',
-        clientId: 'WebsiteClient',
-        topic: 'rfid/register',
+        username: "admin",
+        password: "admin",
+        clientId: "WebsiteClient",
+        topic: "rfid/register",
     });
 
     useEffect(() => {
-        if (!scannedKeycard) {
-            return;
-        }
+        if (!scannedKeycard) return;
 
-        setForm({ RfidTag: scannedKeycard });
-        if (ref.current) {
-            ref.current.focus();
+        console.log("Scanned Keycard:", scannedKeycard);
+
+        const raw = (scannedKeycard as any).data || scannedKeycard;
+
+        if (typeof raw === "string") {
+            setForm({ RfidTag: raw });
+            setIsDialogOpen(true);
+        } else if (raw?.cardUID) {
+            setForm({ RfidTag: raw.cardUID });
+            setIsDialogOpen(true);
         }
     }, [scannedKeycard]);
 
@@ -135,53 +136,58 @@ export function KeycardsRoute() {
                 </Button>
             </Stack>
 
-            {/* ✅ Controlled dialog (no triggers inside) */}
-            {isDialogOpen && (
-                <Dialog.Root
-                    open={isDialogOpen}
-                    onOpenChange={(details) => setIsDialogOpen(details.open)}
-                >
-                    <Dialog.Backdrop />
-                    <Dialog.Positioner>
-                        <Dialog.Content>
-                            <Dialog.Header>
-                                <Dialog.Title>
-                                    {editingKeycard
-                                        ? t("keycards.edit_keycard")
-                                        : t("keycards.add_keycard")}
-                                </Dialog.Title>
-                            </Dialog.Header>
+            {/* ✅ Always-mounted Dialog (Chakra UI v3 compliant) */}
+            <Dialog.Root
+                open={isDialogOpen}
+                onOpenChange={(details) => {
+                    setIsDialogOpen(details.open);
+                    if (!details.open) {
+                        setTimeout(resetForm, 200);
+                    }
+                }}
+            >
+                <Dialog.Backdrop />
+                <Dialog.Positioner>
+                    <Dialog.Content>
+                        <Dialog.Header>
+                            <Dialog.Title>
+                                {editingKeycard
+                                    ? t("keycards.edit_keycard")
+                                    : t("keycards.add_keycard")}
+                            </Dialog.Title>
+                        </Dialog.Header>
 
-                            <Dialog.Body>
-                                <Fieldset.Root size="lg">
-                                    <Fieldset.Legend>{t("keycards.details")}</Fieldset.Legend>
+                        <Dialog.Body>
+                            <Fieldset.Root size="lg">
+                                <Fieldset.Legend>{t("keycards.details")}</Fieldset.Legend>
 
-                                    <Field.Root>
-                                        <Field.Label>{t("keycards.rfid_tag")}</Field.Label>
-                                        <Input
-                                            ref={ref}
-                                            name="RfidTag"
-                                            value={form.RfidTag}
-                                            onChange={handleChange}
-                                        />
-                                    </Field.Root>
-                                </Fieldset.Root>
-                            </Dialog.Body>
+                                <Field.Root>
+                                    <Field.Label>{t("keycards.rfid_tag")}</Field.Label>
+                                    <Input
+                                        ref={ref}
+                                        name="RfidTag"
+                                        value={form.RfidTag}
+                                        onChange={handleChange}
+                                        autoFocus
+                                    />
+                                </Field.Root>
+                            </Fieldset.Root>
+                        </Dialog.Body>
 
-                            <Dialog.Footer gap={4}>
-                                <Button variantStyle="reverse" onClick={handleCloseDialog}>
-                                    {t("keycards.cancel")}
-                                </Button>
+                        <Dialog.Footer gap={4}>
+                            <Button variantStyle="reverse" onClick={() => setIsDialogOpen(false)}>
+                                {t("keycards.cancel")}
+                            </Button>
 
-                                <Button colorScheme="blue" onClick={handleSubmit}>
-                                    {editingKeycard ? t("keycards.update") : t("keycards.create")}
-                                </Button>
-                            </Dialog.Footer>
-                        </Dialog.Content>
-                    </Dialog.Positioner>
-                </Dialog.Root>
-            )}
+                            <Button colorScheme="blue" onClick={handleSubmit}>
+                                {editingKeycard ? t("keycards.update") : t("keycards.create")}
+                            </Button>
+                        </Dialog.Footer>
+                    </Dialog.Content>
+                </Dialog.Positioner>
+            </Dialog.Root>
 
+            {/* ✅ Keycards table */}
             {isLoading ? (
                 <Spinner size="lg" />
             ) : (
@@ -237,5 +243,5 @@ export function KeycardsRoute() {
                 </Box>
             )}
         </Box>
-    )
+    );
 }

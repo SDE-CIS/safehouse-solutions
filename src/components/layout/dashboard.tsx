@@ -11,6 +11,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <Box display="flex" flexDirection="column" minHeight="100vh">
             <DashboardNavigation />
             <Container maxW="container.xl">
+                <div id="dialog-root"></div>
                 {children}
             </Container>
         </Box>

@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import mqtt from "mqtt";
+import { useState, useEffect, useRef } from "react";
+import mqtt, { MqttClient } from "mqtt";
 import { Feed } from "@/types/mqtt.ts";
-import { set } from "zod";
 
 interface UseMqttOptions {
     server: string;
@@ -13,7 +12,7 @@ interface UseMqttOptions {
 }
 
 interface UseMqttResult {
-    message: string | null;
+    message: Feed | string | null;
     isConnected: boolean;
     reconnecting: boolean;
 }
@@ -26,65 +25,72 @@ export function useMqtt({
     clientId,
     topic,
 }: UseMqttOptions): UseMqttResult {
-    const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<Feed | string | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [reconnecting, setReconnecting] = useState(false);
+    const clientRef = useRef<MqttClient | null>(null);
 
     useEffect(() => {
+        // ✅ Prevent multiple clients on re-render
+        if (clientRef.current) return;
+
         const uniqueClientId = `${clientId}-${Math.random().toString(16).substring(2, 8)}`;
-        const client = mqtt.connect(`ws://${server}:${port}/mqtt`, {
+        const client = mqtt.connect(`ws://${server}:${port}`, {
             username,
             password,
             clientId: uniqueClientId,
             keepalive: 60,
-            reconnectPeriod: 1000,
+            reconnectPeriod: 2000,
+            clean: true,
         });
 
+        clientRef.current = client;
+
         client.on("connect", () => {
-            console.log("Connected to MQTT broker");
+            console.log("[MQTT] Connected");
             setIsConnected(true);
             setReconnecting(false);
 
-            // Subscribe to the given topic
             client.subscribe(topic, (err) => {
-                if (err) {
-                    console.error("Failed to subscribe to topic", err);
-                } else {
-                    console.log(`Subscribed to topic: ${topic}`);
-                }
+                if (err) console.error("[MQTT] Failed to subscribe:", err);
+                else console.log(`[MQTT] Subscribed to topic: ${topic}`);
             });
         });
 
         client.on("reconnect", () => {
-            console.log("Reconnecting to MQTT broker...");
+            console.log("[MQTT] Reconnecting...");
             setReconnecting(true);
         });
 
         client.on("close", () => {
-            console.log("Disconnected from MQTT broker");
+            console.log("[MQTT] Connection closed");
             setIsConnected(false);
         });
 
         client.on("offline", () => {
-            console.log("Client offline");
+            console.log("[MQTT] Offline");
             setIsConnected(false);
         });
 
         client.on("message", (receivedTopic, payload) => {
-            if (receivedTopic === topic) {
-                try {
-                    const messageText = payload.toString();
-                    setMessage(messageText);
-                } catch (error) {
-                    console.error("Failed to handle MQTT message:", error);
-                }
-            }
+            if (receivedTopic !== topic) return;
+
+            const raw = payload.toString();
+            let parsed: Feed | string = raw;
+            try {
+                parsed = JSON.parse(raw);
+            } catch { }
+
+            // ✅ Always trigger a new state change, even if identical
+            setMessage({ data: parsed, _ts: Date.now() } as unknown as Feed);
         });
 
-        client.on("error", (err) => console.error("MQTT error:", err));
+        client.on("error", (err) => console.error("[MQTT] Error:", err));
 
         return () => {
-            client.end(); // Clean up the connection
+            console.log("[MQTT] Cleaning up client...");
+            client.end(true);
+            clientRef.current = null;
         };
     }, [server, port, username, password, clientId, topic]);
 
