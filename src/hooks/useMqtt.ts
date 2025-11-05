@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import mqtt from "mqtt";
 import { Feed } from "@/types/mqtt.ts";
+import { set } from "zod";
 
 interface UseMqttOptions {
     server: string;
@@ -12,26 +13,26 @@ interface UseMqttOptions {
 }
 
 interface UseMqttResult {
-    message: Feed | null;
+    message: string | null;
     isConnected: boolean;
     reconnecting: boolean;
 }
 
 export function useMqtt({
-                            server,
-                            port,
-                            username,
-                            password,
-                            clientId,
-                            topic,
-                        }: UseMqttOptions): UseMqttResult {
-    const [message, setMessage] = useState<Feed | null>(null);
+    server,
+    port,
+    username,
+    password,
+    clientId,
+    topic,
+}: UseMqttOptions): UseMqttResult {
+    const [message, setMessage] = useState<string | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [reconnecting, setReconnecting] = useState(false);
 
     useEffect(() => {
         const uniqueClientId = `${clientId}-${Math.random().toString(16).substring(2, 8)}`;
-        const client = mqtt.connect(`ws://${server}:${port}`, {
+        const client = mqtt.connect(`ws://${server}:${port}/mqtt`, {
             username,
             password,
             clientId: uniqueClientId,
@@ -72,10 +73,10 @@ export function useMqtt({
         client.on("message", (receivedTopic, payload) => {
             if (receivedTopic === topic) {
                 try {
-                    const parsedMessage = JSON.parse(payload.toString()) as Feed;
-                    setMessage(parsedMessage);
+                    const messageText = payload.toString();
+                    setMessage(messageText);
                 } catch (error) {
-                    console.error("Failed to parse MQTT message:", error);
+                    console.error("Failed to handle MQTT message:", error);
                 }
             }
         });

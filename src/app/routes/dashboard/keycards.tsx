@@ -22,7 +22,8 @@ import { Button } from "@/components/ui/button"
 import { toaster } from "@/components/ui/toaster"
 import { Keycard } from "@/types/api/Keycard"
 import { Edit3, Trash2, Plus } from "lucide-react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useMqtt } from "@/hooks/useMqtt"
 
 export function KeycardsRoute() {
     const { t } = useTranslation()
@@ -34,7 +35,7 @@ export function KeycardsRoute() {
     const [form, setForm] = useState({ RfidTag: "" })
     const [editingKeycard, setEditingKeycard] = useState<Keycard | null>(null)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const ref = useRef<HTMLInputElement | null>(null)
+    const ref = useRef<HTMLInputElement | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -99,6 +100,26 @@ export function KeycardsRoute() {
             })
         }
     }
+
+    const { message: scannedKeycard } = useMqtt({
+        server: '192.168.1.127',
+        port: 8080,
+        username: 'admin',
+        password: 'admin',
+        clientId: 'WebsiteClient',
+        topic: 'rfid/register',
+    });
+
+    useEffect(() => {
+        if (!scannedKeycard) {
+            return;
+        }
+
+        setForm({ RfidTag: scannedKeycard });
+        if (ref.current) {
+            ref.current.focus();
+        }
+    }, [scannedKeycard]);
 
     return (
         <Box p={8}>
