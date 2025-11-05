@@ -2,143 +2,225 @@ import {
     Box,
     Container,
     Heading,
-    Table,
+    SimpleGrid,
+    VStack,
+    Text,
+    Flex,
+    Icon,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useFansQuery, useTemperatureLogsQuery } from "@/services/api";
+import { useEffect, useMemo, useState } from "react";
+import { Fan, Thermometer, Gauge, Activity } from "lucide-react";
+import {
+    ResponsiveContainer,
+    AreaChart,
+    Area,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+} from "recharts";
+import { useColorModeValue } from "@/components/ui/color-mode";
+
+const MotionBox = motion(Box);
+
+type StatCardProps = {
+    label: string;
+    value: number;
+    suffix?: string;
+    icon: any;
+    color: string;
+};
+
+function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
+    const [displayValue, setDisplayValue] = useState(0);
+    const bg = useColorModeValue("white", "gray.800");
+
+    useEffect(() => {
+        let start = 0;
+        const end = value;
+        const duration = 700;
+        const step = Math.ceil(end / (duration / 16));
+
+        const interval = setInterval(() => {
+            start += step;
+            if (start >= end) {
+                start = end;
+                clearInterval(interval);
+            }
+            setDisplayValue(start);
+        }, 16);
+
+        return () => clearInterval(interval);
+    }, [value]);
+
+    return (
+        <MotionBox
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+            borderRadius="lg"
+            p={6}
+            bgGradient={`linear(to-br, ${color}, ${useColorModeValue(
+                "gray.100",
+                "gray.700"
+            )})`}
+            shadow="lg"
+        >
+            <Flex justify="space-between" align="center">
+                <VStack align="start" gap={1}>
+                    <Text fontSize="sm" color="gray.200" _light={{ color: "gray.600" }}>
+                        {label}
+                    </Text>
+                    <Text fontSize="3xl" fontWeight="bold" color="white" _light={{ color: "gray.800" }}>
+                        {displayValue}
+                        {suffix}
+                    </Text>
+                </VStack>
+                <Icon as={icon} boxSize={8} opacity={0.9} color="whiteAlpha.800" />
+            </Flex>
+        </MotionBox>
+    );
+}
 
 export function OverviewRoute() {
-    // const { data, error, isLoading, isError } = useUnitsQuery();
     const { t } = useTranslation();
+    const { data: fansData, error: fansError, isLoading: fansLoading, isError: fansIsError } = useFansQuery();
+    const { data: tempsData, error: tempsError, isLoading: tempsLoading, isError: tempsIsError } = useTemperatureLogsQuery();
 
-    // const isSchemaError =
-    //     isError &&
-    //     typeof (error as any)?.status !== "number" &&
-    //     ((error as any)?.status === "PARSING_ERROR" ||
-    //         String((error as any)?.error ?? "").includes("Zod"));
+    const fans = fansData?.data ?? [];
+    const temps = tempsData?.data ?? [];
 
-    // useEffect(() => {
-    //     if (isSchemaError) {
-    //         toaster.create({
-    //             title: t("error"),
-    //             description: t("the_api_response_schema_is_invalid"),
-    //         });
-    //     }
-    // }, [isSchemaError, t]);
+    const stats = useMemo(() => {
+        if (!fans.length || !temps.length) {
+            return { totalFans: 0, fansOn: 0, avgFanSpeed: 0, avgTemperature: 0, lastTemperature: 0 };
+        }
 
-    // const units = data?.data ?? [];
+        const fansOn = fans.filter((f) => f.FanOn).length;
+        const avgFanSpeed = fans.reduce((a, f) => a + f.FanSpeed, 0) / fans.length;
+        const avgTemperature = temps.reduce((a, t) => a + t.Temperature, 0) / temps.length;
+        const lastTemperature = temps[temps.length - 1]?.Temperature ?? 0;
 
-    // const stats = useMemo(() => {
-    //     if (!units.length) {
-    //         return {
-    //             total: 0,
-    //             active: 0,
-    //             inactive: 0,
-    //             locations: 0,
-    //             sensorTypes: 0,
-    //         };
-    //     }
-    //     const active = units.filter((u) => u.Active).length;
-    //     const locations = new Set(units.map((u) => u.LocationID)).size;
-    //     const sensorTypes = new Set(units.map((u) => u.SensorTypeID)).size;
-    //     return {
-    //         total: units.length,
-    //         active,
-    //         inactive: units.length - active,
-    //         locations,
-    //         sensorTypes,
-    //     };
-    // }, [units]);
+        return {
+            totalFans: fans.length,
+            fansOn,
+            avgFanSpeed: Math.round(avgFanSpeed),
+            avgTemperature: Math.round(avgTemperature),
+            lastTemperature,
+        };
+    }, [fans, temps]);
 
-    // const formatDate = (s: string) => {
-    //     const d = new Date(s);
-    //     return isNaN(d.getTime()) ? s : d.toLocaleString();
-    // };
+    const chartData = temps.slice(-20).map((t) => ({
+        time: new Date(t.TemperatureTimestamp).toLocaleTimeString(),
+        temperature: t.Temperature,
+    }));
+
+    const chartBg = useColorModeValue("gray.100", "gray.800");
 
     return (
         <Container maxW="container.xl" py={8}>
-            <Heading as="h1" size="xl" mb={6}>
+            <Heading as="h1" size="xl" mb={8} textAlign="center">
                 {t("dashboard.title")}
             </Heading>
 
-            {/* Quick stats */}
-            {/* <HStack gap={4} wrap="wrap" mb={6}>
-                <StatCard label={t("total_units")} value={stats.total} />
-                <StatCard label={t("active")} value={stats.active} />
-                <StatCard label={t("inactive")} value={stats.inactive} />
-                <StatCard label={t("locations")} value={stats.locations} />
-                <StatCard label={t("sensor_types")} value={stats.sensorTypes} />
-            </HStack> */}
+            {/* STAT CARDS */}
+            <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 5 }} gap={6} mb={10}>
+                <AnimatedStat label={t("total_fans")} value={stats.totalFans} icon={Activity} color="purple.500" />
+                <AnimatedStat label={t("fans_on")} value={stats.fansOn} icon={Fan} color="teal.500" />
+                <AnimatedStat label={t("avg_fan_speed")} value={stats.avgFanSpeed} suffix="%" icon={Gauge} color="blue.500" />
+                <AnimatedStat label={t("avg_temperature")} value={stats.avgTemperature} suffix="°C" icon={Thermometer} color="orange.400" />
+                <AnimatedStat label={t("last_temperature")} value={stats.lastTemperature} suffix="°C" icon={Thermometer} color="red.400" />
+            </SimpleGrid>
 
+            {/* TEMPERATURE CHART */}
             <Box
                 borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
-                bg="bg"
-                _dark={{ bg: "gray.800", borderColor: "gray.700" }}
+                borderRadius="xl"
+                p={6}
+                mb={10}
+                bg={chartBg}
+                shadow="lg"
             >
-                {/* Table */}
-                <Table.Root size="md" variant="outline">
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeader>{t("id")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("status")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("date_added")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("sensor_type")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("location")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("sensor_type_name")}</Table.ColumnHeader>
-                            <Table.ColumnHeader>{t("location_name")}</Table.ColumnHeader>
-                        </Table.Row>
-                    </Table.Header>
-
-                    {/* <Table.Body>
-                        {isLoading ? (
-                            // Skeleton rows while loading
-                            Array.from({ length: 5 }).map((_, i) => (
-                                <Table.Row key={`sk-${i}`}>
-                                    {Array.from({ length: 7 }).map((__, j) => (
-                                        <Table.Cell key={j}>
-                                            <Skeleton h="4" />
-                                        </Table.Cell>
-                                    ))}
-                                </Table.Row>
-                            ))
-                        ) : units.length === 0 ? (
-                            <Table.Row>
-                                <Table.Cell colSpan={7} color="fg.muted">
-                                    {isSchemaError
-                                        ? t("invalid_api_response_schema.")
-                                        : t("no_units_available.")}
-                                </Table.Cell>
-                            </Table.Row>
-                        ) : (
-                            units.map((u) => (
-                                <Table.Row key={u.ID}>
-                                    <Table.Cell>{u.ID}</Table.Cell>
-                                    <Table.Cell>
-                                        <Badge colorPalette={u.Active ? "green" : "gray"}>
-                                            {u.Active ? t("active") : t("inactive")}
-                                        </Badge>
-                                    </Table.Cell>
-                                    <Table.Cell>{formatDate(u.DateAdded)}</Table.Cell>
-                                    <Table.Cell>#{u.SensorTypeID}</Table.Cell>
-                                    <Table.Cell>#{u.LocationID}</Table.Cell>
-                                    <Table.Cell>{u.SensorTypeName}</Table.Cell>
-                                    <Table.Cell>{u.LocationName}</Table.Cell>
-                                </Table.Row>
-                            ))
-                        )}
-                    </Table.Body> */}
-                </Table.Root>
+                <Heading size="md" mb={4}>
+                    {t("temperature_trend")}
+                </Heading>
+                {chartData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <AreaChart data={chartData}>
+                            <defs>
+                                <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="10%" stopColor="#f56565" stopOpacity={0.8} />
+                                    <stop offset="90%" stopColor="#f56565" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
+                            <XAxis dataKey="time" tick={{ fontSize: 12 }} />
+                            <YAxis unit="°C" />
+                            <Tooltip />
+                            <Area
+                                type="monotone"
+                                dataKey="temperature"
+                                stroke="#f56565"
+                                strokeWidth={2}
+                                fillOpacity={1}
+                                fill="url(#colorTemp)"
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <Text textAlign="center" color="gray.500">
+                        {t("no_temperature_data")}
+                    </Text>
+                )}
             </Box>
 
-            {/* {isError && !isSchemaError && (
-                <Box mt={4} color="fg.muted">
-                    <Text fontSize="sm">
-                        {t("there_was_a_problem_loading_units.")}{" "}
-                        {(error as any)?.status && `(${(error as any).status})`}
-                    </Text>
-                </Box>
-            )} */}
+            {/* FANS OVERVIEW */}
+            <Heading as="h2" size="md" mb={6}>
+                {t("fans_overview")}
+            </Heading>
+
+            <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={6}>
+                {fans.map((fan) => (
+                    <MotionBox
+                        key={fan.ID}
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        p={5}
+                        bg={useColorModeValue("white", "gray.900")}
+                        shadow="sm"
+                        whileHover={{ y: -5, boxShadow: "xl" }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <Flex justify="space-between" align="center" mb={3}>
+                            <Text fontWeight="bold">
+                                Fan #{fan.ID} – #{fan.DeviceID}
+                            </Text>
+                            <Box
+                                px={3}
+                                py={1}
+                                borderRadius="md"
+                                bg={fan.FanOn ? "green.400" : "gray.600"}
+                                color="white"
+                                fontSize="xs"
+                            >
+                                {fan.FanOn ? t("on") : t("off")}
+                            </Box>
+                        </Flex>
+                        <VStack align="start" gap={1}>
+                            <Text fontSize="sm">
+                                <strong>{t("speed")}:</strong> {fan.FanSpeed}%
+                            </Text>
+                            <Text fontSize="sm">
+                                <strong>{t("mode")}:</strong> {fan.FanMode}
+                            </Text>
+                            <Text fontSize="xs" color="gray.500">
+                                {new Date(fan.ActivationTimestamp ?? "").toLocaleString()}
+                            </Text>
+                        </VStack>
+                    </MotionBox>
+                ))}
+            </SimpleGrid>
         </Container>
     );
 }

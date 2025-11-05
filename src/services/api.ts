@@ -19,6 +19,8 @@ import {
 } from "@/types/api/User";
 import { Keycard, KeycardResponse, KeycardResponseSchema, KeycardsResponse, KeycardsResponseSchema } from "@/types/api/Keycard";
 import { VideosResponse, VideosResponseSchema } from "@/types/api/Video";
+import { FansResponse } from "@/types/api/Fan";
+import { TemperaturesResponse } from "@/types/api/Temperature";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -222,6 +224,15 @@ export const api = createApi({
                 },
             }),
         }),
+
+        /* ─────────────── DASHBOARD ─────────────── */
+        fans: builder.query<FansResponse, void>({
+            query: () => "temperature/fan",
+        }),
+
+        temperatureLogs: builder.query<TemperaturesResponse, void>({
+            query: () => "temperature",
+        }),
     }),
 });
 
@@ -241,4 +252,6 @@ export const {
     useDeleteKeycardMutation,
     useVideosQuery,
     useVideoStreamQuery,
+    useFansQuery,
+    useTemperatureLogsQuery,
 } = api;
