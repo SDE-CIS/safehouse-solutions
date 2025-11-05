@@ -97,8 +97,8 @@
     "temperature_trend": "Temperatur Trend",
     "total_fans": "Totale blæsere",
     "fans_on": "Blæsere tændt",
-    "avg_fan_speed": "Gennemsnitlig blæserhastighed",
-    "avg_temperature": "Gennemsnitstemperatur",
+    "avg_fan_speed": "Gns. blæserhastighed",
+    "avg_temperature": "Gnm. temperatur",
     "last_temperature": "Sidste temperatur",
     "auth": {
         "name": "Navn",

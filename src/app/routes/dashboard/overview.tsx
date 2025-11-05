@@ -37,6 +37,7 @@ type StatCardProps = {
 
 function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
     const [displayValue, setDisplayValue] = useState(0);
+    const iconColor = useColorModeValue("black", "white");
 
     useEffect(() => {
         let start = 0;
@@ -78,7 +79,7 @@ function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
                         {suffix}
                     </Text>
                 </VStack>
-                <Icon as={icon} boxSize={8} opacity={0.9} color="whiteAlpha.800" />
+                <Icon as={icon} boxSize={8} opacity={0.9} color={iconColor} />
             </Flex>
         </MotionBox>
     );
