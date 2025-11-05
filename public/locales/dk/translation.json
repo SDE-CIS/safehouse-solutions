@@ -134,7 +134,14 @@
         "data_consent_required": "Databeskyttelsessamtykke er påkrævet.",
         "email_required": "E-mail er påkrævet.",
         "password_min_length": "Adgangskode skal være mindst 6 tegn lang.",
-        "logging_in": "Logger ind..."
+        "logging_in": "Logger ind...",
+        "fans_overview": "Blæsere Oversigt",
+        "temperature_trend": "Temperatur Trend",
+        "total_fans": "Totale blæsere",
+        "fans_on": "Blæsere tændt",
+        "avg_fan_speed": "Gennemsnitlig blæserhastighed",
+        "avg_temperature": "Gennemsnitstemperatur",
+        "last_temperature": "Sidste temperatur"
     },
     "navigation": {
         "home": "Hjem",
