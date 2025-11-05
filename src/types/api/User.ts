@@ -9,7 +9,7 @@ export const UserSchema = z.object({
     Email: z.string().nullable().optional(),
     Username: z.string(),
     Password: z.string(),
-    ProfilePicture: z.string().optional(),
+    ProfilePicture: z.string().nullable().optional(),
 });
 
 export type User = z.infer<typeof UserSchema>;
