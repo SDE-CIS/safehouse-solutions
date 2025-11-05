@@ -3,6 +3,7 @@ import { ApiResponseSchema } from "./ApiResponse";
 
 export const KeycardSchema = z.object({
     ID: z.number(),
+    Name: z.string(),
     RfidTag: z.string(),
 });
 

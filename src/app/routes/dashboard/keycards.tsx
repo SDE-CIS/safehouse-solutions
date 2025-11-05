@@ -32,17 +32,17 @@ export function KeycardsRoute() {
     const [updateKeycard] = useUpdateKeycardMutation();
     const [deleteKeycard, { isLoading: isDeleting }] = useDeleteKeycardMutation();
 
-    const [form, setForm] = useState({ RfidTag: "" });
+    const [form, setForm] = useState({ Name: "", RfidTag: "" });
     const [editingKeycard, setEditingKeycard] = useState<Keycard | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const ref = useRef<HTMLInputElement | null>(null);
+    const nameInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const resetForm = () => {
-        setForm({ RfidTag: "" });
+        setForm({ Name: "", RfidTag: "" });
         setEditingKeycard(null);
     };
 
@@ -53,7 +53,7 @@ export function KeycardsRoute() {
 
     const handleOpenEdit = (keycard: Keycard) => {
         setEditingKeycard(keycard);
-        setForm({ RfidTag: keycard.RfidTag });
+        setForm({ Name: keycard.Name, RfidTag: keycard.RfidTag });
         setIsDialogOpen(true);
     };
 
@@ -109,18 +109,30 @@ export function KeycardsRoute() {
     useEffect(() => {
         if (!scannedKeycard) return;
 
-        console.log("Scanned Keycard:", scannedKeycard);
-
         const raw = (scannedKeycard as any).data || scannedKeycard;
+        console.log("Scanned Keycard:", raw);
 
         if (typeof raw === "string") {
-            setForm({ RfidTag: raw });
+            setForm((prev) => ({
+                ...prev,
+                RfidTag: raw, // ✅ only update the tag, keep Name as-is
+            }));
             setIsDialogOpen(true);
         } else if (raw?.cardUID) {
-            setForm({ RfidTag: raw.cardUID });
+            setForm((prev) => ({
+                ...prev,
+                RfidTag: raw.cardUID,
+            }));
             setIsDialogOpen(true);
         }
     }, [scannedKeycard]);
+
+    // ✅ Focus the Name field when dialog opens
+    useEffect(() => {
+        if (isDialogOpen && nameInputRef.current) {
+            setTimeout(() => nameInputRef.current?.focus(), 100);
+        }
+    }, [isDialogOpen]);
 
     return (
         <Box p={8}>
@@ -136,14 +148,12 @@ export function KeycardsRoute() {
                 </Button>
             </Stack>
 
-            {/* ✅ Always-mounted Dialog (Chakra UI v3 compliant) */}
+            {/* ✅ Always-mounted Dialog (Chakra v3 compliant) */}
             <Dialog.Root
                 open={isDialogOpen}
                 onOpenChange={(details) => {
                     setIsDialogOpen(details.open);
-                    if (!details.open) {
-                        setTimeout(resetForm, 200);
-                    }
+                    if (!details.open) setTimeout(resetForm, 200);
                 }}
             >
                 <Dialog.Backdrop />
@@ -162,20 +172,31 @@ export function KeycardsRoute() {
                                 <Fieldset.Legend>{t("keycards.details")}</Fieldset.Legend>
 
                                 <Field.Root>
+                                    <Field.Label>{t("keycards.name")}</Field.Label>
+                                    <Input
+                                        ref={nameInputRef}
+                                        name="Name"
+                                        value={form.Name}
+                                        onChange={handleChange}
+                                    />
+                                </Field.Root>
+
+                                <Field.Root>
                                     <Field.Label>{t("keycards.rfid_tag")}</Field.Label>
                                     <Input
-                                        ref={ref}
                                         name="RfidTag"
                                         value={form.RfidTag}
                                         onChange={handleChange}
-                                        autoFocus
                                     />
                                 </Field.Root>
                             </Fieldset.Root>
                         </Dialog.Body>
 
                         <Dialog.Footer gap={4}>
-                            <Button variantStyle="reverse" onClick={() => setIsDialogOpen(false)}>
+                            <Button
+                                variantStyle="reverse"
+                                onClick={() => setIsDialogOpen(false)}
+                            >
                                 {t("keycards.cancel")}
                             </Button>
 
@@ -187,7 +208,6 @@ export function KeycardsRoute() {
                 </Dialog.Positioner>
             </Dialog.Root>
 
-            {/* ✅ Keycards table */}
             {isLoading ? (
                 <Spinner size="lg" />
             ) : (
@@ -195,6 +215,7 @@ export function KeycardsRoute() {
                     <Table.Root size="lg" variant="outline">
                         <Table.Header bg="gray.100" _dark={{ bg: "gray.800" }}>
                             <Table.Row>
+                                <Table.Cell fontWeight="bold">{t("keycards.name")}</Table.Cell>
                                 <Table.Cell fontWeight="bold">{t("keycards.rfid_tag")}</Table.Cell>
                                 <Table.Cell fontWeight="bold">{t("keycards.actions")}</Table.Cell>
                             </Table.Row>
@@ -214,6 +235,7 @@ export function KeycardsRoute() {
                                         transform: "scale(1.01)",
                                     }}
                                 >
+                                    <Table.Cell>{keycard.Name}</Table.Cell>
                                     <Table.Cell>{keycard.RfidTag}</Table.Cell>
                                     <Table.Cell>
                                         <Stack direction="row" gap={3}>
