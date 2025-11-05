@@ -93,6 +93,13 @@
     "there_was_a_problem_loading_units.": "Der opstod et problem med indlæsning af enheder.",
     "add_new_task": "Tilføj ny opgave",
     "todo_list": "Opgaveliste",
+    "fans_overview": "Blæsere Oversigt",
+    "temperature_trend": "Temperatur Trend",
+    "total_fans": "Totale blæsere",
+    "fans_on": "Blæsere tændt",
+    "avg_fan_speed": "Gennemsnitlig blæserhastighed",
+    "avg_temperature": "Gennemsnitstemperatur",
+    "last_temperature": "Sidste temperatur",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
@@ -134,14 +141,7 @@
         "data_consent_required": "Databeskyttelsessamtykke er påkrævet.",
         "email_required": "E-mail er påkrævet.",
         "password_min_length": "Adgangskode skal være mindst 6 tegn lang.",
-        "logging_in": "Logger ind...",
-        "fans_overview": "Blæsere Oversigt",
-        "temperature_trend": "Temperatur Trend",
-        "total_fans": "Totale blæsere",
-        "fans_on": "Blæsere tændt",
-        "avg_fan_speed": "Gennemsnitlig blæserhastighed",
-        "avg_temperature": "Gennemsnitstemperatur",
-        "last_temperature": "Sidste temperatur"
+        "logging_in": "Logger ind..."
     },
     "navigation": {
         "home": "Hjem",
