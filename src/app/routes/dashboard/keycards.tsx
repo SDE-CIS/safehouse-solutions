@@ -53,7 +53,7 @@ export function KeycardsRoute() {
 
     const handleOpenEdit = (keycard: Keycard) => {
         setEditingKeycard(keycard);
-        setForm({ Name: keycard.Name, RfidTag: keycard.RfidTag });
+        setForm({ Name: keycard.Name || "", RfidTag: keycard.RfidTag });
         setIsDialogOpen(true);
     };
 
@@ -80,7 +80,7 @@ export function KeycardsRoute() {
         }
     };
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         try {
             await deleteKeycard(id).unwrap();
             toaster.create({
