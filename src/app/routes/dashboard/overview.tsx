@@ -122,7 +122,7 @@ export function OverviewRoute() {
 
     const onFanActivate = (fanId: number, mode: string) => {
         activateFan({
-            Activation: 1,
+            UserID: 1,
             DeviceID: fanId,
             Location: "stue",
             FanMode: mode

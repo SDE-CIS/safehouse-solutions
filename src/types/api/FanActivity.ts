@@ -1,6 +1,6 @@
 export interface FanActivity {
-    Activation: number;
     DeviceID: number;
+    UserID: number;
     Location: string;
     FanMode: string;
 }
