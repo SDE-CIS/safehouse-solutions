@@ -74,6 +74,11 @@ export const paths: Record<string, Path> = {
             path: '/dashboard/keycards',
             getHref: () => '/dashboard/keycards',
         },
+        access_logs: {
+            label: 'Access Logs',
+            path: '/dashboard/access-logs',
+            getHref: () => '/dashboard/access-logs',
+        },
         food: {
             label: 'Food',
             path: '/dashboard/food',

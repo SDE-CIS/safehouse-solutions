@@ -22,6 +22,7 @@ import { VideosResponse, VideosResponseSchema } from "@/types/api/Video";
 import { FansResponse } from "@/types/api/Fan";
 import { TemperaturesResponse } from "@/types/api/Temperature";
 import { FanActivity } from "@/types/api/FanActivity";
+import { AccessLogsResponse, AccessLogsResponseSchema } from "@/types/api/AccessLog";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -186,6 +187,12 @@ export const api = createApi({
                 KeycardResponseSchema.parse(response),
         }),
 
+        keycardLogs: builder.query<AccessLogsResponse, void>({
+            query: () => "keycards/logs",
+            transformResponse: (response: unknown) =>
+                AccessLogsResponseSchema.parse(response),
+        }),
+
         createKeycard: builder.mutation<KeycardResponse, Partial<Keycard>>({
             query: (body) => ({
                 url: "keycards",
@@ -256,6 +263,7 @@ export const {
     useDeleteUserMutation,
     useKeycardsQuery,
     useKeycardQuery,
+    useKeycardLogsQuery,
     useCreateKeycardMutation,
     useUpdateKeycardMutation,
     useDeleteKeycardMutation,
