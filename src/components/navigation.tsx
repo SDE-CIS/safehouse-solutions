@@ -24,61 +24,6 @@ import { selectCurrentAccessToken } from "@/services/login.ts";
 import { Button } from './ui/button';
 import { ProfileButton } from './ProfileButton.tsx';
 
-export function DashboardNavigation() {
-    const { t } = useTranslation();
-
-    const dashboardPaths = Object.entries(paths.dashboard || {})
-        .filter(([, value]) => !value.hidden && value.label)
-        .map(([key, value]) => ({ key, ...value }));
-
-    return (
-        <Box
-            bg={useColorModeValue('gray.100', 'gray.900')}
-            borderBottom="1px"
-            borderStyle="solid"
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-        >
-            <Container maxW="container.xl" py={4}>
-                <Flex align="center" justify="space-between">
-                    {/* Logo */}
-                    <Link to="/">
-                        <Image
-                            src={logo}
-                            alt="Logo"
-                            h={{ base: '25px', lg: '30px' }}
-                            w="auto"
-                        />
-                    </Link>
-
-                    {/* Navigation Links */}
-                    <Stack direction="row" gap={6} align="center" ml={8}>
-                        {dashboardPaths.map(({ key, label, getHref }) => (
-                            <Link
-                                key={key}
-                                to={getHref ? getHref() : '#'}
-                                style={{
-                                    textDecoration: 'none',
-                                    fontWeight: 600,
-                                    padding: '8px 16px',
-                                }}
-                            >
-                                {t(`navigation.${label.toLowerCase()}`)}
-                            </Link>
-                        ))}
-                    </Stack>
-
-                    {/* Utility Buttons */}
-                    <Stack direction="row" gap={6} align="center">
-                        <ColorModeButton />
-                        <LanguageModeButton />
-                        <ProfileButton />
-                    </Stack>
-                </Flex>
-            </Container>
-        </Box>
-    );
-}
-
 export function Navigation() {
     const location = useLocation();
     const { t } = useTranslation();

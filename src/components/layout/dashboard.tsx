@@ -1,6 +1,6 @@
-import { Box, Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
-import { DashboardNavigation } from "@/components/navigation";
+import { DashboardSidebar } from "../DashboardSidebar";
 
 type DashboardLayoutProps = {
     children: React.ReactNode;
@@ -8,12 +8,12 @@ type DashboardLayoutProps = {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
     return (
-        <Box display="flex" flexDirection="column" minHeight="100vh">
-            <DashboardNavigation />
-            <Container maxW="container.xl">
+        <Box display="flex" minHeight="100vh" overflow="hidden">
+            <DashboardSidebar />
+            <Box flex="1" p={6} overflowY="auto" bg="gray.50" _dark={{ bg: "gray.800" }}>
                 <div id="dialog-root"></div>
                 {children}
-            </Container>
+            </Box>
         </Box>
     );
 }
