@@ -2,9 +2,15 @@ import { z } from "zod";
 import { ApiResponseSchema } from "./ApiResponse";
 
 export const KeycardSchema = z.object({
-    ID: z.number(),
-    Name: z.string(),
+    ID: z.string(),
     RfidTag: z.string(),
+    IssueDate: z.string(),
+    ExpirationDate: z.string().nullable(),
+    UserID: z.number().nullable(),
+    StatusTypeID: z.number().nullable(),
+    Name: z.string().nullable(),
+    StatusName: z.string().nullable(),
+    StatusDescription: z.string().nullable(),
 });
 
 export type Keycard = z.infer<typeof KeycardSchema>;
