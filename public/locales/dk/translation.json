@@ -155,7 +155,7 @@
         "cameras": "Kameraovervågning",
         "contact_us": "Kontakt os",
         "keycards": "Nøglekort",
-        "access_logs": "Adgangslogfiler",
+        "logs": "Adgangslogfiler",
         "app": "Åbn Dashboard",
         "profile": "Åbn Profil",
         "log_out": "Log ud...",
@@ -163,7 +163,8 @@
         "food": "Madplan",
         "todo": "Opgaveliste",
         "users": "Åbn brugere",
-        "videos": "Videoarkiv"
+        "videos": "Videoarkiv",
+        "access": "Adgangskontrol"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",

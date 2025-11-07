@@ -69,15 +69,21 @@ export const paths: Record<string, Path> = {
             path: '/dashboard/videos/:filename',
             getHref: (filename: string) => `/dashboard/videos/${filename}`,
         },
-        keycards: {
-            label: 'Keycards',
-            path: '/dashboard/keycards',
-            getHref: () => '/dashboard/keycards',
-        },
-        access_logs: {
-            label: 'Access Logs',
-            path: '/dashboard/access-logs',
-            getHref: () => '/dashboard/access-logs',
+        access: {
+            label: 'Access',
+            path: '/dashboard/access',
+            getHref: () => '/dashboard/access',
+
+            keycards: {
+                label: 'Keycards',
+                path: '/dashboard/keycards',
+                getHref: () => '/dashboard/keycards',
+            },
+            logs: {
+                label: 'Logs',
+                path: '/dashboard/access-logs',
+                getHref: () => '/dashboard/access-logs',
+            },
         },
         food: {
             label: 'Food',
@@ -91,7 +97,6 @@ export const paths: Record<string, Path> = {
         },
         users: {
             label: 'Users',
-            hidden: true,
             path: '/dashboard/users',
             getHref: () => '/dashboard/users',
         },

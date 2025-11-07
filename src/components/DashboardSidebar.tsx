@@ -1,38 +1,120 @@
-import { Box, VStack, HStack, Icon, Text, useDisclosure, Image, Collapsible, Button } from "@chakra-ui/react";
+"use client";
+
+import {
+    Box,
+    VStack,
+    HStack,
+    Icon,
+    Text,
+    useDisclosure,
+    Button,
+    Collapsible,
+    Image,
+} from "@chakra-ui/react";
 import { useColorModeValue } from "@/components/ui/color-mode";
-import { FiHome, FiVideo, FiUsers, FiKey, FiChevronRight } from "react-icons/fi";
-import { ColorModeButton } from "@/components/ui/color-mode";
-import { LanguageModeButton } from "@/components/ui/language-mode";
-import { ProfileButton } from "@/components/ProfileButton";
-import logo from "/images/logo.png";
-import { useTranslation } from "react-i18next";
-import { paths } from "@/config/paths";
-import { Book } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { paths } from "@/config/paths";
+import { useTranslation } from "react-i18next";
+import {
+    FiVideo,
+    FiUsers,
+    FiKey,
+    FiChevronRight,
+    FiBook,
+    FiCreditCard,
+    FiCoffee,
+    FiCheck,
+    FiDatabase,
+    FiArchive,
+    FiCircle,
+} from "react-icons/fi";
+import logo from "/images/logo.png";
+
+const iconMap: Record<string, any> = {
+    overview: FiCircle,
+    cameras: FiVideo,
+    videos: FiArchive,
+    access: FiDatabase,
+    keycards: FiKey,
+    logs: FiCreditCard,
+    users: FiUsers,
+    food: FiCoffee,
+    todo: FiCheck,
+};
+
+function NavItem({ pathKey, pathDef, depth = 0 }: any) {
+    const location = useLocation();
+    const { t } = useTranslation();
+    const disclosure = useDisclosure();
+
+    const bgActive = useColorModeValue("blue.100", "blue.700");
+    const textColor = useColorModeValue("gray.800", "gray.100");
+    const hoverBg = useColorModeValue("gray.200", "gray.700");
+
+    // Find subpaths
+    const subpaths = Object.entries(pathDef)
+        .filter(([k, v]: any) => !v.hidden && v.label && v.getHref)
+        .map(([k, v]) => ({ key: k, ...v }));
+
+    const hasChildren = subpaths.length > 0;
+
+    const IconComp = iconMap[pathKey] || FiBook;
+    const active = location.pathname === pathDef.path;
+
+    return (
+        <Box>
+            <Button
+                variant="ghost"
+                justifyContent="space-between"
+                w="full"
+                color={textColor}
+                pl={depth * 4}
+                onClick={hasChildren ? disclosure.onToggle : undefined}
+                as={hasChildren ? "div" : Link}
+                to={!hasChildren ? pathDef.getHref?.() : undefined}
+                bg={active ? bgActive : "transparent"}
+                _hover={{ bg: hoverBg }}
+                rightIcon={
+                    hasChildren ? (
+                        <Collapsible.Indicator>
+                            <Icon
+                                as={FiChevronRight}
+                                transition="transform 0.2s"
+                                _open={{ transform: "rotate(90deg)" }}
+                            />
+                        </Collapsible.Indicator>
+                    ) : undefined
+                }
+            >
+                <HStack>
+                    <Icon as={IconComp} />
+                    <Text>{t(`navigation.${pathDef.label.toLowerCase()}`)}</Text>
+                </HStack>
+            </Button>
+
+            {hasChildren && (
+                <Collapsible.Root open={disclosure.open} onOpenChange={disclosure.onToggle}>
+                    <Collapsible.Content>
+                        <VStack align="stretch" mt={2} gap={1}>
+                            {subpaths.map((sub) => (
+                                <NavItem key={sub.key} pathKey={sub.key} pathDef={sub} depth={depth + 1} />
+                            ))}
+                        </VStack>
+                    </Collapsible.Content>
+                </Collapsible.Root>
+            )}
+        </Box>
+    );
+}
 
 export function DashboardSidebar() {
-    const { t } = useTranslation();
-    const location = useLocation();
-
     const bg = useColorModeValue("gray.100", "gray.900");
-    const activeBg = useColorModeValue("blue.100", "blue.700");
-    const textColor = useColorModeValue("gray.800", "gray.100");
+    const borderColor = useColorModeValue("gray.200", "gray.700");
 
-    const access = useDisclosure();
-
-    const navItems = [
-        { label: t("navigation.dashboard"), icon: FiHome, href: paths.dashboard.overview.getHref() },
-        { label: t("navigation.cameras"), icon: FiVideo, href: paths.dashboard.cameras.getHref() },
-        {
-            label: t("navigation.access"),
-            icon: FiKey,
-            children: [
-                { label: t("navigation.keycards"), href: paths.dashboard.keycards.getHref(), icon: FiKey },
-                { label: t("navigation.access_logs"), href: paths.dashboard.access_logs.getHref(), icon: Book },
-            ],
-        },
-        { label: t("navigation.users"), icon: FiUsers, href: paths.dashboard.users.getHref() },
-    ];
+    // Filter only the top-level dashboard paths
+    const dashboardPaths = Object.entries(paths.dashboard)
+        .filter(([k, v]: any) => !v.hidden && v.label)
+        .map(([k, v]) => ({ key: k, ...v }));
 
     return (
         <Box
@@ -41,93 +123,20 @@ export function DashboardSidebar() {
             p={4}
             bg={bg}
             borderRight="1px solid"
-            borderColor={useColorModeValue("gray.200", "gray.700")}
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
+            borderColor={borderColor}
+            overflowY="auto"
         >
-            <Box>
-                <Link to="/" style={{ textDecoration: "none" }}>
-                    <HStack mb={8}>
-                        <Image src={logo} alt="Logo" h="30px" />
-                    </HStack>
-                </Link>
-
-                <VStack align="stretch" gap={2}>
-                    {navItems.map((item) =>
-                        item.children ? (
-                            <Collapsible.Root key={item.label} open={access.open} onOpenChange={access.onToggle}>
-                                <Collapsible.Trigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        w="full"
-                                        justifyContent="space-between"
-                                        color={textColor}
-                                        _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
-                                    >
-                                        <HStack>
-                                            <Icon as={item.icon} />
-                                            <Text>{item.label}</Text>
-                                        </HStack>
-                                        <Collapsible.Indicator>
-                                            <Icon
-                                                as={FiChevronRight}
-                                                transition="transform 0.2s"
-                                                _open={{ transform: "rotate(90deg)" }}
-                                            />
-                                        </Collapsible.Indicator>
-                                    </Button>
-                                </Collapsible.Trigger>
-
-                                <Collapsible.Content>
-                                    <VStack align="stretch" pl={8} mt={2} gap={1}>
-                                        {item.children.map((child) => {
-                                            const active = location.pathname === child.href;
-                                            return (
-                                                <Link to={child.href} key={child.label}>
-                                                    <HStack
-                                                        px={3}
-                                                        py={2}
-                                                        borderRadius="md"
-                                                        bg={active ? activeBg : "transparent"}
-                                                        _hover={{ bg: activeBg }}
-                                                        transition="background 0.2s"
-                                                    >
-                                                        <Icon as={child.icon} />
-                                                        <Text>{child.label}</Text>
-                                                    </HStack>
-                                                </Link>
-                                            );
-                                        })}
-                                    </VStack>
-                                </Collapsible.Content>
-                            </Collapsible.Root>
-                        ) : (
-                            <Link to={item.href!} key={item.label}>
-                                <HStack
-                                    px={3}
-                                    py={2}
-                                    borderRadius="md"
-                                    bg={location.pathname === item.href ? activeBg : "transparent"}
-                                    _hover={{ bg: activeBg }}
-                                    transition="background 0.2s"
-                                >
-                                    <Icon as={item.icon} />
-                                    <Text>{item.label}</Text>
-                                </HStack>
-                            </Link>
-                        )
-                    )}
-                </VStack>
-            </Box>
-
-            <Box>
-                <HStack justify="space-between">
-                    <ColorModeButton />
-                    <LanguageModeButton />
-                    <ProfileButton />
+            <Link to="/" style={{ textDecoration: "none" }}>
+                <HStack mb={8}>
+                    <Image src={logo} alt="Logo" h="28px" />
                 </HStack>
-            </Box>
+            </Link>
+
+            <VStack align="stretch" gap={2}>
+                {dashboardPaths.map((item) => (
+                    <NavItem key={item.key} pathKey={item.key} pathDef={item} />
+                ))}
+            </VStack>
         </Box>
     );
 }
