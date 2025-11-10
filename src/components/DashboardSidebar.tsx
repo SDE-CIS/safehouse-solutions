@@ -19,7 +19,6 @@ import {
     FiVideo,
     FiUsers,
     FiKey,
-    FiChevronRight,
     FiBook,
     FiCreditCard,
     FiCoffee,
@@ -42,7 +41,13 @@ const iconMap: Record<string, any> = {
     todo: FiCheck,
 };
 
-function NavItem({ pathKey, pathDef, depth = 0 }: any) {
+interface PathDefItem {
+    hidden?: boolean;
+    label: string;
+    getHref?: () => string;
+}
+
+function NavItem({ pathKey, pathDef, depth = 0 }: { pathKey: string; pathDef: PathDefItem & { path: string; }; depth?: number; }) {
     const location = useLocation();
     const { t } = useTranslation();
     const disclosure = useDisclosure();
@@ -53,7 +58,7 @@ function NavItem({ pathKey, pathDef, depth = 0 }: any) {
 
     // Find subpaths
     const subpaths = Object.entries(pathDef)
-        .filter(([k, v]: any) => !v.hidden && v.label && v.getHref)
+        .filter(([_k, v]) => !v.hidden && v.label && v.getHref)
         .map(([k, v]) => ({ key: k, ...v }));
 
     const hasChildren = subpaths.length > 0;
@@ -71,20 +76,8 @@ function NavItem({ pathKey, pathDef, depth = 0 }: any) {
                 pl={depth * 4}
                 onClick={hasChildren ? disclosure.onToggle : undefined}
                 as={hasChildren ? "div" : Link}
-                to={!hasChildren ? pathDef.getHref?.() : undefined}
                 bg={active ? bgActive : "transparent"}
                 _hover={{ bg: hoverBg }}
-                rightIcon={
-                    hasChildren ? (
-                        <Collapsible.Indicator>
-                            <Icon
-                                as={FiChevronRight}
-                                transition="transform 0.2s"
-                                _open={{ transform: "rotate(90deg)" }}
-                            />
-                        </Collapsible.Indicator>
-                    ) : undefined
-                }
             >
                 <HStack>
                     <Icon as={IconComp} />
@@ -113,7 +106,7 @@ export function DashboardSidebar() {
 
     // Filter only the top-level dashboard paths
     const dashboardPaths = Object.entries(paths.dashboard)
-        .filter(([k, v]: any) => !v.hidden && v.label)
+        .filter(([_k, v]: any) => !v.hidden && v.label)
         .map(([k, v]) => ({ key: k, ...v }));
 
     return (
