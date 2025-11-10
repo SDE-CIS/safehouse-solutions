@@ -160,25 +160,61 @@ export function OverviewRoute() {
                     {t("temperature_trend")}
                 </Heading>
                 {chartData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={chartData}>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <AreaChart
+                            data={chartData}
+                            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                        >
                             <defs>
                                 <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="10%" stopColor="#f56565" stopOpacity={0.8} />
-                                    <stop offset="90%" stopColor="#f56565" stopOpacity={0.1} />
+                                    <stop
+                                        offset="10%"
+                                        stopColor={
+                                            stats.lastTemperature > 20.6
+                                                ? "#f56565"
+                                                : "#4299E1"
+                                        }
+                                        stopOpacity={0.8}
+                                    />
+                                    <stop
+                                        offset="90%"
+                                        stopColor={
+                                            stats.lastTemperature > 25
+                                                ? "#f56565"
+                                                : "#4299E1"
+                                        }
+                                        stopOpacity={0.1}
+                                    />
                                 </linearGradient>
                             </defs>
+
                             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
-                            <XAxis dataKey="time" tick={{ fontSize: 12 }} />
-                            <YAxis unit="°C" />
-                            <Tooltip />
+                            <XAxis
+                                dataKey="time"
+                                tick={{ fontSize: 12 }}
+                                interval="preserveStartEnd"
+                            />
+                            <YAxis
+                                unit="°C"
+                                domain={["dataMin - 2", "dataMax + 2"]}
+                            />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: useColorModeValue("#fff", "#1a202c"),
+                                    border: "none",
+                                    borderRadius: "8px",
+                                }}
+                            />
                             <Area
                                 type="monotone"
                                 dataKey="temperature"
-                                stroke="#f56565"
-                                strokeWidth={2}
+                                stroke={
+                                    stats.lastTemperature > 25 ? "#f56565" : "#4299E1"
+                                }
+                                strokeWidth={2.5}
                                 fillOpacity={1}
                                 fill="url(#colorTemp)"
+                                animationDuration={700}
                             />
                         </AreaChart>
                     </ResponsiveContainer>
