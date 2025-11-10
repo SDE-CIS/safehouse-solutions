@@ -15,7 +15,7 @@ import { AccessLog } from "@/types/api/AccessLog";
 import { useTranslation } from "react-i18next";
 
 export function AccessLogsRoute() {
-    const { data, isLoading, isError, refetch } = useKeycardLogsQuery();
+    const { data, isLoading, isError } = useKeycardLogsQuery();
     const { t } = useTranslation();
 
     if (isLoading)
