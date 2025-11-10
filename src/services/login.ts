@@ -38,9 +38,12 @@ export const loginSlice = createSlice({
         loggedIn: (state, action) => {
             setRawCookie('id', action.payload.user.id);
             setRawCookie('username', action.payload.user.username);
-            setRawCookie('avatar', action.payload.user.avatar);
             setRawCookie('accessToken', action.payload.accessToken);
             setRawCookie('refreshToken', action.payload.refreshToken);
+
+            if (action.payload.user.avatar) {
+                setRawCookie('avatar', action.payload.user.avatar);
+            }
 
             state.username = action.payload.user.username;
             state.avatar = action.payload.user.avatar;

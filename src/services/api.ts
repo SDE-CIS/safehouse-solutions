@@ -19,7 +19,7 @@ import {
 } from "@/types/api/User";
 import { Keycard, KeycardResponse, KeycardResponseSchema, KeycardsResponse, KeycardsResponseSchema } from "@/types/api/Keycard";
 import { VideosResponse, VideosResponseSchema } from "@/types/api/Video";
-import { FansResponse } from "@/types/api/Fan";
+import { FansResponse, FansResponseSchema } from "@/types/api/Fan";
 import { TemperaturesResponse } from "@/types/api/Temperature";
 import { FanActivity } from "@/types/api/FanActivity";
 import { AccessLogsResponse, AccessLogsResponseSchema } from "@/types/api/AccessLog";
@@ -234,8 +234,10 @@ export const api = createApi({
         }),
 
         /* ─────────────── DASHBOARD ─────────────── */
-        fans: builder.query<FansResponse, void>({
-            query: () => "temperature/fan",
+        fans: builder.query<FansResponse, string>({
+            query: (id) => `temperature/fan/device/${id}`,
+            transformResponse: (response: unknown) =>
+                FansResponseSchema.parse(response),
         }),
 
         temperatureLogs: builder.query<TemperaturesResponse, void>({

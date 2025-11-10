@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useActivateFanMutation, useFansQuery, useTemperatureLogsQuery } from "@/services/api";
 import { useEffect, useMemo, useState } from "react";
-import { Fan, Thermometer, Gauge, Activity } from "lucide-react";
+import { Fan, Thermometer, Activity } from "lucide-react";
 import {
     ResponsiveContainer,
     AreaChart,
@@ -24,6 +24,9 @@ import {
 } from "recharts";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { Button } from "@/components/ui/button";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 const MotionBox = motion(Box);
 
@@ -86,8 +89,9 @@ function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
 }
 
 export function OverviewRoute() {
+    const userId = cookies.get("id");
     const { t } = useTranslation();
-    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError, refetch: fansRefetch } = useFansQuery();
+    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError, refetch: fansRefetch } = useFansQuery(userId);
     const { data: tempsData, error: _tempsError, isLoading: _tempsLoading, isError: _tempsIsError } = useTemperatureLogsQuery();
     const [activateFan] = useActivateFanMutation();
 
@@ -99,15 +103,13 @@ export function OverviewRoute() {
             return { totalFans: 0, fansOn: 0, avgFanSpeed: 0, avgTemperature: 0, lastTemperature: 0 };
         }
 
-        const fansOn = fans.filter((f) => f.FanOn).length;
-        const avgFanSpeed = fans.reduce((a, f) => a + f.FanSpeed, 0) / fans.length;
+        const fansOn = fans.filter((f) => f.fanMode === "on").length;
         const avgTemperature = temps.reduce((a, t) => a + t.Temperature, 0) / temps.length;
         const lastTemperature = temps[temps.length - 1]?.Temperature ?? 0;
 
         return {
             totalFans: fans.length,
             fansOn,
-            avgFanSpeed: Math.round(avgFanSpeed),
             avgTemperature: Math.round(avgTemperature),
             lastTemperature,
         };
@@ -140,7 +142,6 @@ export function OverviewRoute() {
             <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 5 }} gap={6} mb={10}>
                 <AnimatedStat label={t("total_fans")} value={stats.totalFans} icon={Activity} color="purple.500" />
                 <AnimatedStat label={t("fans_on")} value={stats.fansOn} icon={Fan} color="teal.500" />
-                <AnimatedStat label={t("avg_fan_speed")} value={stats.avgFanSpeed} suffix="%" icon={Gauge} color="blue.500" />
                 <AnimatedStat label={t("avg_temperature")} value={stats.avgTemperature} suffix="°C" icon={Thermometer} color="orange.400" />
                 <AnimatedStat label={t("last_temperature")} value={stats.lastTemperature} suffix="°C" icon={Thermometer} color="red.400" />
             </SimpleGrid>
@@ -206,29 +207,26 @@ export function OverviewRoute() {
                     >
                         <Flex justify="space-between" align="center" mb={3}>
                             <Text fontWeight="bold">
-                                Fan #{fan.ID} – #{fan.DeviceID}
+                                Fan #{fan.ID} – #{fan.UserID}
                             </Text>
                             <Button
                                 px={3}
                                 py={1}
                                 borderRadius="md"
-                                bg={fan.FanOn ? "green.400" : "gray.600"}
+                                bg={fan.fanMode === "on" ? "green.400" : "gray.600"}
                                 color="white"
                                 fontSize="xs"
-                                onClick={() => onFanActivate(fan.DeviceID, fan.FanOn ? "off" : "on")}
+                                onClick={() => onFanActivate(fan.UserID, fan.fanMode === "on" ? "off" : "on")}
                             >
-                                {fan.FanOn ? t("on") : t("off")}
+                                {fan.fanMode === "on" ? t("on") : t("off")}
                             </Button>
                         </Flex>
                         <VStack align="start" gap={1}>
                             <Text fontSize="sm">
-                                <strong>{t("speed")}:</strong> {fan.FanSpeed}%
-                            </Text>
-                            <Text fontSize="sm">
-                                <strong>{t("mode")}:</strong> {fan.FanMode}
+                                <strong>{t("mode")}:</strong> {fan.fanMode}
                             </Text>
                             <Text fontSize="xs" color="gray.500">
-                                {new Date(fan.ActivationTimestamp ?? "").toLocaleString()}
+                                {new Date(fan.DateAdded ?? "").toLocaleString()}
                             </Text>
                         </VStack>
                     </MotionBox>

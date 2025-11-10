@@ -3,12 +3,11 @@ import { ApiResponseSchema } from "./ApiResponse";
 
 export const FanSchema = z.object({
     ID: z.number(),
-    Activation: z.boolean(),
-    ActivationTimestamp: z.string().nullable(),
-    FanOn: z.boolean(),
-    FanSpeed: z.number(),
-    FanMode: z.string(),
-    DeviceID: z.number(),
+    Active: z.boolean(),
+    DateAdded: z.string().nullable(),
+    LocationID: z.number().nullable(),
+    UserID: z.number(),
+    fanMode: z.string().nullable(),
 });
 
 export type Fan = z.infer<typeof FanSchema>;
