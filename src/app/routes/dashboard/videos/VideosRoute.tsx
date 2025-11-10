@@ -108,7 +108,7 @@ export function VideosRoute() {
                                 </Select.ValueText>
                             </Select.Trigger>
 
-                            <Select.Content>
+                            <Select.Content position="absolute" w="300px">
                                 {dateCollection.items.map((item) => (
                                     <Select.Item key={item.value} item={item}>
                                         {item.label}

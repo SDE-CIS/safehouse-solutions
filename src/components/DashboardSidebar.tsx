@@ -19,7 +19,6 @@ import {
     FiVideo,
     FiUsers,
     FiKey,
-    FiChevronRight,
     FiBook,
     FiCreditCard,
     FiCoffee,
