@@ -115,7 +115,7 @@ export function DashboardSidebar() {
 
     // Filter only the top-level dashboard paths
     const dashboardPaths = Object.entries(paths.dashboard)
-        .filter(([k, v]: any) => !v.hidden && v.label)
+        .filter(([_k, v]: any) => !v.hidden && v.label)
         .map(([k, v]) => ({ key: k, ...v }));
 
     return (

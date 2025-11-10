@@ -179,7 +179,8 @@
         "watch": "Se",
         "avi_file": "Denne video er i AVI-format og kan ikke afspilles i browseren.",
         "download": "Download video",
-        "no_video_found": "Ingen video fundet"
+        "no_video_found": "Ingen video fundet",
+        "select_date": "Vælg dato"
     },
     "landing": {
         "welcome": "Velkommen til Safehouse Solutions",
