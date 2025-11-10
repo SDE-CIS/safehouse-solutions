@@ -129,7 +129,7 @@ export function OverviewRoute() {
             Location: "stue",
             FanMode: mode
         });
-        fansRefetch();
+        setTimeout(() => { fansRefetch() }, 1500);
     };
 
     return (
