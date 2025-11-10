@@ -121,6 +121,7 @@ export function OverviewRoute() {
     }));
 
     const chartBg = useColorModeValue("gray.100", "gray.800");
+    const fanCardBg = useColorModeValue("white", "gray.900");
 
     const onFanActivate = (fanId: number, mode: string) => {
         activateFan({
@@ -200,7 +201,7 @@ export function OverviewRoute() {
                         borderWidth="1px"
                         borderRadius="lg"
                         p={5}
-                        bg={useColorModeValue("white", "gray.900")}
+                        bg={fanCardBg}
                         shadow="sm"
                         whileHover={{ y: -5, boxShadow: "xl" }}
                         transition={{ duration: 0.2 }}
@@ -216,7 +217,12 @@ export function OverviewRoute() {
                                 bg={fan.fanMode === "on" ? "green.400" : "gray.600"}
                                 color="white"
                                 fontSize="xs"
-                                onClick={() => onFanActivate(fan.UserID, fan.fanMode === "on" ? "off" : "on")}
+                                onClick={() =>
+                                    onFanActivate(
+                                        fan.UserID,
+                                        fan.fanMode === "on" ? "off" : "on"
+                                    )
+                                }
                             >
                                 {fan.fanMode === "on" ? t("on") : t("off")}
                             </Button>

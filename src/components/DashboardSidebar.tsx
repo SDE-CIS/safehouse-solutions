@@ -19,6 +19,7 @@ import {
     FiVideo,
     FiUsers,
     FiKey,
+    FiChevronRight,
     FiBook,
     FiCreditCard,
     FiCoffee,
@@ -56,7 +57,6 @@ function NavItem({ pathKey, pathDef, depth = 0 }: { pathKey: string; pathDef: Pa
     const textColor = useColorModeValue("gray.800", "gray.100");
     const hoverBg = useColorModeValue("gray.200", "gray.700");
 
-    // Find subpaths
     const subpaths = Object.entries(pathDef)
         .filter(([_k, v]) => !v.hidden && v.label && v.getHref)
         .map(([k, v]) => ({ key: k, ...v }));
@@ -68,22 +68,32 @@ function NavItem({ pathKey, pathDef, depth = 0 }: { pathKey: string; pathDef: Pa
 
     return (
         <Box>
-            <Button
-                variant="ghost"
-                justifyContent="space-between"
-                w="full"
-                color={textColor}
-                pl={depth * 4}
-                onClick={hasChildren ? disclosure.onToggle : undefined}
-                as={hasChildren ? "div" : Link}
-                bg={active ? bgActive : "transparent"}
-                _hover={{ bg: hoverBg }}
-            >
-                <HStack>
-                    <Icon as={IconComp} />
-                    <Text>{t(`navigation.${pathDef.label.toLowerCase()}`)}</Text>
-                </HStack>
-            </Button>
+            {hasChildren ? (
+                <Button
+                    variant="ghost"
+                    justifyContent="space-between"
+                    w="full"
+                    color={textColor}
+                    pl={depth * 4}
+                    onClick={disclosure.onToggle}
+                    bg={active ? bgActive : "transparent"}
+                    _hover={{ bg: hoverBg }}
+                >
+                    <HStack>
+                        <Icon as={IconComp} />
+                        <Text>{t(`navigation.${pathDef.label.toLowerCase()}`)}</Text>
+                    </HStack>
+                </Button>
+            ) : (
+                <Button asChild variant="ghost" justifyContent="space-between" w="full" color={textColor} pl={depth * 4} bg={active ? bgActive : "transparent"} _hover={{ bg: hoverBg }}>
+                    <Link to={pathDef.getHref?.() ?? "#"}>
+                        <HStack>
+                            <Icon as={IconComp} />
+                            <Text>{t(`navigation.${pathDef.label.toLowerCase()}`)}</Text>
+                        </HStack>
+                    </Link>
+                </Button>
+            )}
 
             {hasChildren && (
                 <Collapsible.Root open={disclosure.open} onOpenChange={disclosure.onToggle}>
@@ -106,7 +116,7 @@ export function DashboardSidebar() {
 
     // Filter only the top-level dashboard paths
     const dashboardPaths = Object.entries(paths.dashboard)
-        .filter(([_k, v]: any) => !v.hidden && v.label)
+        .filter(([k, v]: any) => !v.hidden && v.label)
         .map(([k, v]) => ({ key: k, ...v }));
 
     return (
