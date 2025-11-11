@@ -201,7 +201,7 @@ export const api = createApi({
             })
         }),
 
-        updateKeycard: builder.mutation<KeycardResponse, { id: string; data: Partial<Keycard> }>({
+        updateKeycard: builder.mutation<KeycardResponse, { id: number; data: Partial<Keycard> }>({
             query: ({ id, data }) => ({
                 url: `keycards/${id}`,
                 method: "PUT",
@@ -209,7 +209,7 @@ export const api = createApi({
             })
         }),
 
-        deleteKeycard: builder.mutation<{ message: string }, string>({
+        deleteKeycard: builder.mutation<{ message: string }, number>({
             query: (id) => ({
                 url: `keycards/${id}`,
                 method: "DELETE",

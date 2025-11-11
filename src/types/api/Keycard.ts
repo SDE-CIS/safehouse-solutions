@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ApiResponseSchema } from "./ApiResponse";
 
 export const KeycardSchema = z.object({
-    ID: z.string(),
+    ID: z.number(),
     RfidTag: z.string(),
     IssueDate: z.string(),
     ExpirationDate: z.string().nullable(),

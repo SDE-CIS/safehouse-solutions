@@ -80,7 +80,7 @@ export function KeycardsRoute() {
         }
     };
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id: number) => {
         try {
             await deleteKeycard(id).unwrap();
             toaster.create({
