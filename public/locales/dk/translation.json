@@ -107,6 +107,7 @@
     "granted": "Givet",
     "denied": "Nægtet",
     "rfid_tag": "RFID-tag",
+    "due_date_optional": "Forfaldsdato (valgfri)",
     "auth": {
         "name": "Navn",
         "email": "E-mail",

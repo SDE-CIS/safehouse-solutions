@@ -1,5 +1,9 @@
 "use client"
 
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import { bg } from "date-fns/locale"
+import { da } from "date-fns/locale"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
     Box,
@@ -19,6 +23,7 @@ import { Trash2 } from "lucide-react"
 import { toaster } from "@/components/ui/toaster"
 import { useTranslation } from "react-i18next"
 import { useColorModeValue } from "@/components/ui/color-mode"
+import i18n from "@/config/i18n"
 
 type Todo = {
     id: string
@@ -93,6 +98,7 @@ export const TodoRoute = () => {
 
     const remaining = useMemo(() => todos.filter((t) => !t.done).length, [todos])
     const lineColor = useColorModeValue("brand.500", "brand.300")
+    const locale = i18n.language === "bg" ? bg : da
 
     const addTodo = () => {
         if (!newTitle.trim()) {
@@ -219,12 +225,23 @@ export const TodoRoute = () => {
                             onChange={(e) => setNewTitle(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && addTodo()}
                         />
-                        <Input
-                            type="date"
-                            flex="1"
-                            value={newDue}
-                            onChange={(e) => setNewDue(e.target.value)}
-                        />
+                        <Button variant="outline">
+                            <DatePicker
+                                selected={newDue ? new Date(newDue) : null}
+                                onChange={(date: Date | null) => {
+                                    if (date) {
+                                        setNewDue(date.toISOString().split("T")[0])
+                                    } else {
+                                        setNewDue("")
+                                    }
+                                }}
+                                placeholderText={t("due_date_optional")}
+                                isClearable
+                                dateFormat="P"
+                                locale={locale}
+                            />
+                        </Button>
+
                         <Input
                             flex="2"
                             placeholder={t("short_notes_optional")}
@@ -274,12 +291,13 @@ export const TodoRoute = () => {
                                         textDecoration={todo.done ? "line-through" : "none"}
                                         onChange={(e) => updateTodo(todo.id, { title: e.target.value })}
                                     />
-                                    <Input
-                                        type="date"
-                                        value={todo.due}
-                                        onChange={(e) => updateTodo(todo.id, { due: e.target.value })}
-                                        w={{ base: "100%", sm: "160px" }}
-                                    />
+                                    <Text>
+                                        {todo.due &&
+                                            new Intl.DateTimeFormat(
+                                                i18n.language === "bg" ? "bg-BG" : "en-US",
+                                                { year: "numeric", month: "long", day: "numeric" }
+                                            ).format(new Date(todo.due))}
+                                    </Text>
                                     <IconButton
                                         aria-label={t("delete")}
                                         size="sm"

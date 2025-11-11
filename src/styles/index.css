@@ -1,1 +1,12 @@
 @import './fade.css';
+
+.react-datepicker__input-container input {
+    background: transparent !important;
+    cursor: pointer !important;
+}
+
+.react-datepicker__input-container input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: inherit !important;
+}

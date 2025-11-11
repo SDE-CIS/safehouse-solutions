@@ -107,6 +107,7 @@
     "granted": "Разрешен",
     "denied": "Отказан",
     "rfid_tag": "RFID етикет",
+    "due_date_optional": "Срок (по избор)",
     "auth": {
         "name": "Име",
         "email": "Имейл",
