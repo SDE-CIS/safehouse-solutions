@@ -32,7 +32,9 @@ export function AccessLogsRoute() {
             </Box>
         );
 
-    const logs = data?.data ?? [];
+    const logs = (data?.data ?? []).slice().sort(
+        (a, b) => new Date(b.AccessTime).getTime() - new Date(a.AccessTime).getTime()
+    );
 
     return (
         <Box p={8}>
