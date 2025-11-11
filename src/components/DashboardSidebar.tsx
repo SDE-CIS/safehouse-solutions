@@ -120,7 +120,7 @@ export function DashboardSidebar() {
 
     return (
         <Box
-            w="260px"
+            w="300px"
             h="100vh"
             p={4}
             bg={bg}
@@ -130,7 +130,7 @@ export function DashboardSidebar() {
         >
             <Link to="/" style={{ textDecoration: "none" }}>
                 <HStack mb={8}>
-                    <Image src={logo} alt="Logo" h="28px" />
+                    <Image src={logo} alt="Logo" h="34px" />
                 </HStack>
             </Link>
 
