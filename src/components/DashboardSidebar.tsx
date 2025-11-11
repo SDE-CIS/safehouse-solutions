@@ -66,7 +66,7 @@ function NavItem({ pathKey, pathDef, depth = 0 }: { pathKey: string; pathDef: Pa
     const active = location.pathname === pathDef.path;
 
     return (
-        <Box>
+        <Box pl={2}>
             {hasChildren ? (
                 <Button
                     variant="ghost"
