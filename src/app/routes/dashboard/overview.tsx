@@ -91,7 +91,9 @@ function AnimatedStat({ label, value, suffix, icon, color }: StatCardProps) {
 export function OverviewRoute() {
     const userId = cookies.get("id");
     const { t } = useTranslation();
-    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError, refetch: fansRefetch } = useFansQuery(userId);
+    const { data: fansData, error: _fansError, isLoading: _fansLoading, isError: _fansIsError, refetch: fansRefetch } = useFansQuery(userId, {
+        pollingInterval: 5000,
+    });
     const { data: tempsData, error: _tempsError, isLoading: _tempsLoading, isError: _tempsIsError } = useTemperatureLogsQuery();
     const [activateFan] = useActivateFanMutation();
 
@@ -122,6 +124,7 @@ export function OverviewRoute() {
 
     const chartBg = useColorModeValue("gray.100", "gray.800");
     const fanCardBg = useColorModeValue("white", "gray.900");
+    const tooltipBg = useColorModeValue("#fff", "#1a202c");
 
     const onFanActivate = (fanId: number, mode: string) => {
         activateFan({
@@ -170,7 +173,7 @@ export function OverviewRoute() {
                                     <stop
                                         offset="10%"
                                         stopColor={
-                                            stats.lastTemperature > 20.6
+                                            stats.lastTemperature > 25
                                                 ? "#f56565"
                                                 : "#4299E1"
                                         }
@@ -200,7 +203,7 @@ export function OverviewRoute() {
                             />
                             <Tooltip
                                 contentStyle={{
-                                    backgroundColor: useColorModeValue("#fff", "#1a202c"),
+                                    backgroundColor: tooltipBg,
                                     border: "none",
                                     borderRadius: "8px",
                                 }}

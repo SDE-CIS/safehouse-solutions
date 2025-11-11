@@ -11,7 +11,6 @@ export function CamerasRoute() {
 
     const cameraFeeds = [
         { id: 1, topic: "/camera/office/front_door/video", title: "Stue kamera" },
-        { id: 2, topic: "/camera/office/desks/video", title: "Kontor kamera" },
     ];
 
     return (
