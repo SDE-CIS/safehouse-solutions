@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { useActivateFanMutation, useFansQuery, useTemperatureLogsQuery } from "@/services/api";
+import { useActivateFanMutation, useCameraDetectionsQuery, useFansQuery, useTemperatureLogsQuery } from "@/services/api";
 import { useEffect, useMemo, useState } from "react";
 import { Fan, Thermometer, Activity } from "lucide-react";
 import {
@@ -25,6 +25,7 @@ import {
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { Button } from "@/components/ui/button";
 import { Cookies } from "react-cookie";
+import { useBufferImage } from "@/hooks/useBufferImage";
 
 const cookies = new Cookies();
 
@@ -96,6 +97,7 @@ export function OverviewRoute() {
     });
     const { data: tempsData, error: _tempsError, isLoading: _tempsLoading, isError: _tempsIsError } = useTemperatureLogsQuery();
     const [activateFan] = useActivateFanMutation();
+    const { data: cameraDetectionsData } = useCameraDetectionsQuery({ id: userId, page: 1, limit: 3 });
 
     const fans = fansData?.data ?? [];
     const temps = tempsData?.data ?? [];
@@ -227,6 +229,59 @@ export function OverviewRoute() {
                     </Text>
                 )}
             </Box>
+
+            {/* CAMERA DETECTIONS */}
+            <Heading as="h2" size="md" mb={6}>
+                {t("camera_detections_overview")}
+            </Heading>
+
+            <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={6}>
+                {cameraDetectionsData?.data.map((detection) => {
+                    const imageSrc = useBufferImage(detection.CameraImage);
+
+                    return (
+                        <MotionBox
+                            key={detection.ID}
+                            borderWidth="1px"
+                            borderRadius="lg"
+                            p={5}
+                            bg={fanCardBg}
+                            shadow="sm"
+                            whileHover={{ y: -5, boxShadow: "xl" }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <VStack align="start" gap={2}>
+                                <Text fontWeight="bold">Detection #{detection.ID}</Text>
+                                <Text fontSize="sm">
+                                    <strong>{t("timestamp")}:</strong>{" "}
+                                    {detection.ImageTimestamp
+                                        ? new Date(detection.ImageTimestamp).toLocaleString()
+                                        : t("no_timestamp")}
+                                </Text>
+
+                                {imageSrc ? (
+                                    <Box mt={3} w="100%">
+                                        <img
+                                            src={imageSrc}
+                                            alt={`Detection ${detection.ID}`}
+                                            style={{
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                                objectFit: "cover",
+                                                maxHeight: "200px"
+                                            }}
+                                        />
+                                    </Box>
+                                ) : (
+                                    <Text fontSize="sm" color="gray.500">
+                                        {t("no_image_available")}
+                                    </Text>
+                                )}
+                            </VStack>
+                        </MotionBox>
+                    );
+                })}
+            </SimpleGrid>
 
             {/* FANS OVERVIEW */}
             <Heading as="h2" size="md" mb={6}>

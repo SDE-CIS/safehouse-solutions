@@ -23,6 +23,8 @@ import { FansResponse, FansResponseSchema } from "@/types/api/Fan";
 import { TemperaturesResponse } from "@/types/api/Temperature";
 import { FanActivity } from "@/types/api/FanActivity";
 import { AccessLogsResponse, AccessLogsResponseSchema } from "@/types/api/AccessLog";
+import { CameraDetectionsResponse } from "@/types/api/CameraDetection";
+import { CameraDetectionRequest } from "@/types/api/CameraDetectionRequest";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -233,6 +235,10 @@ export const api = createApi({
             }),
         }),
 
+        cameraDetections: builder.query<CameraDetectionsResponse, CameraDetectionRequest>({
+            query: ({ id, page, limit }) => `camera/${id}?page=${page}&limit=${limit}`,
+        }),
+
         /* ─────────────── DASHBOARD ─────────────── */
         fans: builder.query<FansResponse, string>({
             query: (id) => `temperature/fan/device/${id}`,
@@ -274,4 +280,5 @@ export const {
     useFansQuery,
     useTemperatureLogsQuery,
     useActivateFanMutation,
+    useCameraDetectionsQuery,
 } = api;
