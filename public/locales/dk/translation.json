@@ -111,6 +111,7 @@
     "detection": "Detektion",
     "timestamp": "Tidsstempel",
     "camera_detections_overview": "Kamera Detektioner Oversigt",
+    "camera_detections": "Kamera Detektioner",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
