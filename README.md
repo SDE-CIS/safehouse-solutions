@@ -1,105 +1,141 @@
-# Project Overview
+# Safehouse Solutions
 
-This repository contains the source code for a modern web application built using React, Chakra UI, and React Hook Form. The application implements a modular architecture with routing, authentication, and several dynamic features to provide an optimized user experience.
-
-## Features
-
-- **Authentication**: Login and registration pages with real-time validation.
-- **Product Information Management (PIM)**: A dashboard to manage products with CRUD operations.
-- **User Management**: Role-based user segmentation and management.
-- **Responsive Design**: Fully responsive UI built with Chakra UI.
-- **Localization**: Supports multiple languages with translation files.
-- **Error Handling**: Comprehensive error handling and fallback routes.
-- **Routing**: Client-side routing using `react-router-dom`.
+Safehouse Solutions er en moderne webplatform til intelligent hjemmestyring, hvor brugeren kan overvåge, styre og automatisere sine IoT-enheder via en sikker webgrænseflade.  
+Projektet kombinerer IoT-teknologi, webudvikling og cloud-integration i et samlet system, der er designet til at være både brugervenligt, skalerbart og sikkert.
 
 ---
 
-## Project Structure
+## Funktionelt overblik
 
-```
+### Offentlig del (hjemmeside)
+- **Forside (Landing Page)** – præsentation af virksomheden med animerede effekter, baggrundsbevægelser og responsivt design.  
+- **Login / Registrering** – brugergodkendelse via e-mail og adgangskode med JWT-tokenhåndtering.  
+- **Kontakt & Privatlivspolitik** – statiske informationssider.  
+- **Flersprogethed** – understøtter flere sprog via `i18next`.
+
+### Dashboard (brugersystem)
+Efter login får brugeren adgang til et komplet kontrolpanel for sit smart home:
+
+| Modul | Funktion |
+|--------|-----------|
+| **Oversigt** | Live-opdaterede grafer og statistik over sensorer og enheder. |
+| **Adgang (RFID)** | Administrér nøglekort, se adgangslog og registrér nye kort. |
+| **Videoovervågning** | Se live-stream fra kameraer og hent optagelser fra Azure Blob Storage. |
+| **Temperatur & Ventilation** | Fjernstyring af temperatur og blæser baseret på IoT-data via MQTT. |
+| **To-do & Måltidsplan** | Simpelt husholdningsværktøj til daglig planlægning. |
+
+---
+
+## Teknisk arkitektur
+
+### Frontend
+Bygget med React, TypeScript og Vite, og designet med Chakra UI v3.  
+Frontend kommunikerer med backend-API’et og MQTT-brokeren i realtid.
+
+**Vigtige teknologier:**
+- React (Vite) – hurtig bundling og modulopdeling  
+- Chakra UI – moderne komponentbaseret UI  
+- RTK Query – effektiv datacaching og API-kommunikation  
+- MQTT.js – live-forbindelser til IoT-enheder  
+- React Router – side-navigation  
+- i18next – flersproget understøttelse  
+- Zod – typesikker validering af API-data  
+- Recharts – datavisualisering  
+
+---
+
+### Backend
+Backend er bygget i Node.js (Express) og kører på en Windows Server / IIS med CI/CD gennem Azure DevOps.
+
+**Nøglepunkter:**
+- REST-API med Express  
+- MySQL database til bruger- og enhedsdata  
+- JWT til autentifikation  
+- bcrypt til sikker hashing af adgangskoder  
+- CORS, dotenv og static-file middleware  
+- CI/CD pipelines via Azure DevOps (self-hosted agent)  
+- Azure Blob Storage til videoarkiver  
+
+---
+
+### IoT-integration
+Platformen kommunikerer med en MQTT-broker (kørende på Raspberry Pi 4), som forbinder alle IoT-enheder.
+
+**Understøttede enheder:**
+- RFID Smart Lock – adgangsstyring via nøglekort  
+- Kameraer – live- og bevægelsesdetekteret video  
+- Temperatur-sensorer – realtidsmålinger  
+- Ventilatorer – fjernstyring baseret på sensorinput  
+
+MQTT-emner følger et hierarkisk mønster:
+IoT-enheder kan modtage konfigurationer via “settings”-topics og sende status tilbage i realtid.
+
+---
+
+## Sikkerhed
+- TLS-kryptering på MQTT-kommunikation  
+- JWT-baseret sessionhåndtering  
+- GDPR-overholdelse og minimal datalagring  
+- Firewall-beskyttelse og adskilt IoT-netværk  
+- Self-signed CA-certifikater for enhedstillid  
+
+---
+
+## Projektstruktur
+safehouse-solutions/
 ├── src/
-│   ├── components/          # Reusable components
-│   ├── pages/               # Main pages like landing, about-us, etc.
-│   ├── services/            # API and data-fetching logic
-│   ├── translations/        # Localization files
-│   ├── App.tsx              # Main application component
-│   ├── main.tsx             # Entry point
-│   └── router.tsx           # Route definitions
-├── public/
-│   ├── index.html           # HTML template
-├── package.json             # Dependencies and scripts
-└── README.md                # Documentation
-```
+│ ├── app/ # Routing, tema og store
+│ ├── components/ # UI-komponenter (Chakra UI)
+│ ├── hooks/ # Custom React hooks (MQTT, parallax)
+│ ├── services/ # API- og loginlogik
+│ ├── types/ # TypeScript-interfaces
+│ ├── config/ # Opsætning (i18n, paths, farver)
+│ └── main.tsx # App entrypoint
+├── public/ # Ikoner og statiske filer
+├── vite.config.ts # Bygkonfiguration
+└── package.json # Projektmetadata
 
 ---
 
-## Installation and Setup
+## Udviklingsmiljø
 
-### Prerequisites
-- Node.js (v16 or later)
-- npm or yarn package manager
-
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo.git
-   cd your-repo
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm start
-   # or
-   yarn start
-   ```
-
-4. Open the application in your browser at `http://localhost:3000`.
+**Krav**
+- Node.js v18 eller nyere  
+- NPM eller Yarn  
+- MySQL-database  
+- MQTT-broker (f.eks. Mosquitto)  
 
 ---
 
-## Technical Overview
+**Installation**
+```bash
+npm install
+npm run dev
 
-### Frameworks and Libraries
-- **React**: Frontend framework for building user interfaces.
-- **Chakra UI**: Component library for responsive and accessible UI design.
-- **React Hook Form**: Efficient form handling with validation.
-- **react-router-dom**: For routing and navigation.
-
-### API Integration
-API calls are managed through custom service files in the `services` folder, utilizing `react-query` or `redux-toolkit` for state management.
-
-### State Management
-The project uses React's Context API and React Hook Form for managing global and form states, ensuring clean and scalable state management.
+**Byg til produktion**
+npm run build
 
 ---
 
-## Key Components and Pages
+## Deployment og skalering
 
-### Components
-- **Navigation**: A dynamic header for navigation across routes.
-- **Footer**: Footer with contextual links and information.
-- **Dialog**: Customizable modals for editing forms or displaying detailed information.
-
-### Pages
-- **Landing Page**: The homepage for the application.
-- **Dashboard**: Main interface for managing products and users.
-- **Login/Register**: Secure authentication system with validation.
-- **PIM**: Product Information Management for managing product data.
-- **Users**: Role-based user management and details.
+* CI/CD pipelines via Azure DevOps
+* Self-hosted agent på Windows Server
+* Produktion hostes i IIS med Node.js process-management
+* Videoer gemmes i Azure Blob Storage for skalerbarhed
+* Staging- og produktionsmiljøer håndteres separat
 
 ---
 
-## Localization
+## Fremtidige udvidelser
 
-The application supports multiple languages. Translation files are located in the `translations/` folder. To add a new language:
+* Sagsstyring og support-system med e-mailnotifikationer
+* Ansigtsgenkendelse via AI (Cascade Classifier)
+* Mobilapp til fjernstyring og push-notifikationer
 
-1. Create a new JSON file in the `translations` directory.
-2. Follow the key-value structure from existing files.
-3. Update the language selection logic if necessary.
+---
+
+## Udviklet af
+Safehouse Solutions Teamet
+Projekt udviklet som en integreret løsning mellem IoT-hardware og websoftware.
+"Sikkerhed starter i hjemmet – Safehouse Solutions giver dig kontrol."
