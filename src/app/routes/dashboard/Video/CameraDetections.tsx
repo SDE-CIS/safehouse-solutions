@@ -1,5 +1,4 @@
 import {
-    Button,
     Container,
     Heading,
     SimpleGrid,
@@ -13,6 +12,7 @@ import { useCameraDetectionsQuery } from "@/services/api";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { Cookies } from "react-cookie";
 import { CameraDetectionView } from "../DetectionView";
+import { Button } from "@/components/ui/button";
 
 const cookies = new Cookies();
 
@@ -87,7 +87,7 @@ export function CameraDetectionsRoute() {
                             {t("next")}
                         </Button>
 
-                        <Button variant="ghost" onClick={() => refetch()}>
+                        <Button variantStyle="outline" onClick={() => refetch()}>
                             {t("refresh")}
                         </Button>
                     </Flex>
