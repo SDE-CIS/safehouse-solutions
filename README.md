@@ -81,22 +81,6 @@ IoT-enheder kan modtage konfigurationer via “settings”-topics og sende statu
 
 ---
 
-## Projektstruktur
-safehouse-solutions/
-├── src/
-│ ├── app/ # Routing, tema og store
-│ ├── components/ # UI-komponenter (Chakra UI)
-│ ├── hooks/ # Custom React hooks (MQTT, parallax)
-│ ├── services/ # API- og loginlogik
-│ ├── types/ # TypeScript-interfaces
-│ ├── config/ # Opsætning (i18n, paths, farver)
-│ └── main.tsx # App entrypoint
-├── public/ # Ikoner og statiske filer
-├── vite.config.ts # Bygkonfiguration
-└── package.json # Projektmetadata
-
----
-
 ## Udviklingsmiljø
 
 **Krav**
