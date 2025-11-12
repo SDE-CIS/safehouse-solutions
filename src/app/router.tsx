@@ -63,7 +63,7 @@ export const createAppRouter = () =>
                 newRoute(paths.dashboard.user.path, 'UserRoute', () => import('./routes/dashboard/users/user')),
                 newRoute(paths.dashboard.video.live.path, 'LiveRoute', () => import('./routes/dashboard/Video/Live')),
                 newRoute(paths.dashboard.video.livePreview.path, 'LivePreviewRoute', () => import('./routes/dashboard/Video/LivePreview')),
-                newRoute(paths.dashboard.video.cameraDetections.path, 'CameraDetectionsRoute', () => import('./routes/dashboard/Video/CameraDetections')),
+                newRoute(paths.dashboard.video.detections.path, 'CameraDetectionsRoute', () => import('./routes/dashboard/Video/CameraDetections')),
                 newRoute(paths.dashboard.video.archive.path, 'ArchiveRoute', () => import('./routes/dashboard/Video/Archive')),
                 newRoute(paths.dashboard.video.archivePreview.path, 'ArchivePreviewRoute', () => import('./routes/dashboard/Video/ArchivePreview')),
             ]

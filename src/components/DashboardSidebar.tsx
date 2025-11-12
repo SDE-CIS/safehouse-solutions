@@ -24,6 +24,7 @@ import {
     FiArchive,
     FiChevronRight,
     FiHome,
+    FiAlertTriangle,
 } from "react-icons/fi";
 import logo from "/images/logo.png";
 import { paths } from "@/config/paths";
@@ -40,6 +41,7 @@ const iconMap: Record<string, any> = {
     video: FiVideo,
     live: FiVideo,
     archive: FiArchive,
+    detections: FiAlertTriangle
 };
 
 interface PathDefItem {

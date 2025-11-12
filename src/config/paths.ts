@@ -65,7 +65,7 @@ export const paths: Record<string, Path> = {
                 getHref: (cameraId: string) => `/dashboard/videos/live/${cameraId}`,
             },
 
-            cameraDetections: {
+            detections: {
                 label: 'Detections',
                 path: '/dashboard/videos/camera-detections',
                 getHref: () => '/dashboard/videos/camera-detections',
