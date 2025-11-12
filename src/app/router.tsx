@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { paths } from '@/config/paths';
 import { MainLayout } from '@/components/layout/main';
 import { Error } from '@/components/ui/error';
-import { DashboardRoot, DashboardRootErrorBoundary } from "@/app/routes/dashboard/root.tsx";
+import { DashboardRoot, DashboardRootErrorBoundary } from "@/app/routes/dashboard/Root";
 import { useTranslation } from "react-i18next";
 import RequireAuth from '@/RequireAuth';
 
@@ -54,11 +54,11 @@ export const createAppRouter = () =>
             element: <RequireAuth><DashboardRoot /></RequireAuth>,
             ErrorBoundary: DashboardRootErrorBoundary,
             children: [
-                newRoute(paths.dashboard.overview.path, 'OverviewRoute', () => import('./routes/dashboard/overview')),
+                newRoute(paths.dashboard.overview.path, 'OverviewRoute', () => import('./routes/dashboard/Overview')),
                 newRoute(paths.dashboard.access.keycards.path, 'KeycardsRoute', () => import('./routes/dashboard/Access/Keycards')),
                 newRoute(paths.dashboard.access.logs.path, 'AccessLogsRoute', () => import('./routes/dashboard/Access/AccessLog')),
-                newRoute(paths.dashboard.food.path, 'FoodRoute', () => import('./routes/dashboard/food')),
-                newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/todo')),
+                newRoute(paths.dashboard.food.path, 'FoodRoute', () => import('./routes/dashboard/Food')),
+                newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/Todo')),
                 newRoute(paths.dashboard.users.path, 'UsersRoute', () => import('./routes/dashboard/User/Users')),
                 newRoute(paths.dashboard.user.path, 'UserRoute', () => import('./routes/dashboard/User/User')),
                 newRoute(paths.dashboard.video.live.path, 'LiveRoute', () => import('./routes/dashboard/Video/Live')),
