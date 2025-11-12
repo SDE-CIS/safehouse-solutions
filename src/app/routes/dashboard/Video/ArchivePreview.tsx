@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { Download } from "lucide-react";
 
-export function VideoStreamRoute() {
+export function ArchivePreviewRoute() {
     const { filename } = useParams<{ filename: string }>();
     const navigate = useNavigate();
     const { data: blob, isFetching, error } = useVideoStreamQuery(filename!, {

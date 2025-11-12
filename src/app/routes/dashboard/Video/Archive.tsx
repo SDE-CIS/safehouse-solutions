@@ -32,7 +32,7 @@ function parseDateFromName(name: string): Date | null {
     );
 }
 
-export function VideosRoute() {
+export function ArchiveRoute() {
     const { data, isLoading, error } = useVideosQuery();
     const navigate = useNavigate();
     const { t } = useTranslation();
