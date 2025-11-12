@@ -53,26 +53,26 @@ export const paths: Record<string, Path> = {
             getHref: (filename: string) => `/dashboard/videos/${filename}`,
 
             live: {
-                label: 'Live Stream',
+                label: 'Live',
                 path: '/dashboard/videos/live',
                 getHref: () => '/dashboard/videos/live',
             },
 
             livePreview: {
-                label: 'Live Camera Stream',
+                label: 'Stream',
                 hidden: true,
                 path: '/dashboard/videos/live/:cameraId',
                 getHref: (cameraId: string) => `/dashboard/videos/live/${cameraId}`,
             },
 
             archive: {
-                label: 'Video Archive',
+                label: 'Archive',
                 path: '/dashboard/videos/archive',
                 getHref: () => '/dashboard/videos/archive',
             },
 
             archivePreview: {
-                label: 'Archived Video Stream',
+                label: 'Archive Preview',
                 hidden: true,
                 path: '/dashboard/videos/archive/:filename',
                 getHref: (filename: string) => `/dashboard/videos/archive/${filename}`,

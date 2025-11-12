@@ -22,23 +22,24 @@ import {
     FiCheck,
     FiDatabase,
     FiArchive,
-    FiCircle,
     FiChevronRight,
+    FiHome,
 } from "react-icons/fi";
 import logo from "/images/logo.png";
 import { paths } from "@/config/paths";
 import { useColorModeValue } from "./ui/color-mode";
 
 const iconMap: Record<string, any> = {
-    overview: FiCircle,
-    cameras: FiVideo,
-    videos: FiArchive,
+    overview: FiHome,
     access: FiDatabase,
     keycards: FiKey,
     logs: FiCreditCard,
     users: FiUsers,
     food: FiCoffee,
     todo: FiCheck,
+    video: FiVideo,
+    live: FiVideo,
+    archive: FiArchive,
 };
 
 interface PathDefItem {

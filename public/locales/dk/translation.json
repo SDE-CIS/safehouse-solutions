@@ -169,7 +169,9 @@
         "users": "Åbn brugere",
         "videos": "Videoarkiv",
         "access": "Adgangskontrol",
-        "video": "Video"
+        "video": "Video",
+        "live": "Live Stream",
+        "archive": "Videoarkiv"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
