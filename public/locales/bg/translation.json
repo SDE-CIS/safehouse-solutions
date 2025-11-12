@@ -108,6 +108,9 @@
     "denied": "Отказан",
     "rfid_tag": "RFID етикет",
     "due_date_optional": "Срок (по избор)",
+    "detection": "Детекция",
+    "timestamp": "Отметка за време",
+    "camera_detections_overview": "Преглед на детекциите от камерата",
     "auth": {
         "name": "Име",
         "email": "Имейл",
