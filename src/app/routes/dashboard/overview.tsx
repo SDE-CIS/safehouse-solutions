@@ -286,7 +286,7 @@ export function OverviewRoute() {
                         </Flex>
                         <VStack align="start" gap={1}>
                             <Text fontSize="sm">
-                                <strong>{t("mode")}:</strong> {fan.fanMode}
+                                <strong>{t("mode")}:</strong> {t(fan.fanMode || "unknown")}
                             </Text>
                             <Text fontSize="xs" color="gray.500">
                                 {new Date(fan.DateAdded ?? "").toLocaleString()}

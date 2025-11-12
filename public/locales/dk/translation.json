@@ -112,6 +112,10 @@
     "timestamp": "Tidsstempel",
     "camera_detections_overview": "Kamera Detektioner Oversigt",
     "camera_detections": "Kamera Detektioner",
+    "mode": "Tilstand",
+    "on": "Tændt",
+    "off": "Slukket",
+    "unknown": "Ukendt",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
