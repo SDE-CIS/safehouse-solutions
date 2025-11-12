@@ -30,7 +30,7 @@ export function CameraDetectionView({
             transition={{ duration: 0.2 }}
         >
             <VStack align="start" gap={2}>
-                <Text fontWeight="bold">Detection #{detection.ID}</Text>
+                <Text fontWeight="bold">{t("detection")} #{detection.ID}</Text>
                 <Text fontSize="sm">
                     <strong>{t("timestamp")}:</strong>{" "}
                     {detection.ImageTimestamp

@@ -108,6 +108,9 @@
     "denied": "Nægtet",
     "rfid_tag": "RFID-tag",
     "due_date_optional": "Forfaldsdato (valgfri)",
+    "detection": "Detektion",
+    "timestamp": "Tidsstempel",
+    "camera_detections_overview": "Kamera Detektioner Oversigt",
     "auth": {
         "name": "Navn",
         "email": "E-mail",

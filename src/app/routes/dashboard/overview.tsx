@@ -247,7 +247,7 @@ export function OverviewRoute() {
             </SimpleGrid>
 
             {/* FANS OVERVIEW */}
-            <Heading as="h2" size="md" mb={6}>
+            <Heading as="h2" size="md" mt={6} mb={6}>
                 {t("fans_overview")}
             </Heading>
 
