@@ -23,7 +23,7 @@ export function CamerasRoute() {
             {/* Live Feed Section */}
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }} gap={4}>
                 {cameraFeeds.map((camera) => (
-                    <Box onClick={() => navigate(`/dashboard/cameras/${camera.id}`)}>
+                    <Box onClick={() => navigate(`/dashboard/videos/live/${camera.id}`)}>
                         <CameraBox
                             key={camera.id}
                             title={camera.title}

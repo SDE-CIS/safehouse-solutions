@@ -168,7 +168,8 @@
         "todo": "Opgaveliste",
         "users": "Åbn brugere",
         "videos": "Videoarkiv",
-        "access": "Adgangskontrol"
+        "access": "Adgangskontrol",
+        "video": "Video"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",

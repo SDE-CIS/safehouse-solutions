@@ -149,7 +149,7 @@ export function VideosRoute() {
                             cursor="pointer"
                             onClick={() =>
                                 navigate(
-                                    `/dashboard/videos/${encodeURIComponent(video.name)}`
+                                    `/dashboard/videos/archive/${encodeURIComponent(video.name)}`
                                 )
                             }
                         >

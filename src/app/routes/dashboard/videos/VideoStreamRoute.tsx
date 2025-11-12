@@ -38,7 +38,7 @@ export function VideoStreamRoute() {
         <Container maxW="container.xl" py={10}>
             <Button
                 leftIcon={<FaArrowLeft />}
-                onClick={() => navigate("/dashboard/videos")}
+                onClick={() => navigate("/dashboard/videos/archive")}
                 variantStyle="outline"
                 mb={4}
             >

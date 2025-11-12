@@ -47,27 +47,36 @@ export const paths: Record<string, Path> = {
             path: '',
             getHref: () => '/dashboard',
         },
-        cameras: {
-            label: 'Cameras',
-            path: '/dashboard/cameras',
-            getHref: () => '/dashboard/cameras',
-        },
-        camera: {
-            label: 'Camera View',
-            hidden: true,
-            path: '/dashboard/cameras/:cameraId',
-            getHref: (id: string) => `/dashboard/cameras/${id}`,
-        },
-        videos: {
-            label: 'Videos',
-            path: '/dashboard/videos',
-            getHref: () => '/dashboard/videos',
-        },
         video: {
-            label: 'Video Stream',
-            hidden: true,
-            path: '/dashboard/videos/:filename',
+            label: 'Video',
+            path: '/dashboard/videos',
             getHref: (filename: string) => `/dashboard/videos/${filename}`,
+
+            live: {
+                label: 'Live Stream',
+                path: '/dashboard/videos/live',
+                getHref: () => '/dashboard/videos/live',
+            },
+
+            livePreview: {
+                label: 'Live Camera Stream',
+                hidden: true,
+                path: '/dashboard/videos/live/:cameraId',
+                getHref: (cameraId: string) => `/dashboard/videos/live/${cameraId}`,
+            },
+
+            archive: {
+                label: 'Video Archive',
+                path: '/dashboard/videos/archive',
+                getHref: () => '/dashboard/videos/archive',
+            },
+
+            archivePreview: {
+                label: 'Archived Video Stream',
+                hidden: true,
+                path: '/dashboard/videos/archive/:filename',
+                getHref: (filename: string) => `/dashboard/videos/archive/${filename}`,
+            },
         },
         access: {
             label: 'Access',
