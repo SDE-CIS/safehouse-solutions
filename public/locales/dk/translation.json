@@ -171,7 +171,8 @@
         "access": "Adgangskontrol",
         "video": "Video",
         "live": "Live Stream",
-        "archive": "Videoarkiv"
+        "archive": "Videoarkiv",
+        "detections": "Kamera Detektioner"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",

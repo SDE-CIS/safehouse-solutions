@@ -9,7 +9,7 @@ export const ApiPagedResponseSchema = <T extends z.ZodTypeAny>(dataSchema: T) =>
             totalItems: z.number(),
             limit: z.number(),
             hasNextPage: z.boolean(),
-            hasPreviousPage: z.boolean(),
+            hasPrevPage: z.boolean(),
         }),
         data: dataSchema,
     });
@@ -22,7 +22,7 @@ export type ApiPagedResponse<T> = {
         totalItems: number;
         limit: number;
         hasNextPage: boolean;
-        hasPreviousPage: boolean;
+        hasPrevPage: boolean;
     }
     data: T;
 };
