@@ -4,7 +4,7 @@ import { useColorModeValue } from "@/components/ui/color-mode.tsx";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
-export function CamerasRoute() {
+export function LiveRoute() {
     const liveColor = useColorModeValue("red.500", "red.300")
     const { t } = useTranslation();
     const navigate = useNavigate();

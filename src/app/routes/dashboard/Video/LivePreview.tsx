@@ -1,7 +1,7 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
-export function CameraRoute() {
+export function LivePreviewRoute() {
     const streamUrl = "http://192.168.1.131:8080?action=stream";
     const { t } = useTranslation();
 
