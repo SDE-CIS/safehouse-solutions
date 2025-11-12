@@ -119,10 +119,3 @@ npm run build
 * Sagsstyring og support-system med e-mailnotifikationer
 * Ansigtsgenkendelse via AI (Cascade Classifier)
 * Mobilapp til fjernstyring og push-notifikationer
-
----
-
-## Udviklet af
-Safehouse Solutions Teamet
-Projekt udviklet som en integreret løsning mellem IoT-hardware og websoftware.
-"Sikkerhed starter i hjemmet – Safehouse Solutions giver dig kontrol."
