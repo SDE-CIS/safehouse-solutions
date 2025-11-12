@@ -95,9 +95,12 @@ IoT-enheder kan modtage konfigurationer via “settings”-topics og sende statu
 ```bash
 npm install
 npm run dev
+```
 
 **Byg til produktion**
+```bash
 npm run build
+```
 
 ---
 
