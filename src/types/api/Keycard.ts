@@ -7,7 +7,6 @@ export const KeycardSchema = z.object({
     IssueDate: z.string(),
     ExpirationDate: z.string().nullable(),
     UserID: z.number().nullable(),
-    StatusTypeID: z.number().nullable(),
     Name: z.string().nullable(),
     StatusName: z.string().nullable(),
     StatusDescription: z.string().nullable(),
