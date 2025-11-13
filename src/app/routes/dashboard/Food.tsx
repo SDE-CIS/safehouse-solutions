@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
     Box,
-    Button,
     Flex,
     Heading,
     Input,
@@ -16,6 +15,7 @@ import {
 import { useTranslation } from "react-i18next"
 import { toaster } from "@/components/ui/toaster"
 import { useColorModeValue } from "@/components/ui/color-mode"
+import { Button } from "@/components/ui/button"
 
 type DayKey =
     | "Monday"
@@ -211,13 +211,13 @@ export const FoodRoute = () => {
             <Flex align="center" mb={8} wrap="wrap" gap={3}>
                 <Heading size="lg">{t("weekly_food_planner")}</Heading>
                 <Flex ml="auto" gap={2} wrap="wrap">
-                    <Button variant="outline" onClick={handleExportCSV}>
+                    <Button variantStyle="outline" onClick={handleExportCSV}>
                         {t("export_csv")}
                     </Button>
-                    <Button variant="outline" onClick={handleExportJSON}>
+                    <Button variantStyle="outline" onClick={handleExportJSON}>
                         {t("export_json")}
                     </Button>
-                    <Button onClick={handleImportClick}>{t("import")}</Button>
+                    <Button variantStyle="outline" onClick={handleImportClick}>{t("import")}</Button>
                     <input
                         ref={fileInputRef}
                         type="file"
@@ -225,7 +225,7 @@ export const FoodRoute = () => {
                         style={{ display: "none" }}
                         onChange={handleImportFile}
                     />
-                    <Button colorScheme="red" variant="ghost" onClick={handleClear}>
+                    <Button colorScheme="red" variantStyle="reverse" onClick={handleClear}>
                         {t("clear")}
                     </Button>
                 </Flex>

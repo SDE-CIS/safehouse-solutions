@@ -7,7 +7,7 @@ import { da } from "date-fns/locale"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
     Box,
-    Button,
+    Button as ChakraButton,
     Card,
     Checkbox,
     Flex,
@@ -24,6 +24,7 @@ import { toaster } from "@/components/ui/toaster"
 import { useTranslation } from "react-i18next"
 import { useColorModeValue } from "@/components/ui/color-mode"
 import i18n from "@/config/i18n"
+import { Button } from "@/components/ui/button"
 
 type Todo = {
     id: string
@@ -183,10 +184,10 @@ export const TodoRoute = () => {
 
             {/* Toolbar */}
             <Flex mb={6} wrap="wrap" gap={2}>
-                <Button variant="outline" onClick={exportCSV}>
+                <Button variantStyle="outline" onClick={exportCSV}>
                     {t("export_csv")}
                 </Button>
-                <Button variant="outline" onClick={exportJSON}>
+                <Button variantStyle="outline" onClick={exportJSON}>
                     {t("export_json")}
                 </Button>
                 <Button onClick={onImportClick}>{t("import")}</Button>
@@ -197,10 +198,10 @@ export const TodoRoute = () => {
                     style={{ display: "none" }}
                     onChange={onImportFile}
                 />
-                <Button variant="subtle" onClick={clearCompleted}>
+                <Button variantStyle="reverse" onClick={clearCompleted}>
                     {t("clear_completed")}
                 </Button>
-                <Button colorScheme="red" variant="ghost" onClick={clearAll}>
+                <Button colorScheme="red" variantStyle="reverse" onClick={clearAll}>
                     {t("clear_all")}
                 </Button>
             </Flex>
@@ -225,7 +226,7 @@ export const TodoRoute = () => {
                             onChange={(e) => setNewTitle(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && addTodo()}
                         />
-                        <Button variant="outline">
+                        <ChakraButton variant="outline">
                             <DatePicker
                                 selected={newDue ? new Date(newDue) : null}
                                 onChange={(date: Date | null) => {
@@ -240,7 +241,7 @@ export const TodoRoute = () => {
                                 dateFormat="P"
                                 locale={locale}
                             />
-                        </Button>
+                        </ChakraButton>
 
                         <Input
                             flex="2"
