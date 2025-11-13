@@ -25,6 +25,7 @@ import { FanActivity } from "@/types/api/FanActivity";
 import { AccessLogsResponse, AccessLogsResponseSchema } from "@/types/api/AccessLog";
 import { CameraDetectionsResponse } from "@/types/api/CameraDetection";
 import { CameraDetectionRequest } from "@/types/api/CameraDetectionRequest";
+import { LockState } from "@/types/api/LockState";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -215,6 +216,14 @@ export const api = createApi({
             query: (id) => ({
                 url: `keycards/${id}`,
                 method: "DELETE",
+            }),
+        }),
+
+        lockKeycardScanner: builder.mutation<{ success: boolean; }, LockState>({
+            query: (lockState) => ({
+                url: `keycards/rfid`,
+                method: "POST",
+                body: lockState,
             }),
         }),
 
