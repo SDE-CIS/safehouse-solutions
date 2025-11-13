@@ -116,6 +116,9 @@
     "on": "Tændt",
     "off": "Slukket",
     "unknown": "Ukendt",
+    "previous": "Forrige",
+    "next": "Næste",
+    "refresh": "Opdater",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
