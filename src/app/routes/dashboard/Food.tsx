@@ -304,7 +304,7 @@ export const FoodRoute = () => {
                             />
                         </Card.Body>
                         <Card.Footer justifyContent="flex-end" gap={2}>
-                            <Button variant="outline">{t("save")}</Button>
+                            <Button variantStyle="outline">{t("save")}</Button>
                         </Card.Footer>
                     </Card.Root>
                 ))}
