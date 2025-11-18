@@ -5,7 +5,11 @@ import { RootState } from '@/app/store';
 const cookies = new Cookies();
 
 export const setRawCookie = (name: string, value: string, options: any = {}) => {
-    (cookies as any).set(name, value, { encode: (v: string) => v, ...options });
+    cookies.set(name, value, {
+        encode: (v: string) => v,
+        path: "/",
+        ...options
+    });
 };
 
 const decode = (value: string | undefined) =>
@@ -51,16 +55,19 @@ export const loginSlice = createSlice({
             state.refreshToken = action.payload.refreshToken;
         },
         loggedOut: (state) => {
-            cookies.remove('id');
-            cookies.remove('username');
-            cookies.remove('avatar');
-            cookies.remove('accessToken');
-            cookies.remove('refreshToken');
+            const opts = { path: "/" };
+
+            cookies.remove('id', opts);
+            cookies.remove('username', opts);
+            cookies.remove('avatar', opts);
+            cookies.remove('accessToken', opts);
+            cookies.remove('refreshToken', opts);
+
             state.username = null;
             state.avatar = null;
             state.accessToken = null;
             state.refreshToken = null;
-        },
+        }
     },
 });
 
