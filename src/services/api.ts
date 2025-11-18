@@ -26,6 +26,7 @@ import { AccessLogsResponse, AccessLogsResponseSchema } from "@/types/api/Access
 import { CameraDetectionsResponse } from "@/types/api/CameraDetection";
 import { CameraDetectionRequest } from "@/types/api/CameraDetectionRequest";
 import { LockState } from "@/types/api/LockState";
+import { LocksResponse } from "@/types/api/Lock";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -190,6 +191,10 @@ export const api = createApi({
                 KeycardResponseSchema.parse(response),
         }),
 
+        locks: builder.query<LocksResponse, number>({
+            query: (id) => `keycards/rfid/${id}`,
+        }),
+
         keycardLogs: builder.query<AccessLogsResponse, void>({
             query: () => "keycards/logs",
             transformResponse: (response: unknown) =>
@@ -279,6 +284,7 @@ export const {
     useUpdateUserAvatarMutation,
     useDeleteUserMutation,
     useKeycardsQuery,
+    useLocksQuery,
     useKeycardQuery,
     useKeycardLogsQuery,
     useCreateKeycardMutation,
