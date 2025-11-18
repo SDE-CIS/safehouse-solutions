@@ -29,6 +29,7 @@ import { LockState } from "@/types/api/LockState";
 import { LocksResponse } from "@/types/api/Lock";
 import { DevicesResponse, DevicesResponseSchema } from "@/types/api/Device";
 import { AssignDevice } from "@/types/api/AssignDevice";
+import { LocationsResponse, LocationsResponseSchema } from "@/types/api/Location";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -200,7 +201,7 @@ export const api = createApi({
         assignLock: builder.mutation<{ success: boolean; message: string }, AssignDevice>({
             query: (body) => ({
                 url: "keycards/rfid/assign",
-                method: "POST",
+                method: "PUT",
                 body,
             }),
         }),
@@ -288,6 +289,36 @@ export const api = createApi({
             transformResponse: (response: unknown) =>
                 DevicesResponseSchema.parse(response),
         }),
+
+        /* ─────────────── LOCATIONS ─────────────── */
+        locations: builder.query<LocationsResponse, void>({
+            query: () => "locations",
+            transformResponse: (response: unknown) =>
+                LocationsResponseSchema.parse(response),
+        }),
+
+        createLocation: builder.mutation<{ message: string }, { LocationName: string }>({
+            query: (body) => ({
+                url: "locations",
+                method: "POST",
+                body,
+            })
+        }),
+
+        updateLocation: builder.mutation<{ message: string }, { id: number; LocationName: string }>({
+            query: ({ id, LocationName }) => ({
+                url: `locations/${id}`,
+                method: "PUT",
+                body: { LocationName },
+            })
+        }),
+
+        deleteLocation: builder.mutation<{ message: string }, number>({
+            query: (id) => ({
+                url: `locations/${id}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
@@ -316,4 +347,8 @@ export const {
     useActivateFanMutation,
     useCameraDetectionsQuery,
     useDevicesQuery,
+    useLocationsQuery,
+    useCreateLocationMutation,
+    useUpdateLocationMutation,
+    useDeleteLocationMutation,
 } = api;

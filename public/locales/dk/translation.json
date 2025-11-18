@@ -134,7 +134,7 @@
     "was_assigned": "blev tildelt",
     "was_unassigned": "blev fjernet",
     "devices": "Devices",
-    "register_new_scanner": "Register New Scanner",
+    "register_new_scanner": "Registrer ny scanner",
     "live_update_device": "📡 Device {{device}} {{status}}",
     "device_status_changed": "Device {{device}} → {{status}}",
     "rfid_scanner_registered": "New RFID scanner successfully registered.",

@@ -1,3 +1,4 @@
+import { useLocationsQuery } from "@/services/api"
 import {
     createListCollection,
     Select,
@@ -17,16 +18,14 @@ export function LocationSelect({
     t: (key: string) => string
     setLocationId: (id: number) => void
 }) {
-    // ✅ Select expects an array of selected keys (even single select)
     const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+    const { data: locations } = useLocationsQuery();
 
-    // ✅ Create the list collection (v3 standard)
     const locationCollection = createListCollection<LocationItem>({
-        items: [
-            { label: `${t("location")} 1`, value: "1" },
-            { label: `${t("location")} 2`, value: "2" },
-            { label: `${t("location")} 3`, value: "3" },
-        ],
+        items: locations?.data.map((loc) => ({
+            label: loc.LocationName,
+            value: loc.ID.toString(),
+        })) || [],
     })
 
     const handleValueChange = (details: { value: string[] }) => {
