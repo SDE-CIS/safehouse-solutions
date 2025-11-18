@@ -56,6 +56,7 @@ export const createAppRouter = () =>
             children: [
                 newRoute(paths.dashboard.overview.path, 'OverviewRoute', () => import('./routes/dashboard/Overview')),
                 newRoute(paths.dashboard.access.keycards.path, 'KeycardsRoute', () => import('./routes/dashboard/Access/Keycards')),
+                newRoute(paths.dashboard.access.locks.path, 'LocksRoute', () => import('./routes/dashboard/Access/Locks')),
                 newRoute(paths.dashboard.access.logs.path, 'AccessLogsRoute', () => import('./routes/dashboard/Access/AccessLog')),
                 newRoute(paths.dashboard.food.path, 'FoodRoute', () => import('./routes/dashboard/Food')),
                 newRoute(paths.dashboard.todo.path, 'TodoRoute', () => import('./routes/dashboard/Todo')),

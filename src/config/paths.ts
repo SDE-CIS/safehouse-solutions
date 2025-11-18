@@ -94,6 +94,11 @@ export const paths: Record<string, Path> = {
                 path: '/dashboard/keycards',
                 getHref: () => '/dashboard/keycards',
             },
+            locks: {
+                label: 'Locks',
+                path: '/dashboard/locks',
+                getHref: () => '/dashboard/locks',
+            },
             logs: {
                 label: 'Logs',
                 path: '/dashboard/access-logs',

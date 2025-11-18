@@ -284,6 +284,7 @@ export const {
     useCreateKeycardMutation,
     useUpdateKeycardMutation,
     useDeleteKeycardMutation,
+    useLockKeycardScannerMutation,
     useVideosQuery,
     useVideoStreamQuery,
     useFansQuery,
