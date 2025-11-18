@@ -26,6 +26,7 @@ import {
     FiHome,
     FiAlertTriangle,
     FiLock,
+    FiBookOpen,
 } from "react-icons/fi";
 import logo from "/images/logo.png";
 import { paths } from "@/config/paths";
@@ -44,7 +45,8 @@ const iconMap: Record<string, any> = {
     locks: FiLock,
     archive: FiArchive,
     detections: FiAlertTriangle,
-    devices: FiDatabase
+    devices: FiDatabase,
+    locations: FiBookOpen,
 };
 
 interface PathDefItem {

@@ -130,6 +130,11 @@ export const paths: Record<string, Path> = {
             label: 'Devices',
             path: '/dashboard/devices',
             getHref: () => '/dashboard/devices',
+        },
+        locations: {
+            label: 'Locations',
+            path: '/dashboard/locations',
+            getHref: () => '/dashboard/locations',
         }
     }
 } as const;

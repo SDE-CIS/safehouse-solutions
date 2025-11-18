@@ -150,6 +150,14 @@
     "assign_location": "Назначи локация",
     "select_location": "Избери локация",
     "create_lock": "Създай ключалка",
+    "total_locations": "Общо локации",
+    "list_of_locations": "Списък с локации",
+    "location_management": "Управление на локации",
+    "add_location": "Добави локация",
+    "actions": "Действия",
+    "create_location": "Създай локация",
+    "enter_location_name": "Въведете име на локация",
+    "edit_location": "Редактирай локация",
     "auth": {
         "name": "Име",
         "email": "Имейл",
@@ -213,7 +221,8 @@
         "archive": "Архив",
         "detections": "Камерни детекции",
         "locks": "Управление на ключалки",
-        "devices": "Устройства"
+        "devices": "Устройства",
+        "locations": "Локации"
     },
     "cameras": {
         "overview": "Преглед на камерите",

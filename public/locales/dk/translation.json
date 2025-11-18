@@ -150,6 +150,14 @@
     "assign_location": "Assign Location",
     "select_location": "Select location",
     "create_lock": "Opret lås",
+    "total_locations": "Totale lokationer",
+    "list_of_locations": "Liste over lokationer",
+    "location_management": "Lokationsstyring",
+    "add_location": "Tilføj lokation",
+    "actions": "Handlinger",
+    "create_location": "Opret lokation",
+    "enter_location_name": "Indtast lokationsnavn",
+    "edit_location": "Rediger lokation",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
@@ -213,7 +221,8 @@
         "archive": "Videoarkiv",
         "detections": "Kamera Detektioner",
         "locks": "Dør Lås Styring",
-        "devices": "Enhedsstyring"
+        "devices": "Enhedsstyring",
+        "locations": "Lokationer"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
