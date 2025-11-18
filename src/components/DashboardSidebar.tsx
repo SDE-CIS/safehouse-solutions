@@ -43,7 +43,8 @@ const iconMap: Record<string, any> = {
     live: FiVideo,
     locks: FiLock,
     archive: FiArchive,
-    detections: FiAlertTriangle
+    detections: FiAlertTriangle,
+    devices: FiDatabase
 };
 
 interface PathDefItem {

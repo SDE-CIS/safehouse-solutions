@@ -27,6 +27,8 @@ import { CameraDetectionsResponse } from "@/types/api/CameraDetection";
 import { CameraDetectionRequest } from "@/types/api/CameraDetectionRequest";
 import { LockState } from "@/types/api/LockState";
 import { LocksResponse } from "@/types/api/Lock";
+import { DevicesResponse, DevicesResponseSchema } from "@/types/api/Device";
+import { AssignDevice } from "@/types/api/AssignDevice";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -195,6 +197,14 @@ export const api = createApi({
             query: (id) => `keycards/rfid/${id}`,
         }),
 
+        assignLock: builder.mutation<{ success: boolean; message: string }, AssignDevice>({
+            query: (body) => ({
+                url: "keycards/rfid/assign",
+                method: "POST",
+                body,
+            }),
+        }),
+
         keycardLogs: builder.query<AccessLogsResponse, void>({
             query: () => "keycards/logs",
             transformResponse: (response: unknown) =>
@@ -271,6 +281,13 @@ export const api = createApi({
                 body: activity,
             }),
         }),
+
+        /* ─────────────── DEVICES ─────────────── */
+        devices: builder.query<DevicesResponse, void>({
+            query: () => "devices",
+            transformResponse: (response: unknown) =>
+                DevicesResponseSchema.parse(response),
+        }),
     }),
 });
 
@@ -285,6 +302,7 @@ export const {
     useDeleteUserMutation,
     useKeycardsQuery,
     useLocksQuery,
+    useAssignLockMutation,
     useKeycardQuery,
     useKeycardLogsQuery,
     useCreateKeycardMutation,
@@ -297,4 +315,5 @@ export const {
     useTemperatureLogsQuery,
     useActivateFanMutation,
     useCameraDetectionsQuery,
+    useDevicesQuery,
 } = api;

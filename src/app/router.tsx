@@ -67,6 +67,7 @@ export const createAppRouter = () =>
                 newRoute(paths.dashboard.video.detections.path, 'CameraDetectionsRoute', () => import('./routes/dashboard/Video/CameraDetections')),
                 newRoute(paths.dashboard.video.archive.path, 'ArchiveRoute', () => import('./routes/dashboard/Video/Archive')),
                 newRoute(paths.dashboard.video.archivePreview.path, 'ArchivePreviewRoute', () => import('./routes/dashboard/Video/ArchivePreview')),
+                newRoute(paths.dashboard.devices.path, 'DevicesRoute', () => import('./routes/dashboard/Devices')),
             ]
         },
         newRoute('*', 'NotFoundRoute', () => import('./routes/not-found')),
