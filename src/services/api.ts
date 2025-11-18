@@ -35,7 +35,7 @@ const baseQuery = fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
         const accessToken = (getState() as RootState).loginSlice.accessToken;
-        if (accessToken) headers.set("authorization", accessToken);
+        if (accessToken) headers.set("authorization", `Bearer ${accessToken}`);
         return headers;
     },
     responseHandler: (response) => response.json(),
