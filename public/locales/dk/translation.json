@@ -149,7 +149,7 @@
     "waiting_for_scan": "Waiting for scan...",
     "assign_location": "Assign Location",
     "select_location": "Select location",
-    "create_lock": "Create Lock",
+    "create_lock": "Opret lås",
     "auth": {
         "name": "Navn",
         "email": "E-mail",
