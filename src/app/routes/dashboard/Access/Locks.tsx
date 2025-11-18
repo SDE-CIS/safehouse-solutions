@@ -12,7 +12,6 @@ import {
     Field,
     Switch,
 } from "@chakra-ui/react";
-import { Button } from "@/components/ui/button";
 import { toaster } from "@/components/ui/toaster";
 import { useState } from "react";
 import { Cookies } from "react-cookie";
@@ -25,10 +24,10 @@ export function LocksRoute() {
     const deviceId = "2c428c842178";
     const userId = cookies.get("id") ?? "";
     const [isLocked, setIsLocked] = useState(false);
-    const [lockKeycardScanner, { isLoading }] = useLockKeycardScannerMutation();
+    const [lockKeycardScanner] = useLockKeycardScannerMutation();
     const { t } = useTranslation();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (locked: boolean) => {
         if (!userId) {
             toaster.create({
                 description: t("missing_userId"),
@@ -38,17 +37,19 @@ export function LocksRoute() {
             return;
         }
 
+        setIsLocked(locked);
+
         try {
             const res = await lockKeycardScanner({
                 DeviceID: deviceId,
                 UserID: userId,
                 Location: 1,
-                isLocked: isLocked,
+                isLocked: locked,
             }).unwrap();
 
             if (res.success) {
                 toaster.create({
-                    description: isLocked
+                    description: locked
                         ? t("keycard_scanner_locked_successfully")
                         : t("keycard_scanner_unlocked_successfully"),
                     type: "info",
@@ -112,7 +113,7 @@ export function LocksRoute() {
                                 <Text>{isLocked ? t("locked") : t("unlocked")}</Text>
                                 <Switch.Root
                                     checked={isLocked}
-                                    onCheckedChange={(e) => setIsLocked(e.checked)}
+                                    onCheckedChange={(e) => handleSubmit(e.checked)}
                                 >
                                     <Switch.HiddenInput />
                                     <Switch.Control>
@@ -124,16 +125,6 @@ export function LocksRoute() {
                                 </Switch.Root>
                             </Stack>
                         </Field.Root>
-
-                        <Button
-                            onClick={handleSubmit}
-                            loading={isLoading}
-                            w="full"
-                            colorScheme={isLocked ? "red" : "green"}
-                            size="lg"
-                        >
-                            {isLocked ? t("lock_scanner") : t("unlock_scanner")}
-                        </Button>
                     </VStack>
                 </CardBody>
             </Card.Root>
