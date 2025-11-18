@@ -119,6 +119,12 @@
     "previous": "Forrige",
     "next": "Næste",
     "refresh": "Opdater",
+    "door_lock_management": "Dør Lås Styring",
+    "manage_the_door_lock_remotely": "Administrer dørlåsen eksternt",
+    "locked": "Låst",
+    "unlocked": "Ulåst",
+    "lock_scanner": "Lås Scanner",
+    "unlock_scanner": "Lås Op Scanner",
     "auth": {
         "name": "Navn",
         "email": "E-mail",

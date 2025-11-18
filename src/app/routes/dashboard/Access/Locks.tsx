@@ -17,6 +17,7 @@ import { toaster } from "@/components/ui/toaster";
 import { useState } from "react";
 import { Cookies } from "react-cookie";
 import { useLockKeycardScannerMutation } from "@/services/api";
+import { useTranslation } from "react-i18next";
 
 const cookies = new Cookies();
 
@@ -25,11 +26,12 @@ export function LocksRoute() {
     const userId = cookies.get("id") ?? "";
     const [isLocked, setIsLocked] = useState(false);
     const [lockKeycardScanner, { isLoading }] = useLockKeycardScannerMutation();
+    const { t } = useTranslation();
 
     const handleSubmit = async () => {
         if (!userId) {
             toaster.create({
-                description: "Missing user ID. Please log in again.",
+                description: t("missing_userId"),
                 type: "warning",
                 closable: true,
             });
@@ -47,21 +49,21 @@ export function LocksRoute() {
             if (res.success) {
                 toaster.create({
                     description: isLocked
-                        ? "Keycard scanner locked successfully."
-                        : "Keycard scanner unlocked successfully.",
+                        ? t("keycard_scanner_locked_successfully")
+                        : t("keycard_scanner_unlocked_successfully"),
                     type: "info",
                     closable: true,
                 });
             } else {
                 toaster.create({
-                    description: "Operation failed. Try again later.",
+                    description: t("operation_failed_try_again_later"),
                     type: "error",
                     closable: true,
                 });
             }
         } catch {
             toaster.create({
-                description: "Failed to connect to the scanner service.",
+                description: t("failed_to_connect_to_scanner_service"),
                 type: "error",
                 closable: true,
             });
@@ -85,10 +87,10 @@ export function LocksRoute() {
             >
                 <CardHeader textAlign="center">
                     <Heading size="md" mb={1}>
-                        Keycard Scanner Control
+                        {t("door_lock_management")}
                     </Heading>
                     <Text fontSize="sm" color="gray.500">
-                        Manage the door lock remotely.
+                        {t("manage_the_door_lock_remotely")}
                     </Text>
                 </CardHeader>
 
@@ -100,14 +102,14 @@ export function LocksRoute() {
                                 fontWeight="bold"
                                 color={isLocked ? "red.500" : "green.500"}
                             >
-                                {isLocked ? "Locked" : "Unlocked"}
+                                {isLocked ? t("locked") : t("unlocked")}
                             </Text>
                         </Box>
 
                         <Field.Root>
                             <Field.Label>Status</Field.Label>
                             <Stack direction="row" align="center" justify="space-between" w="full">
-                                <Text>{isLocked ? "Locked" : "Unlocked"}</Text>
+                                <Text>{isLocked ? t("locked") : t("unlocked")}</Text>
                                 <Switch.Root
                                     checked={isLocked}
                                     onCheckedChange={(e) => setIsLocked(e.checked)}
@@ -117,7 +119,7 @@ export function LocksRoute() {
                                         <Switch.Thumb />
                                     </Switch.Control>
                                     <Switch.Label srOnly>
-                                        {isLocked ? "Locked" : "Unlocked"}
+                                        {isLocked ? t("locked") : t("unlocked")}
                                     </Switch.Label>
                                 </Switch.Root>
                             </Stack>
@@ -130,7 +132,7 @@ export function LocksRoute() {
                             colorScheme={isLocked ? "red" : "green"}
                             size="lg"
                         >
-                            {isLocked ? "Lock Scanner" : "Unlock Scanner"}
+                            {isLocked ? t("lock_scanner") : t("unlock_scanner")}
                         </Button>
                     </VStack>
                 </CardBody>
