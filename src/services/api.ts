@@ -49,9 +49,9 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, extraOptions);
-    const error = result.error as FetchBaseQueryError | undefined;
+    const error = result.error as { status: number | "FETCH_ERROR" | "PARSING_ERROR" | "CUSTOM_ERROR"; originalStatus?: number };
 
-    if (error?.status === 401) {
+    if (error?.originalStatus === 401) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {
