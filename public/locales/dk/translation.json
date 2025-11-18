@@ -186,7 +186,8 @@
         "video": "Video",
         "live": "Live Stream",
         "archive": "Videoarkiv",
-        "detections": "Kamera Detektioner"
+        "detections": "Kamera Detektioner",
+        "locks": "Dør Lås Styring"
     },
     "cameras": {
         "overview": "Oversigt over kameraer",
