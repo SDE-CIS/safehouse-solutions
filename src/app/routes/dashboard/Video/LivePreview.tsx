@@ -1,4 +1,5 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
+import { Box, Heading } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
 export function LivePreviewRoute() {
