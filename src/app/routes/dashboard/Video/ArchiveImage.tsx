@@ -9,7 +9,7 @@ export function ArchiveImage(props: { name: string }) {
     console.log(thumbnail);
 
     return (
-        <Box>
+        <Box position="relative" width="100%" height="100%" overflow="hidden">
             {thumbnail ? (
                 <img
                     src={`data:image/jpeg;base64,${thumbnail}`}
