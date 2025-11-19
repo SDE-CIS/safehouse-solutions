@@ -12,10 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { useVideosQuery } from "@/services/api";
 import { useNavigate } from "react-router-dom";
-import { FaPlay, FaVideo } from "react-icons/fa6";
+import { FaPlay } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
+import { ArchiveImage } from "./ArchiveImage";
 
 function parseDateFromName(name: string): Date | null {
     const match = name.match(/^(\d{2})_(\d{2})_(\d{4})_(\d{2})_(\d{2})_(\d{2})/);
@@ -40,7 +41,6 @@ export function ArchiveRoute() {
 
     const videos = data?.data ?? [];
 
-    // ✅ Parse and sort videos by extracted date
     const videosWithParsedDates = useMemo(() => {
         return videos
             .map((video) => ({
@@ -55,7 +55,6 @@ export function ArchiveRoute() {
             );
     }, [videos]);
 
-    // ✅ Group by date (YYYY-MM-DD)
     const groupedByDate = useMemo(() => {
         const grouped: Record<string, any[]> = {};
         videosWithParsedDates.forEach((video) => {
@@ -67,14 +66,12 @@ export function ArchiveRoute() {
         return grouped;
     }, [videosWithParsedDates]);
 
-    // ✅ Get all unique dates (sorted descending)
     const availableDates = useMemo(() => {
         return Object.keys(groupedByDate).sort(
             (a, b) => new Date(b).getTime() - new Date(a).getTime()
         );
     }, [groupedByDate]);
 
-    // ✅ Videos filtered by selected date
     const filteredVideos = selectedDate
         ? groupedByDate[selectedDate] ?? []
         : videosWithParsedDates;
@@ -158,28 +155,7 @@ export function ArchiveRoute() {
                                 aspectRatio={16 / 9}
                                 bg="gray.100"
                             >
-                                {video.thumbnail ? (
-                                    <img
-                                        src={video.thumbnail}
-                                        alt={video.name}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ objectFit: "cover" }}
-                                    />
-                                ) : (
-                                    <FaVideo
-                                        style={{
-                                            position: "absolute",
-                                            top: "50%",
-                                            left: "50%",
-                                            transform:
-                                                "translate(-50%, -50%)",
-                                            fontSize: "3rem",
-                                            color: "#3182CE",
-                                            opacity: 0.8,
-                                        }}
-                                    />
-                                )}
+                                <ArchiveImage name={video.name} />
                             </Box>
 
                             <Card.Body textAlign="center" py={4} gap={2}>

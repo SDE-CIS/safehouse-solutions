@@ -260,6 +260,13 @@ export const api = createApi({
             }),
         }),
 
+        thumbnail: builder.query<string, string>({
+            query: (filename) => ({
+                url: `videos/thumbnail/${encodeURIComponent(filename)}`,
+                responseHandler: (response) => response.text(),
+            }),
+        }),
+
         cameraDetections: builder.query<CameraDetectionsResponse, CameraDetectionRequest>({
             query: ({ id, page, limit }) => `camera/${id}?page=${page}&limit=${limit}`,
         }),
@@ -342,6 +349,7 @@ export const {
     useLockKeycardScannerMutation,
     useVideosQuery,
     useVideoStreamQuery,
+    useThumbnailQuery,
     useFansQuery,
     useTemperatureLogsQuery,
     useActivateFanMutation,
